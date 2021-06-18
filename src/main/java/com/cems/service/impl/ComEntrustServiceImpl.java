@@ -4,6 +4,7 @@ package com.cems.service.impl;
 
 import com.cems.mapper.EntrustMapper;
 import com.cems.pojo.ComEntrust;
+import com.cems.pojo.ComEntrustType;
 import com.cems.service.ComEntrustService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,8 +21,14 @@ import java.util.List;
 public class ComEntrustServiceImpl implements ComEntrustService {
     @Autowired
     EntrustMapper entrustMapper;
+
     @Override
     public List<ComEntrust> getEntrusts() {
         return entrustMapper.getEntrusts();
+    }
+
+    @Override
+    public List<ComEntrustType> getEntTypes() {
+        return entrustMapper.getEntTypes();
     }
 }

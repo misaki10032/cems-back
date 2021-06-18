@@ -2,6 +2,7 @@ package com.cems.service;
 
 
 import com.cems.pojo.ComEntrust;
+import com.cems.pojo.ComEntrustType;
 
 import java.util.List;
 
@@ -14,5 +15,7 @@ import java.util.List;
 public interface ComEntrustService {
 
     List<ComEntrust> getEntrusts();
+
+    List<ComEntrustType> getEntTypes();
 
 }
