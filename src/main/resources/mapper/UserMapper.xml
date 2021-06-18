@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cems.mapper.UserMapper">
+    <select id="getUsers" resultType="ComUser">
+        select id, user_phone, user_pwd, user_role, status
+        from cems.com_user
+    </select>
+    <select id="getUsersInfo" resultType="ComUserInfo">
+        select id,
+               user_id,
+               user_email,
+               user_house,
+               user_birth,
+               user_pwd_protect,
+               user_dec,
+               user_name,
+               user_pname,
+               user_sex,
+               user_money,
+               user_picture
+        from cems.com_user_info;
+    </select>
+    <update id="killUser">
+        update cems.com_user set status = #{status}
+        where id=#{id}
+    </update>
+    <select id="getUserLike" resultType="ComUser">
+        select id, user_phone, user_pwd, user_role, status
+        from cems.com_user
+        where user_phone like #{phone} and status = #{status}
+    </select>
+</mapper>
