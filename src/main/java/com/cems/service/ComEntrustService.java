@@ -3,6 +3,7 @@ package com.cems.service;
 
 import com.cems.pojo.ComEntrust;
 import com.cems.pojo.ComEntrustType;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -18,4 +19,6 @@ public interface ComEntrustService {
 
     List<ComEntrustType> getEntTypes();
 
+
+    void updataEntState(int id, String status);
 }

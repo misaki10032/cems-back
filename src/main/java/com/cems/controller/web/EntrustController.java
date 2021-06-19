@@ -10,10 +10,7 @@ import com.cems.service.ComEntrustService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -38,6 +35,7 @@ public class EntrustController {
         return s;
     }
 
+
     @PostMapping("/getEntlimit/{pageNum}/{pageSize}")
     public String getEntLimit(PageTo pageTo) {
         HashMap<String, Object> map = new HashMap<>();
@@ -53,13 +51,43 @@ public class EntrustController {
         } catch (Exception e) {
             map.put("code", "500");
         }
+
         return JSON.toJSONString(map);
     }
 
+    /**
+     *
+     */
+    @GetMapping("/updataEntState")
+    public String updataEntState(Integer rowid,
+                               String rowstatus) {
+        System.out.println(rowid);
+        System.out.println(rowstatus);
+
+        try {
+            if (rowstatus.equals("已审核")) {
+                rowstatus = "未审核";
+            } else {
+                rowstatus = "已审核";
+            }
+            entrustService.updataEntState(rowid, rowstatus);
+            System.out.println(rowstatus);
+            return rowstatus;
+        } catch (Exception e) {
+            return "0";
+        }
+    }
+
+
+    /**
+     * 获得所有的类型名称 以及对应的数量
+     *
+     * @param pageTo
+     * @return
+     */
     @PostMapping("/getEntTypelimit/{pageNum}/{pageSize}")
     public String getEntTypeLimit(PageTo pageTo) {
         HashMap<String, Object> map = new HashMap<>();
-        System.out.println(pageTo);
         try {
             PageHelper.startPage(pageTo.getPageNum(), pageTo.getPageSize());
             PageInfo<ComEntrustType> entList = new PageInfo<>(entrustService.getEntTypes());

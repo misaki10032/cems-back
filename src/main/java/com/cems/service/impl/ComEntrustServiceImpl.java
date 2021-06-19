@@ -31,4 +31,9 @@ public class ComEntrustServiceImpl implements ComEntrustService {
     public List<ComEntrustType> getEntTypes() {
         return entrustMapper.getEntTypes();
     }
+
+    @Override
+    public void updataEntState(int id, String status) {
+        entrustMapper.updataEntState(id,status);
+    }
 }
