@@ -36,7 +36,7 @@ public class EntrustController {
     }
 
 
-    @PostMapping("/getEntlimit/{pageNum}/{pageSize}")
+    @PostMapping("getEntlimit/{pageNum}/{pageSize}")
     public String getEntLimit(PageTo pageTo) {
         HashMap<String, Object> map = new HashMap<>();
         System.out.println(pageTo);
@@ -58,7 +58,7 @@ public class EntrustController {
     /**
      *
      */
-    @GetMapping("/updataEntState")
+    @GetMapping("updataEntState")
     public String updataEntState(Integer rowid,
                                String rowstatus) {
         System.out.println(rowid);
@@ -85,7 +85,7 @@ public class EntrustController {
      * @param pageTo
      * @return
      */
-    @PostMapping("/getEntTypelimit/{pageNum}/{pageSize}")
+    @PostMapping("getEntTypelimit/{pageNum}/{pageSize}")
     public String getEntTypeLimit(PageTo pageTo) {
         HashMap<String, Object> map = new HashMap<>();
         try {

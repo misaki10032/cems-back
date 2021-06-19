@@ -49,7 +49,7 @@ public class UserContorller {
         }
     }
 
-    @PostMapping("/getUserlimit/{pageNum}/{pageSize}")
+    @PostMapping("getUserlimit/{pageNum}/{pageSize}")
     public String getUserLimit(PageTo pageTo) {
         HashMap<String, Object> map = new HashMap<>();
         System.out.println(pageTo);
@@ -66,7 +66,7 @@ public class UserContorller {
         }
         return JSON.toJSONString(map);
     }
-    @PostMapping("/getUserLike")
+    @PostMapping("getUserLike")
     public String chaxun(@RequestBody FormInline form) {
         HashMap<String, Object> map = new HashMap<>();
         System.out.println(form);
