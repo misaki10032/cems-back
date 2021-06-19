@@ -4,6 +4,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
+import java.util.Date;
+
 /**
  * @ClassName ComUser
  * @Author 陈新予(blank)
@@ -19,4 +21,15 @@ public class ComUser {
     private String userPwd;
     private String userRole;
     private String status;
+
+    private Integer userId;
+    private String  userPname;
+    private String userName;
+    private String userSex;
+    private Date userBirth;
+    private String userEmail;
+    private String userHouse;
+    private String userPwdProtect;//密保问题
+    private String userDec;
+    private Integer userMoney;
 }

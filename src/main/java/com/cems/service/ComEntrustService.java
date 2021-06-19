@@ -6,6 +6,7 @@ import com.cems.pojo.ComEntrustType;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @InterfaceName ComEntrustService
@@ -21,4 +22,10 @@ public interface ComEntrustService {
 
 
     void updataEntState(int id, String status);
+
+    int upQuitEtrustEntMoney(Map<String, Object> map);
+
+
+
+    void delLeisureEntrustById2(Integer id);
 }

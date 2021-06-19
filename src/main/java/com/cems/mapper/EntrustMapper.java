@@ -10,6 +10,7 @@ import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @InterfaceName EntrustMapper
@@ -28,4 +29,9 @@ public interface EntrustMapper extends BaseMapper<ComEntrust> {
 
     void updataEntState(@Param("id") int id, @Param("status") String status);
 
+    int upQuitEtrustEntMoney(Map<String, Object> map);
+
+
+
+    void delLeisureEntrustById2(Integer id);
 }

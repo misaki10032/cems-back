@@ -20,12 +20,15 @@ import java.util.List;
 @Component
 public interface UserMapper extends BaseMapper<ComUser> {
 
+
+    ComUser selOneUser(int id);
+
     List<ComUser> getUsers();
 
     List<ComUserInfo> getUsersInfo();
 
     void killUser(@Param("id") int id, @Param("status") String status);
 
-    List<ComUser> getUserLike(@Param("phone")String phone,@Param("status")String status);
+    List<ComUser> getUserLike(@Param("phone") String phone, @Param("status") String status);
 
 }
