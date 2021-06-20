@@ -30,4 +30,16 @@
         from cems.com_user
         where user_phone like #{phone} and status = #{status}
     </select>
+    <!--用户申诉账号密码判断-->
+    <select id="judgeAP" parameterType="map" resultType="ComUser">
+        select id, user_phone, user_pwd, user_role, status
+        from com_user
+        where user_phone = #{phone} and user_pwd = #{psw}
+    </select>
+    <!--管理员申诉账号密码判断-->
+    <select id="gljudgeAP" parameterType="map" resultType="SysAdmin">
+        select id,admin_num,admin_pwd,admin_status
+        from sys_admin
+        where admin_num = #{phone} and admin_pwd = #{psw};
+    </select>
 </mapper>

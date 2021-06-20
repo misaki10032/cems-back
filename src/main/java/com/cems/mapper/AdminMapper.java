@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @InterfaceName AdminMapper
@@ -19,6 +20,7 @@ import java.util.List;
 public interface AdminMapper extends BaseMapper<SysAdmin> {
 
     List<SysAdmin> getAdmins();
-
+    /**管理员申诉账号密码验证*/
+    SysAdmin gljudgeAP(Map<String,Object> map);
 }
 

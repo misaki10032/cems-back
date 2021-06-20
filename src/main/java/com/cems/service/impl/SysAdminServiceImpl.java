@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -27,5 +28,10 @@ public class SysAdminServiceImpl implements SysAdminService {
     @Override
     public List<SysAdmin> getAdmins() {
         return adminMapper.selectList(null);
+    }
+
+    @Override
+    public SysAdmin gljudgeAP(Map<String, Object> map) {
+        return adminMapper.gljudgeAP(map);
     }
 }

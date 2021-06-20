@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @ClassName ComUserServiceImpl
@@ -52,6 +53,11 @@ public class ComUserServiceImpl implements ComUserService {
         }
         System.out.println("查找:phone->%"+form.getUser()+"%,"+form.getRegion());
         return userMapper.getUserLike("%"+form.getUser()+"%",form.getRegion());
+    }
+
+    @Override
+    public ComUser judgeAP(Map<String, Object> map) {
+        return userMapper.judgeAP(map);
     }
 
 }
