@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cems.mapper.ReplyMapper">
+    <select id="getReplyByCommId" resultType="CommentReply">
+        select id, comm_re_data, comm_user, comm_re_user, comm_reply, gmt_create
+        from comment_reply
+        where comm_reply = #{id}
+    </select>
+    <select id="getReplyLike" resultType="CommentReply">
+        select id, comm_re_data, comm_user, comm_re_user, comm_reply, gmt_create
+        from comment_reply
+        where comm_reply = #{id}
+          and (comm_re_data like #{text}
+            or comm_re_user like #{text}
+            or gmt_create like #{text})
+    </select>
+</mapper>

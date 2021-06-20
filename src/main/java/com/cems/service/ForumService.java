@@ -1,7 +1,10 @@
 package com.cems.service;
 
+import com.cems.pojo.CommentReply;
 import com.cems.pojo.ForumArticle;
+import com.cems.pojo.ForumComment;
 import com.cems.pojo.to.FormArticle;
+import com.cems.pojo.to.FormInline;
 
 import java.util.List;
 
@@ -18,4 +21,12 @@ public interface ForumService {
     List<ForumArticle> getArticleLike(FormArticle form);
 
     void killArticle(int id, String status);
+
+    List<ForumComment> getComments();
+
+    List<ForumComment> getCommentLike(FormInline form);
+
+    List<CommentReply> getReplyByCommId(int id);
+
+    List<CommentReply> getReplyLike(FormInline form);
 }
