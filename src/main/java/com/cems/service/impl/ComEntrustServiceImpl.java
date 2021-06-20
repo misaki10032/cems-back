@@ -34,6 +34,11 @@ public class ComEntrustServiceImpl implements ComEntrustService {
     }
 
     @Override
+    public String handleDeleteById(Integer id) {
+        return entrustMapper.handleDeleteById(id);
+    }
+
+    @Override
     public List<ComEntrust> getEntrusts() {
         return entrustMapper.getEntrusts();
     }

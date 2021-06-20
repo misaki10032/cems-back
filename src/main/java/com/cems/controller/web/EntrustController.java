@@ -1,6 +1,7 @@
 package com.cems.controller.web;
 
 
+import ch.qos.logback.core.pattern.color.MagentaCompositeConverter;
 import com.alibaba.fastjson.JSON;
 import com.cems.pojo.ComEntrust;
 import com.cems.pojo.ComEntrustType;
@@ -12,6 +13,7 @@ import com.cems.service.UserService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -164,14 +166,35 @@ public class EntrustController {
             messageMapper.addMessage(map);
              */
 
-
-            Integer id = moneyBack.getEntrustId();
-            entrustService.delLeisureEntrustById2(id);
+            //删除委托
+//   Integer id = moneyBack.getEntrustId();
+//   entrustService.delLeisureEntrustById2(id);
             System.err.println("=====>>>>>?????" + msg);
             return msg;
 
 
         }
 
+
+    }
+
+
+    @GetMapping("handleDeleteById/{id}")
+    public String handleDeleteById(@PathVariable Integer id) {
+        String msg = "";
+        try {
+            System.err.println("--------------"+msg);
+            System.err.println("--------------"+id);
+            entrustService.handleDeleteById(id);
+            msg="ok";
+            System.err.println("++++++++++"+msg);
+            System.err.println("--------------"+id);
+            return msg;
+        } finally {
+            msg = "no";
+            System.err.println("sssssssssssssssss+"+msg);
+            System.err.println("--------------"+id);
+            return msg;
+        }
     }
 }

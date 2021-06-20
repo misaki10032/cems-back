@@ -28,4 +28,6 @@ public interface ComEntrustService {
 
 
     void delLeisureEntrustById2(Integer id);
+
+    String handleDeleteById(Integer id);
 }

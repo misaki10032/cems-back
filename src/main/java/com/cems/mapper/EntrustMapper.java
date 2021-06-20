@@ -32,6 +32,8 @@ public interface EntrustMapper extends BaseMapper<ComEntrust> {
     int upQuitEtrustEntMoney(Map<String, Object> map);
 
 
-
     void delLeisureEntrustById2(Integer id);
+
+    //删除委托
+    String handleDeleteById(Integer id);
 }

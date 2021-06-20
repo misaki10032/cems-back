@@ -36,4 +36,12 @@
         where id = #{id}
     </delete>
 
+
+    <!--删除委托类型-->
+    <delete id="handleDeleteById">
+        DELETE
+        FROM com_entrust_type
+        WHERE id = #{id}
+    </delete>
+
 </mapper>
