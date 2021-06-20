@@ -44,4 +44,61 @@
         WHERE id = #{id}
     </delete>
 
+    <!--添加一个委托-->
+    <update id="addEntrustType" parameterType="ComEntrustType">
+
+        INSERT INTO com_entrust_type (ent_type) VALUE (#{entType})
+    </update>
+    <!--图形需要的名称-->
+    <select id="getEntrustName" resultType="string">
+        SELECT ent_type
+        FROM com_entrust_type
+        ORDER BY com_entrust_type.id;
+    </select>
+    <!--图形需要的数量-->
+    <select id="getTypeNums" resultType="Integer">
+        SELECT COUNT(e.ent_type_id)
+        FROM com_entrust e
+                 RIGHT JOIN com_entrust_type t
+                            ON e.ent_type_id = t.id
+        GROUP BY t.id
+        ORDER BY t.id;
+    </select>
+
+    <!--    //委托计划进度的数据-->
+    <select id="getEntPlan" resultType="string">
+        SELECT e.ent_plan
+        FROM com_entrust e
+                 LEFT JOIN com_entrust_type t
+                           ON e.ent_type_id = t.id
+        GROUP BY e.ent_plan
+        ORDER BY e.ent_plan;
+    </select>
+    <select id="getEntPlanNums" resultType="Integer">
+        SELECT COUNT(e.ent_type_id)
+        FROM com_entrust e
+                 LEFT JOIN com_entrust_type t
+                           ON e.ent_type_id = t.id
+        GROUP BY e.ent_plan
+        ORDER BY e.ent_plan;
+    </select>
+
+    <!--      //委托类型中 存在真正委托的查询-->
+    <select id="getExistEnt" resultType="string">
+        SELECT t.ent_type
+        FROM com_entrust e
+                 LEFT JOIN com_entrust_type t
+                           ON e.ent_type_id = t.id
+        GROUP BY t.id
+        ORDER BY t.id;
+    </select>
+    <select id="getExistEntNums" resultType="Integer">
+        SELECT COUNT(e.ent_type_id)
+        FROM com_entrust e
+                 LEFT JOIN com_entrust_type t
+                           ON e.ent_type_id = t.id
+        GROUP BY t.id
+        ORDER BY t.id;
+    </select>
+
 </mapper>
