@@ -44,4 +44,10 @@
         WHERE id = #{id}
     </delete>
 
+    <!--添加一个委托-->
+    <update id="addEntrustType" parameterType="ComEntrustType">
+
+        INSERT INTO com_entrust_type (ent_type) VALUE (#{entType})
+    </update>
+
 </mapper>

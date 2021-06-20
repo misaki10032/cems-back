@@ -30,4 +30,9 @@ public interface ComEntrustService {
     void delLeisureEntrustById2(Integer id);
 
     String handleDeleteById(Integer id);
+
+
+    boolean judgeTypeRep(String entrustType);
+
+    boolean addEntrustType(String entrustType);
 }

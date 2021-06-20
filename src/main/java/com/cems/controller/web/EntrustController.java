@@ -167,8 +167,8 @@ public class EntrustController {
              */
 
             //删除委托
-//   Integer id = moneyBack.getEntrustId();
-//   entrustService.delLeisureEntrustById2(id);
+            Integer id = moneyBack.getEntrustId();
+            entrustService.delLeisureEntrustById2(id);
             System.err.println("=====>>>>>?????" + msg);
             return msg;
 
@@ -183,18 +183,58 @@ public class EntrustController {
     public String handleDeleteById(@PathVariable Integer id) {
         String msg = "";
         try {
-            System.err.println("--------------"+msg);
-            System.err.println("--------------"+id);
+            System.err.println("--------------" + msg);
+            System.err.println("--------------" + id);
             entrustService.handleDeleteById(id);
-            msg="ok";
-            System.err.println("++++++++++"+msg);
-            System.err.println("--------------"+id);
+            msg = "ok";
+            System.err.println("++++++++++" + msg);
+            System.err.println("--------------" + id);
             return msg;
         } finally {
             msg = "no";
-            System.err.println("sssssssssssssssss+"+msg);
-            System.err.println("--------------"+id);
+            System.err.println("sssssssssssssssss+" + msg);
+            System.err.println("--------------" + id);
             return msg;
+        }
+    }
+
+
+    // 判断委托类型是否重复
+    @PostMapping("verifyAddEntType")
+    public String verifyAddEntType(
+            @RequestBody ComEntrustType comEntrustType) {
+        System.out.println(comEntrustType);
+        String EntrustType = comEntrustType.getEntType();
+        boolean bool = entrustService.judgeTypeRep(EntrustType);
+        String msg = "";
+        if (bool) {
+            msg = "ok";
+            System.err.println("ok");
+        } else {
+            msg = "失败--有重复属性";
+            System.err.println("失败--有重复属性");
+        }
+        return msg;
+    }
+
+    // 添加委托
+    @PostMapping("addEntType")
+    public StringBuffer addEntType(
+            @RequestBody ComEntrustType comEntrustType) {
+        StringBuffer str = new StringBuffer();
+        System.out.println(comEntrustType);
+        String EntrustType = comEntrustType.getEntType();
+
+        try {
+            boolean bool = entrustService.addEntrustType(EntrustType);
+            if (bool) {
+                str.append("ok");
+            } else {
+                str.append("no");
+            }
+        } finally {
+            System.err.println("____________" + str);
+            return str;
         }
     }
 }
