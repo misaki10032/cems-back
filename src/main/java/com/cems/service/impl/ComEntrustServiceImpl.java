@@ -60,6 +60,36 @@ public class ComEntrustServiceImpl implements ComEntrustService {
     }
 
     @Override
+    public List<String> getEntrustName() {
+        return entrustMapper.getEntrustName();
+    }
+
+    @Override
+    public List<String> getEntPlan() {
+        return entrustMapper.getEntPlan();
+    }
+
+    @Override
+    public List<Integer> getEntPlanNums() {
+        return entrustMapper.getEntPlanNums();
+    }
+
+    @Override
+    public List<String> getExistEnt() {
+        return entrustMapper.getExistEnt();
+    }
+
+    @Override
+    public List<Integer> getExistEntNums() {
+        return entrustMapper.getExistEntNums();
+    }
+
+    @Override
+    public List<Integer> getTypeNums() {
+        return entrustMapper.getTypeNums();
+    }
+
+    @Override
     public boolean addEntrustType(String entrustType) {
 
         List<ComEntrustType> allEtrustType = entrustMapper.getEntTypes();

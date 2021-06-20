@@ -39,4 +39,16 @@ public interface EntrustMapper extends BaseMapper<ComEntrust> {
 
     //添加一个委托
     void addEntrustType(String entrustType);
+
+    List<String> getEntrustName();
+
+    List<Integer> getTypeNums();
+
+    List<String> getEntPlan();
+
+    List<Integer> getEntPlanNums();
+
+    List<String> getExistEnt();
+
+    List<Integer> getExistEntNums();
 }
