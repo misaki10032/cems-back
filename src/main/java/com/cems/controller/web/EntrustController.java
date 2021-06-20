@@ -154,18 +154,6 @@ public class EntrustController {
             } else {
                 msg += "给委托人返回" + money2;
             }
-
-
-            /*
-用户页面添加相关的数据
-  SysEntrust leisureEntrustsByEntId = entrustService.getLeisureEntrustsByEntId(entrustId);
-            map.put("userId",leisureEntrustsByEntId.getEntConsignor());
-            map.put("userMessage","您的委托已被管理员删除,退款将稍后到账");
-            messageMapper.addMessage(map);
-            map.put("userId",leisureEntrustsByEntId.getEntAgent());
-            messageMapper.addMessage(map);
-             */
-
             //删除委托
             Integer id = moneyBack.getEntrustId();
             entrustService.delLeisureEntrustById2(id);
