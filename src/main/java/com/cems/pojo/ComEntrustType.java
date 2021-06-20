@@ -14,6 +14,7 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 public class ComEntrustType {
-    private int id;
+    private Integer id;
     private String entType;
+    private  Integer entTypeNum;
 }

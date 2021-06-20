@@ -30,4 +30,23 @@
         from cems.com_user
         where user_phone like #{phone} and status = #{status}
     </select>
+
+
+
+    <!--进入个人空间前查找-->
+    <select id="selOneUser" resultType="com.cems.pojo.to.ComUser">
+        select id,
+               user_id,
+               user_email,
+               user_house,
+               user_birth,
+               user_pwd_protect,
+               user_dec,
+               user_name,
+               user_pname,
+               user_sex,
+               user_money
+        from com_user_info
+        where user_id = #{userId}
+    </select>
 </mapper>
