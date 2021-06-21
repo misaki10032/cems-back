@@ -4,6 +4,7 @@ package com.cems.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.cems.pojo.SysAdmin;
 import com.cems.pojo.SysAdminInfo;
+import com.cems.pojo.SysAdminWt;
 import com.cems.pojo.SysShenSu;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -70,5 +71,10 @@ public interface AdminMapper extends BaseMapper<SysAdmin> {
      * 根据账号查询管理员
      */
     SysAdmin selOneSysZC(String acc);
+    /**
+     * 查询admin表adminInfo表
+     */
+    List<SysAdminWt> selSysAdminWt();
+
 }
 

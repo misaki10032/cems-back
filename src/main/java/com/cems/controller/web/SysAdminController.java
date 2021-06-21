@@ -45,4 +45,23 @@ public class SysAdminController {
         sysAdminService.delSS(id);
         return "ok";
     }
+
+   //前端请求地址目前没写
+    @PostMapping("/{pageNum}/{pageSize}")
+    public String getAdminAndAdminINfo(PageTo pageTo) {
+        HashMap<String, Object> map = new HashMap<>();
+        System.out.println(pageTo);
+        try {
+            PageHelper.startPage(pageTo.getPageNum(), pageTo.getPageSize());
+            PageInfo<SysShenSu> entList = new PageInfo(sysAdminService.selSysAdminWt());
+            List<SysShenSu> shensuList = entList.getList();
+            map.put("data", shensuList);
+            map.put("code", "200");
+            map.put("total", entList.getTotal());
+            System.out.println(entList.getTotal());
+        } catch (Exception e) {
+            map.put("code", "500");
+        }
+        return JSON.toJSONString(map);
+    }
 }

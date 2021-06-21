@@ -5,6 +5,7 @@ package com.cems.service.impl;
 import com.cems.mapper.AdminMapper;
 import com.cems.pojo.SysAdmin;
 import com.cems.pojo.SysAdminInfo;
+import com.cems.pojo.SysAdminWt;
 import com.cems.pojo.SysShenSu;
 import com.cems.service.SysAdminService;
 import com.cems.util.RedisUtil;
@@ -91,5 +92,10 @@ public class SysAdminServiceImpl implements SysAdminService {
     @Override
     public SysAdmin selOneSysZC(String acc) {
         return adminMapper.selOneSysZC(acc);
+    }
+
+    @Override
+    public List<SysAdminWt> selSysAdminWt() {
+        return adminMapper.selSysAdminWt();
     }
 }

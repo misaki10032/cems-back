@@ -3,7 +3,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cems.mapper.AdminMapper">
     <!--管理员申诉账号密码判断-->
-    <select id="gljudgeAP" parameterType="map" resultType="SysAdmin">
+    <select id="gljudgeAP" parameterType="map" resultType="com.cems.pojo.SysAdmin">
         select id, admin_num, admin_pwd, admin_status
         from sys_admin
         where admin_num = #{phone}
@@ -21,7 +21,7 @@
         values (#{acc}, #{psw});
     </insert>
     <!--根据账号查询管理员-->
-    <select id="selOneSysZC" parameterType="string" resultType="SysAdmin">
+    <select id="selOneSysZC" parameterType="string" resultType="com.cems.pojo.SysAdmin">
         SELECT id, admin_num, admin_pwd, admin_level, admin_status
         from sys_admin
         where admin_num = #{acc}
@@ -32,28 +32,30 @@
         values (#{id}, #{phoneTwo}, #{email});
     </insert>
     <!--管理员注册差重复-->
-    <select id="selOneSysByAcc" parameterType="string" resultType="SysAdmin">
+    <select id="selOneSysByAcc" parameterType="string" resultType="com.cems.pojo.SysAdmin">
         select admin_num
         from sys_admin
         where admin_num = #{acc}
     </select>
     <!--管理员注册差重复(手机号,邮箱)-->
-    <select id="selOneSysByEP" parameterType="map" resultType="SysAdminInfo">
+    <select id="selOneSysByEP" parameterType="map" resultType="com.cems.pojo.SysAdminInfo">
         select admin_phone, admin_emil
         from sys_admin_info
         where admin_phone = #{phoneTwo}
     </select>
     <!--管理员注册差重复(手机号,邮箱)-->
-    <select id="selOneSysByEP2" parameterType="map" resultType="SysAdminInfo">
+    <select id="selOneSysByEP2" parameterType="map" resultType="com.cems.pojo.SysAdminInfo">
         select admin_phone, admin_emil
         from sys_admin_info
         where admin_emil = #{email}
     </select>
     <!--管理员申诉查询-->
-    <select id="selAllAppeal" resultType="SysShenSu">
+    <select id="selAllAppeal" resultType="com.cems.pojo.SysShenSu">
         select id, admin_num, content
         from sys_admin_shensu
     </select>
+    <select id="getAdmins" resultType="com.cems.pojo.SysAdmin"></select>
+
     <!--管理员申诉成功-->
     <update id="shensuOK" parameterType="string">
         update sys_admin
@@ -66,4 +68,22 @@
         from sys_admin_shensu
         where id = #{id}
     </delete>
+    <!--查询admin,adminInfo-->
+    <select id="selSysAdminWt" resultType="com.cems.pojo.SysAdminWt">
+                    SELECT
+              sai.`admin_id`,
+              sai.`id`,
+              sai.`admin_phone`,
+              sai.`admin_house`,
+              sai.`admin_birth`,
+              sai.`admin_emil`,
+              sai.`admin_pwd_protect`,
+              sa.`admin_num`,
+              sa.`admin_level`,
+              sa.`admin_status`
+            FROM
+              sys_admin_info sai
+              LEFT JOIN sys_admin sa
+                ON sai.`admin_id` = sa.`id`
+    </select>
 </mapper>
