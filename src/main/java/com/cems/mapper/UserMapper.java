@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.cems.pojo.SysAdmin;
 import com.cems.pojo.to.ComUser;
 import com.cems.pojo.to.ComUserInfo;
+import com.cems.pojo.to.SysEntrust;
 import com.cems.service.ComUserService;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -38,4 +39,5 @@ public interface UserMapper extends BaseMapper<ComUser> {
 
     ComUser getUserNum(String num);
 
+    List<SysEntrust> byEntrustByType(Integer typeID);
 }

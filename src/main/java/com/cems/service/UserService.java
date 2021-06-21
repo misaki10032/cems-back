@@ -1,6 +1,9 @@
 package com.cems.service;
 
 import com.cems.pojo.to.ComUser;
+import com.cems.pojo.to.SysEntrust;
+
+import java.util.List;
 
 /*
  *
@@ -10,4 +13,5 @@ import com.cems.pojo.to.ComUser;
 public interface UserService {
 
     ComUser selOneUser(int id);
+    List<SysEntrust> byEntrustByType(Integer typeID);
 }

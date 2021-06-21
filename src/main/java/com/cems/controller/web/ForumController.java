@@ -118,6 +118,7 @@ public class ForumController {
     public String getReplys(PageToById pageTo) {
         HashMap<String, Object> map = new HashMap<>();
         System.out.println(pageTo);
+        System.out.println(pageTo);
         try {
             PageHelper.startPage(pageTo.getPageNum(), pageTo.getPageSize());
             PageInfo<CommentReply> commentReplyPageInfo = new PageInfo<>(forumService.getReplyByCommId(pageTo.getId()));
