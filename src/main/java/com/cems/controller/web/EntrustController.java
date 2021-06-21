@@ -5,9 +5,12 @@ import ch.qos.logback.core.pattern.color.MagentaCompositeConverter;
 import com.alibaba.fastjson.JSON;
 import com.cems.pojo.ComEntrust;
 import com.cems.pojo.ComEntrustType;
+import com.cems.pojo.CommentReply;
 import com.cems.pojo.MoneyBack;
 import com.cems.pojo.to.ComUser;
 import com.cems.pojo.to.PageTo;
+import com.cems.pojo.to.PageToById;
+import com.cems.pojo.to.SysEntrust;
 import com.cems.service.ComEntrustService;
 import com.cems.service.UserService;
 import com.github.pagehelper.PageHelper;
@@ -224,5 +227,27 @@ public class EntrustController {
             System.err.println("____________" + str);
             return str;
         }
+    }
+
+
+    @PostMapping("/byEentyToEntList/{id}/{pageNum}/{pageSize}")
+    public String byEentyToEntList(PageToById pageTo) {
+        HashMap<String, Object> map = new HashMap<>();
+        System.out.println(pageTo);
+        System.out.println(pageTo);
+
+//        List<SysEntrust> EntrustByTypes = userService.byEntrustByType(typeID);
+        try {
+            PageHelper.startPage(pageTo.getPageNum(), pageTo.getPageSize());
+            PageInfo<SysEntrust> sysEntrustPageInfo = new PageInfo<>(userService.byEntrustByType(pageTo.getId()));
+            List<SysEntrust> replies = sysEntrustPageInfo.getList();
+            map.put("data", replies);
+            map.put("code", "200");
+            map.put("total", sysEntrustPageInfo.getTotal());
+            System.out.println(sysEntrustPageInfo.getTotal());
+        } catch (Exception e) {
+            map.put("code", "500");
+        }
+        return JSON.toJSONString(map);
     }
 }

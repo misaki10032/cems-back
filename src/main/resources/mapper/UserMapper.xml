@@ -22,14 +22,18 @@
         from cems.com_user_info;
     </select>
     <update id="killUser">
-        update cems.com_user set status = #{status}
-        where id=#{id}
+        update cems.com_user
+        set status = #{status}
+        where id = #{id}
     </update>
     <select id="getUserLike" resultType="ComUser">
         select id, user_phone, user_pwd, user_role, status
         from cems.com_user
         where user_phone like #{phone} and status = #{status}
     </select>
+
+
+    <!--进入个人空间前查找-->
     <select id="selOneUser" resultType="com.cems.pojo.to.ComUser">
         select id,
                user_id,
@@ -45,9 +49,21 @@
         from com_user_info
         where user_id = #{userId}
     </select>
-    <select id="getUserNum" resultType="com.cems.pojo.to.ComUser">
-        select id, user_phone, user_pwd, user_role, status
-        from cems.com_user
-        where user_phone = #{num}
+
+    <!--根据委托类型查找数据类型-->
+    <select id="byEntrustByType" resultType="SysEntrust">
+        SELECT e.id            entrustId,
+               e.ent_data      entData,
+               e.ent_consignor entConsignor,
+               e.ent_agent     entAgent,
+               e.ent_state     entState,
+               t.ent_type      entType,
+               e.ent_plan      entPlan
+        FROM `com_entrust` e,
+             `com_entrust_type` t
+        WHERE e.`ent_type_id` = t.`id`
+          and t.id = #{typeID}
+
     </select>
+
 </mapper>
