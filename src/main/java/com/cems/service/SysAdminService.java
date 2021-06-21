@@ -13,6 +13,8 @@ import java.util.List;
  */
 public interface SysAdminService {
 
-     List<SysAdmin> getAdmins();
+    List<SysAdmin> getAdmins();
+
+    SysAdmin getAdminNum(String num);
 
 }

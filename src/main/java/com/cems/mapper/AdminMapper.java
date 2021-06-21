@@ -4,6 +4,7 @@ package com.cems.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.cems.pojo.SysAdmin;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -19,6 +20,9 @@ import java.util.List;
 public interface AdminMapper extends BaseMapper<SysAdmin> {
 
     List<SysAdmin> getAdmins();
+
+    @Select("select * from sys_admin where admin_num = #{num}")
+    SysAdmin getAdminNum(String num);
 
 }
 

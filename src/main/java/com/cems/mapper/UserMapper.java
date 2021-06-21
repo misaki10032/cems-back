@@ -31,4 +31,6 @@ public interface UserMapper extends BaseMapper<ComUser> {
 
     List<ComUser> getUserLike(@Param("phone") String phone, @Param("status") String status);
 
+    ComUser getUserNum(String num);
+
 }

@@ -30,10 +30,6 @@
         from cems.com_user
         where user_phone like #{phone} and status = #{status}
     </select>
-
-
-
-    <!--进入个人空间前查找-->
     <select id="selOneUser" resultType="com.cems.pojo.to.ComUser">
         select id,
                user_id,
@@ -48,5 +44,10 @@
                user_money
         from com_user_info
         where user_id = #{userId}
+    </select>
+    <select id="getUserNum" resultType="com.cems.pojo.to.ComUser">
+        select id, user_phone, user_pwd, user_role, status
+        from cems.com_user
+        where user_phone = #{num}
     </select>
 </mapper>

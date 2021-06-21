@@ -22,8 +22,10 @@ public interface ComUserService {
 
     List<ComUserBig> getUserBigs();
 
-    void KillUser(int id,String status);
+    void KillUser(int id, String status);
 
     List<ComUser> getUserLike(FormInline form);
+
+    ComUser getUserNum(String num);
 
 }
