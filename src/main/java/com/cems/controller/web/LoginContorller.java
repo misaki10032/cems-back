@@ -101,4 +101,26 @@ public class LoginContorller {
             return "502";
         }
     }
+    /**管理员注册*/
+    @PostMapping("register")
+    public String register(@RequestBody Appeal appeal){
+        System.out.println("appeal===="+appeal);
+        String s = ShiroMd5Util.toPwdMd5(appeal.getAcc(), appeal.getPsw());
+        Map<String,Object> map = new HashMap<>();
+        map.put("acc",appeal.getAcc());
+        map.put("psw",s);
+        map.put("phoneTwo",appeal.getPhoneTwo());
+        map.put("email",appeal.getEmail());
+        if(sysAdminService.selOneSysByAcc(appeal.getAcc()).size()!= 0){
+            return "401";
+        }else if(sysAdminService.selOneSysByEP(map).size()!= 0){
+            return "402";
+        }else if(sysAdminService.selOneSysByEP2(map).size()!= 0){
+            return "403";
+        }else{
+            sysAdminService.registerSys(map);
+            sysAdminService.insertEmail(map);
+            return "200";
+        }
+    }
 }

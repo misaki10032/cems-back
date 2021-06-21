@@ -14,7 +14,7 @@ public class WebConfiguration extends WebMvcConfigurationSupport {
         System.out.println("开始拦截");
         registry.addInterceptor(new TokenInterceptor()).
                 addPathPatterns("/**").
-                excludePathPatterns("/web/userlogin","/web/appeal");
+                excludePathPatterns("/web/userlogin","/web/appeal","/web/register");
     }
 }
 

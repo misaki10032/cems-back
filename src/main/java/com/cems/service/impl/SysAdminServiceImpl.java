@@ -4,6 +4,7 @@ package com.cems.service.impl;
 
 import com.cems.mapper.AdminMapper;
 import com.cems.pojo.SysAdmin;
+import com.cems.pojo.SysAdminInfo;
 import com.cems.service.SysAdminService;
 import com.cems.util.RedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,5 +34,30 @@ public class SysAdminServiceImpl implements SysAdminService {
     @Override
     public SysAdmin gljudgeAP(Map<String, Object> map) {
         return adminMapper.gljudgeAP(map);
+    }
+
+    @Override
+    public int registerSys(Map<String, Object> map) {
+        return adminMapper.registerSys(map);
+    }
+
+    @Override
+    public int insertEmail(Map<String, Object> map) {
+        return adminMapper.insertEmail(map);
+    }
+
+    @Override
+    public List<SysAdmin> selOneSysByAcc(String acc) {
+        return adminMapper.selOneSysByAcc(acc);
+    }
+
+    @Override
+    public List<SysAdminInfo> selOneSysByEP(Map<String, Object> map) {
+        return adminMapper.selOneSysByEP(map);
+    }
+
+    @Override
+    public List<SysAdminInfo> selOneSysByEP2(Map<String, Object> map) {
+        return adminMapper.selOneSysByEP2(map);
     }
 }

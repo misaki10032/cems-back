@@ -36,10 +36,5 @@
         from com_user
         where user_phone = #{phone} and user_pwd = #{psw}
     </select>
-    <!--管理员申诉账号密码判断-->
-    <select id="gljudgeAP" parameterType="map" resultType="SysAdmin">
-        select id,admin_num,admin_pwd,admin_status
-        from sys_admin
-        where admin_num = #{phone} and admin_pwd = #{psw};
-    </select>
+
 </mapper>
