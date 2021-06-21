@@ -24,8 +24,14 @@ public class SysAdminServiceImpl implements SysAdminService {
     AdminMapper adminMapper;
     @Autowired
     RedisUtil redisUtil;
+
     @Override
     public List<SysAdmin> getAdmins() {
         return adminMapper.selectList(null);
+    }
+
+    @Override
+    public SysAdmin getAdminNum(String num) {
+        return adminMapper.getAdminNum(num);
     }
 }

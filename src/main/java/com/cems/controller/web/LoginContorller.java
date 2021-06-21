@@ -8,6 +8,7 @@ import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.LockedAccountException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -33,9 +34,11 @@ public class LoginContorller {
         //传递给shiro
         Subject subject = SecurityUtils.getSubject();//获取用户信息
         UsernamePasswordToken token = new UsernamePasswordToken(num, pwd);//封装
+        Session session = subject.getSession();
         try {
+            session.setAttribute("isAdmin", true);//设置非管理员
             subject.login(token);//通过subject取
-            SysAdmin logingAdmin = (SysAdmin) subject.getSession().getAttribute("LogingAdmin");
+            SysAdmin logingAdmin = (SysAdmin) session.getAttribute("LogingAdmin");
             String admintoken = JWTUtil.getToken(logingAdmin);
             HashMap<String, Object> map = new HashMap<>();
             map.put("adminToken",admintoken);

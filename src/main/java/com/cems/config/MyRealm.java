@@ -4,7 +4,10 @@ package com.cems.config;
 
 
 import com.cems.pojo.SysAdmin;
+import com.cems.pojo.to.ComUser;
+import com.cems.service.ComUserService;
 import com.cems.service.SysAdminService;
+import com.cems.service.UserService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
@@ -13,8 +16,6 @@ import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import java.util.List;
 
 /**
  * @ClassName UserController
@@ -25,10 +26,11 @@ import java.util.List;
 public class MyRealm extends AuthorizingRealm {
     @Autowired
     SysAdminService adminService;
+    @Autowired
+    ComUserService userService;
 
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
-
         return null;
     }
 
@@ -37,19 +39,35 @@ public class MyRealm extends AuthorizingRealm {
         UsernamePasswordToken userToken = (UsernamePasswordToken) token;
         String username = userToken.getUsername();
         String realmName = getName();
-        List<SysAdmin> admins = adminService.getAdmins();
-        for (SysAdmin admin : admins) {
-            if(admin.getAdminNum().equals(username)){
+        Session session = SecurityUtils.getSubject().getSession();
+        Boolean isAdmin = (Boolean) session.getAttribute("isAdmin");
+        if (isAdmin) {
+            SysAdmin admin = adminService.getAdminNum(username);
+            if (admin == null) {
+                return null;
+            } else {
                 if (!admin.getAdminStatus().equals("正常")) {
                     throw new LockedAccountException();
+                } else {
+                    session.setAttribute("LogingAdmin", admin);
+                    ByteSource salt = ByteSource.Util.bytes(admin.getAdminNum());//md5盐值
+                    return new SimpleAuthenticationInfo(admin, admin.getAdminPwd(), salt, realmName);
                 }
-                Session session = SecurityUtils.getSubject().getSession();
-                session.setAttribute("LogingAdmin",admin);
-                ByteSource salt = ByteSource.Util.bytes(admin.getAdminNum());//md5盐值
-                return new SimpleAuthenticationInfo(admin,admin.getAdminPwd(),salt,realmName);
+            }
+        } else {
+            ComUser user = userService.getUserNum(username);
+            if (user == null) {
+                return null;
+            } else {
+                if (!user.getStatus().equals("正常")) {
+                    throw new LockedAccountException();
+                } else {
+                    session.setAttribute("LogingUser", user);
+                    ByteSource salt = ByteSource.Util.bytes(user.getUserPhone());//md5盐值
+                    return new SimpleAuthenticationInfo(user, user.getUserPwd(), salt, realmName);
+                }
             }
         }
-        return null;
     }
 
 }
