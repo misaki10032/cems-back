@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cems.mapper.AdminMapper">
+    <!--管理员申诉账号密码判断-->
+    <select id="gljudgeAP" parameterType="map" resultType="SysAdmin">
+        select id, admin_num, admin_pwd, admin_status
+        from sys_admin
+        where admin_num = #{phone}
+          and admin_pwd = #{psw};
+    </select>
+    <!--管理员注册-->
+    <insert id="registerSys" parameterType="map">
+        insert into sys_admin (admin_num, admin_pwd)
+        values (#{acc}, #{psw});
+    </insert>
+    <!--添加邮箱-->
+    <insert id="insertEmail" parameterType="map">
+        insert into sys_admin_info (admin_id, admin_phone, admin_emil)
+        values (#{acc}, #{phoneTwo}, #{email});
+    </insert>
+    <!--管理员注册差重复-->
+    <select id="selOneSysByAcc" parameterType="string" resultType="SysAdmin">
+        select admin_num
+        from sys_admin
+        where admin_num = #{acc}
+    </select>
+    <!--管理员注册差重复(手机号,邮箱)-->
+    <select id="selOneSysByEP" parameterType="map" resultType="SysAdminInfo">
+        select admin_phone, admin_emil
+        from sys_admin_info
+        where admin_phone = #{phoneTwo}
+    </select>
+    <!--管理员注册差重复(手机号,邮箱)-->
+    <select id="selOneSysByEP2" parameterType="map" resultType="SysAdminInfo">
+        select admin_phone, admin_emil
+        from sys_admin_info
+        where admin_emil = #{email}
+    </select>
+    <!--管理员申诉查询-->
+    <select id="selAllAppeal" resultType="SysShenSu">
+        select id, admin_num, content
+        from sys_admin_shensu
+    </select>
+    <!--管理员申诉成功-->
+    <update id="shensuOK" parameterType="string">
+        update sys_admin
+        set admin_status='正常'
+        where admin_num = #{adminNum}
+    </update>
+    <!--管理员申诉成功,删除申诉-->
+    <delete id="delSS" parameterType="int">
+        delete
+        from sys_admin_shensu
+        where id = #{id}
+    </delete>
+</mapper>

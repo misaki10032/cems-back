@@ -7,6 +7,7 @@ import com.cems.pojo.to.ComUserInfo;
 import com.cems.pojo.to.FormInline;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @InterfaceName ComUserService
@@ -28,4 +29,6 @@ public interface ComUserService {
 
     ComUser getUserNum(String num);
 
+    /**申诉账号密码验证*/
+    ComUser judgeAP(Map<String,Object> map);
 }

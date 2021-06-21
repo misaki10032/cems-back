@@ -30,6 +30,14 @@
         from cems.com_user
         where user_phone like #{phone} and status = #{status}
     </select>
+    <!--用户申诉账号密码判断-->
+    <select id="judgeAP" parameterType="map" resultType="ComUser">
+        select id, user_phone, user_pwd, user_role, status
+        from com_user
+        where user_phone = #{phone} and user_pwd = #{psw}
+    </select>
+
+    <!--进入个人空间前查找-->
     <select id="selOneUser" resultType="com.cems.pojo.to.ComUser">
         select id,
                user_id,
