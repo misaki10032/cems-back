@@ -14,10 +14,16 @@
         insert into sys_admin (admin_num, admin_pwd)
         values (#{acc}, #{psw});
     </insert>
+    <!--根据账号查询管理员-->
+    <select id="selOneSysZC" parameterType="string" resultType="SysAdmin">
+        SELECT id, admin_num, admin_pwd, admin_level, admin_status
+        from sys_admin
+        where admin_num = #{acc}
+    </select>
     <!--添加邮箱-->
     <insert id="insertEmail" parameterType="map">
         insert into sys_admin_info (admin_id, admin_phone, admin_emil)
-        values (#{acc}, #{phoneTwo}, #{email});
+        values (#{id}, #{phoneTwo}, #{email});
     </insert>
     <!--管理员注册差重复-->
     <select id="selOneSysByAcc" parameterType="string" resultType="SysAdmin">

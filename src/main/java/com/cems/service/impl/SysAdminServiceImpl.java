@@ -82,4 +82,9 @@ public class SysAdminServiceImpl implements SysAdminService {
     public int delSS(Integer id) {
         return adminMapper.delSS(id);
     }
+
+    @Override
+    public SysAdmin selOneSysZC(String acc) {
+        return adminMapper.selOneSysZC(acc);
+    }
 }

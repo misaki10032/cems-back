@@ -122,6 +122,8 @@ public class LoginContorller {
             return "403";
         }else{
             sysAdminService.registerSys(map);
+            SysAdmin sysAdmin = sysAdminService.selOneSysZC(appeal.getAcc());
+            map.put("id", sysAdmin.getId());
             sysAdminService.insertEmail(map);
             return "200";
         }

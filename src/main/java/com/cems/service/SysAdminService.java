@@ -28,13 +28,31 @@ public interface SysAdminService {
      int insertEmail(Map<String,Object> map);
      /**管理员注册差重复*/
      List<SysAdmin> selOneSysByAcc(String acc);
-     /**管理员注册差重复(手机号,邮箱)*/
-     List<SysAdminInfo> selOneSysByEP(Map<String,Object> map);
-     List<SysAdminInfo> selOneSysByEP2(Map<String,Object> map);
-     /**管理员申诉查询*/
-     List<SysShenSu> selAllAppeal();
-     /**管理员申诉成功*/
-     int shensuOK(String adminNum);
-     /**管理员申诉成功,删除申诉*/
-     int delSS(Integer id);
+
+ /**
+  * 管理员注册差重复(手机号,邮箱)
+  */
+ List<SysAdminInfo> selOneSysByEP(Map<String, Object> map);
+
+ List<SysAdminInfo> selOneSysByEP2(Map<String, Object> map);
+
+ /**
+  * 管理员申诉查询
+  */
+ List<SysShenSu> selAllAppeal();
+
+ /**
+  * 管理员申诉成功
+  */
+ int shensuOK(String adminNum);
+
+ /**
+  * 管理员申诉成功,删除申诉
+  */
+ int delSS(Integer id);
+
+ /**
+  * 根据账号查询管理员
+  */
+ SysAdmin selOneSysZC(String acc);
 }
