@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @ClassName ComEntrustServiceImpl
@@ -23,6 +24,21 @@ public class ComEntrustServiceImpl implements ComEntrustService {
     EntrustMapper entrustMapper;
 
     @Override
+    public int upQuitEtrustEntMoney(Map<String, Object> map) {
+        return entrustMapper.upQuitEtrustEntMoney(map);
+    }
+
+    @Override
+    public void delLeisureEntrustById2(Integer id) {
+        entrustMapper.delLeisureEntrustById2(id);
+    }
+
+    @Override
+    public String handleDeleteById(Integer id) {
+        return entrustMapper.handleDeleteById(id);
+    }
+
+    @Override
     public List<ComEntrust> getEntrusts() {
         return entrustMapper.getEntrusts();
     }
@@ -30,5 +46,10 @@ public class ComEntrustServiceImpl implements ComEntrustService {
     @Override
     public List<ComEntrustType> getEntTypes() {
         return entrustMapper.getEntTypes();
+    }
+
+    @Override
+    public void updataEntState(int id, String status) {
+        entrustMapper.updataEntState(id,status);
     }
 }

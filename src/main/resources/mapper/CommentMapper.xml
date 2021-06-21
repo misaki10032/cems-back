@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cems.mapper.CommentMapper">
+    <select id="getComments" resultType="ForumComment">
+        select id, art_id, comm_user, comm_data, gmt_create
+        from forum_comment
+    </select>
+
+    <select id="getCommentLike" resultType="ForumComment">
+        select id, art_id, comm_user, comm_data, gmt_create
+        from forum_comment
+        where comm_user like #{text}
+           or comm_data like #{text}
+           or gmt_create like #{text}
+    </select>
+</mapper>

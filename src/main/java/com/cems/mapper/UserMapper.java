@@ -23,6 +23,9 @@ import java.util.Map;
 @Component
 public interface UserMapper extends BaseMapper<ComUser> {
 
+
+    ComUser selOneUser(int id);
+
     List<ComUser> getUsers();
 
     List<ComUserInfo> getUsersInfo();
@@ -32,7 +35,5 @@ public interface UserMapper extends BaseMapper<ComUser> {
     List<ComUser> getUserLike(@Param("phone")String phone,@Param("status")String status);
     /**用户申诉账号密码验证*/
     ComUser judgeAP(Map<String,Object> map);
-
-
 
 }
