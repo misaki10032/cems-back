@@ -9,6 +9,12 @@
         where admin_num = #{phone}
           and admin_pwd = #{psw};
     </select>
+    <!--管理员申诉-->
+    <insert id="insApple" parameterType="map">
+        insert into sys_admin_shensu
+            (admin_num, content)
+        values (#{phone}, #{desc})
+    </insert>
     <!--管理员注册-->
     <insert id="registerSys" parameterType="map">
         insert into sys_admin (admin_num, admin_pwd)

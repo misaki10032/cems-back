@@ -32,8 +32,11 @@ public interface AdminMapper extends BaseMapper<SysAdmin> {
     /**管理员注册*/
     int registerSys(Map<String,Object> map);
     /**添加邮箱*/
-    int insertEmail(Map<String,Object> map);
-    /**管理员注册差重复*/
+    int insertEmail(Map<String, Object> map);
+
+    /**
+     * 管理员注册差重复
+     */
     List<SysAdmin> selOneSysByAcc(String acc);
 
     /**
@@ -42,6 +45,11 @@ public interface AdminMapper extends BaseMapper<SysAdmin> {
     List<SysAdminInfo> selOneSysByEP(Map<String, Object> map);
 
     List<SysAdminInfo> selOneSysByEP2(Map<String, Object> map);
+
+    /**
+     * 管理员申诉
+     */
+    int insApple(Map<String, Object> map);
 
     /**
      * 管理员申诉查询

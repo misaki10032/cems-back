@@ -74,6 +74,11 @@ public class SysAdminServiceImpl implements SysAdminService {
     }
 
     @Override
+    public int insApple(Map<String, Object> map) {
+        return adminMapper.insApple(map);
+    }
+
+    @Override
     public int shensuOK(String adminNum) {
         return adminMapper.shensuOK(adminNum);
     }

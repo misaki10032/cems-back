@@ -93,13 +93,16 @@ public class LoginContorller {
         String s = ShiroMd5Util.toPwdMd5(appeal.getPhone(), appeal.getPsw());
         Map<String,Object> map = new HashMap<>();
         map.put("phone",appeal.getPhone());
-        map.put("psw",s);
+        map.put("psw", s);
+        map.put("desc", appeal.getDesc());
         SysAdmin sysAdmin = sysAdminService.gljudgeAP(map);
         if (sysAdmin!=null){
-            if (sysAdmin.getAdminStatus().equals("正常")){
+            if (sysAdmin.getAdminStatus().equals("正常")) {
                 return "405";
+            } else {
+                sysAdminService.insApple(map);
+                return "1";
             }
-            return "1";
         }else {
             return "502";
         }

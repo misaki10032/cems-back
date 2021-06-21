@@ -42,6 +42,11 @@ public interface SysAdminService {
  List<SysShenSu> selAllAppeal();
 
  /**
+  * 管理员申诉
+  */
+ int insApple(Map<String, Object> map);
+
+ /**
   * 管理员申诉成功
   */
  int shensuOK(String adminNum);
