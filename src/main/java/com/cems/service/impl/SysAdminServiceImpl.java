@@ -5,6 +5,7 @@ package com.cems.service.impl;
 import com.cems.mapper.AdminMapper;
 import com.cems.pojo.SysAdmin;
 import com.cems.pojo.SysAdminInfo;
+import com.cems.pojo.SysShenSu;
 import com.cems.service.SysAdminService;
 import com.cems.util.RedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,5 +60,20 @@ public class SysAdminServiceImpl implements SysAdminService {
     @Override
     public List<SysAdminInfo> selOneSysByEP2(Map<String, Object> map) {
         return adminMapper.selOneSysByEP2(map);
+    }
+
+    @Override
+    public List<SysShenSu> selAllAppeal() {
+        return adminMapper.selAllAppeal();
+    }
+
+    @Override
+    public int shensuOK(String adminNum) {
+        return adminMapper.shensuOK(adminNum);
+    }
+
+    @Override
+    public int delSS(Integer id) {
+        return adminMapper.delSS(id);
     }
 }
