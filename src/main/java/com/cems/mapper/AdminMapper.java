@@ -7,6 +7,7 @@ import com.cems.pojo.SysAdminInfo;
 import com.cems.pojo.SysAdminInfoBig;
 import com.cems.pojo.SysShenSu;
 import com.cems.pojo.to.LevelUpDTO;
+import com.cems.pojo.SysUpgrade;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
@@ -88,5 +89,21 @@ public interface AdminMapper extends BaseMapper<SysAdmin> {
 
     void addLevelUp(LevelUpDTO level);
 
+    /**
+     * 管理员升级申请管理
+     */
+    List<SysUpgrade> selAllUp();
+    /**
+     * 通过id获取升级申请数据
+     */
+    SysUpgrade getAdminUp(int id);
+    /**
+     * 管理员升级修改
+     */
+     int upAdminOk(Map<String,Object> map);
+    /**
+     * 管理员升级修改管理员表状态
+     */
+     int changeUpStatus(Map<String,Object> map);
 }
 

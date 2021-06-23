@@ -19,7 +19,7 @@ import java.util.List;
  * @ClassName ForumController
  * @Author 陈新予(blank)
  * @Date 2021/6/20
- * @Version 1.0
+ * @Version 1killArticle.0
  */
 @RestController
 @RequestMapping("web")

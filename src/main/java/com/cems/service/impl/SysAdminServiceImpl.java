@@ -8,6 +8,7 @@ import com.cems.pojo.SysAdminInfo;
 import com.cems.pojo.SysAdminInfoBig;
 import com.cems.pojo.SysShenSu;
 import com.cems.pojo.to.LevelUpDTO;
+import com.cems.pojo.SysUpgrade;
 import com.cems.service.SysAdminService;
 import com.cems.util.RedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -108,5 +109,25 @@ public class SysAdminServiceImpl implements SysAdminService {
     @Override
     public void addLevelUp(LevelUpDTO level) {
         adminMapper.addLevelUp(level);
+    }
+
+    @Override
+    public List<SysUpgrade> selAllUp() {
+        return adminMapper.selAllUp();
+    }
+
+    @Override
+    public SysUpgrade getAdminUp(int id) {
+        return adminMapper.getAdminUp(id);
+    }
+
+    @Override
+    public int upAdminOk(Map<String, Object> map) {
+        return adminMapper.upAdminOk(map);
+    }
+
+    @Override
+    public int changeUpStatus(Map<String, Object> map) {
+        return adminMapper.changeUpStatus(map);
     }
 }

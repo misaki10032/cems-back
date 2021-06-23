@@ -89,4 +89,26 @@
         set admin_status = #{status}
         where id = #{id}
     </update>
+    <!--管理员升级申请管理-->
+    <select id="selAllUp" resultType="SysUpgrade">
+        select id, admin_id, admin_target, admin_now, status, admin_reason
+        from sys_upgrade
+    </select>
+    <!--通过id获取升级申请数据-->
+    <select id="getAdminUp" resultType="SysUpgrade" parameterType="int">
+        select id, admin_id, admin_target, admin_now, status, admin_reason
+        from sys_upgrade
+        where id = #{id}
+    </select>
+    <!--管理员升级修改-->
+    <update id="upAdminOk" parameterType="map">
+        update sys_admin set admin_level = #{level}
+        where id = #{id}
+    </update>
+    <!--管理员升级修改管理员表状态-->
+    <update id="changeUpStatus" parameterType="map">
+        update sys_upgrade set status = #{status}
+        where id = #{upid}
+    </update>
+
 </mapper>
