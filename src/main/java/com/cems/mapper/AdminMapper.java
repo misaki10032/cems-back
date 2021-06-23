@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.cems.pojo.SysAdmin;
 import com.cems.pojo.SysAdminInfo;
 import com.cems.pojo.SysShenSu;
+import com.cems.pojo.SysUpgrade;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Component;
@@ -70,5 +71,18 @@ public interface AdminMapper extends BaseMapper<SysAdmin> {
      * 根据账号查询管理员
      */
     SysAdmin selOneSysZC(String acc);
+    /**
+     * 管理员升级申请管理
+     */
+    List<SysUpgrade> selAllUp();
+    /**
+     * 通过id获取升级申请数据
+     */
+    SysUpgrade getAdminUp(int id);
+    /**
+     * 管理员升级修改
+     */
+     int upAdminOk(Map<String,Object> map);
+     int changeUpStatus(Map<String,Object> map);
 }
 

@@ -2,6 +2,7 @@ package com.cems.controller.web;
 
 import com.alibaba.fastjson.JSON;
 import com.cems.pojo.SysShenSu;
+import com.cems.pojo.SysUpgrade;
 import com.cems.pojo.to.PageTo;
 import com.cems.service.SysAdminService;
 import com.github.pagehelper.PageHelper;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("web")
@@ -41,4 +43,43 @@ public class SysAdminController {
         sysAdminService.delSS(id);
         return "ok";
     }
-}
+    @PostMapping("selAllUp/{pageNum}/{pageSize}")
+    public String selAllUp(PageTo pageTo) {
+        HashMap<String, Object> map = new HashMap<>();
+        try {
+            PageHelper.startPage(pageTo.getPageNum(), pageTo.getPageSize());
+            PageInfo<SysUpgrade> entList = new PageInfo(sysAdminService.selAllUp());
+            List<SysUpgrade> upList = entList.getList();
+            map.put("data", upList);
+            map.put("code", "200");
+            map.put("total", entList.getTotal());
+            System.out.println(entList.getTotal());
+        } catch (Exception e) {
+            map.put("code", "500");
+        }
+        return JSON.toJSONString(map);
+    }
+    @GetMapping("UpOk")
+    public String UpOk(Integer id, String status) {
+        SysUpgrade adminUp = sysAdminService.getAdminUp((Integer) id);
+        String jiu = adminUp.getAdminNow();
+        String xin = adminUp.getAdminTarget();
+        Map<String, Object> map = new HashMap<>();
+        if (status.equals("已处理")) {
+            map.put("id", adminUp.getAdminId());
+            map.put("level", xin);
+            map.put("upid", id);
+            map.put("status", "已处理");
+            sysAdminService.changeUpStatus(map);
+            sysAdminService.upAdminOk(map);
+        } else {
+            map.put("id", adminUp.getAdminId());
+            map.put("level", jiu);
+            map.put("upid", id);
+            map.put("status", "未处理");
+            sysAdminService.changeUpStatus(map);
+            sysAdminService.upAdminOk(map);
+        }
+        return "";
+    }
+    }
