@@ -89,6 +89,11 @@ public class SysAdminServiceImpl implements SysAdminService {
     }
 
     @Override
+    public SysAdminInfo getAdminInfo(String adminNum) {
+        return adminMapper.getAdminInfo(adminNum);
+    }
+
+    @Override
     public SysAdmin selOneSysZC(String acc) {
         return adminMapper.selOneSysZC(acc);
     }

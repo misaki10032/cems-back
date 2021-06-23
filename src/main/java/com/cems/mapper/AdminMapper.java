@@ -27,11 +27,19 @@ public interface AdminMapper extends BaseMapper<SysAdmin> {
     @Select("select * from sys_admin where admin_num = #{num}")
     SysAdmin getAdminNum(String num);
 
-    /**管理员申诉账号密码验证*/
-    SysAdmin gljudgeAP(Map<String,Object> map);
-    /**管理员注册*/
-    int registerSys(Map<String,Object> map);
-    /**添加邮箱*/
+    /**
+     * 管理员申诉账号密码验证
+     */
+    SysAdmin gljudgeAP(Map<String, Object> map);
+
+    /**
+     * 管理员注册
+     */
+    int registerSys(Map<String, Object> map);
+
+    /**
+     * 添加邮箱
+     */
     int insertEmail(Map<String, Object> map);
 
     /**
@@ -70,5 +78,10 @@ public interface AdminMapper extends BaseMapper<SysAdmin> {
      * 根据账号查询管理员
      */
     SysAdmin selOneSysZC(String acc);
+
+    /*
+     * 根据账号查询管理员详细信息
+     */
+    SysAdminInfo getAdminInfo(String adminNum);
 }
 

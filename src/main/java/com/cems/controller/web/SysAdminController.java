@@ -1,6 +1,7 @@
 package com.cems.controller.web;
 
 import com.alibaba.fastjson.JSON;
+import com.cems.pojo.SysAdminInfo;
 import com.cems.pojo.SysShenSu;
 import com.cems.pojo.to.PageTo;
 import com.cems.service.SysAdminService;
@@ -35,10 +36,18 @@ public class SysAdminController {
         }
         return JSON.toJSONString(map);
     }
+
     @GetMapping("ShenSuOk/{id}/{adminNum}")
-    public String ShenSuOk(@PathVariable  Integer id, @PathVariable  String adminNum) {
+    public String ShenSuOk(@PathVariable Integer id, @PathVariable String adminNum) {
         sysAdminService.shensuOK(adminNum);
         sysAdminService.delSS(id);
         return "ok";
     }
+
+    @PostMapping("AdminByNum/{num}")
+    public SysAdminInfo AdminByNum(@PathVariable String num) {
+        System.err.println(num);
+        return sysAdminService.getAdminInfo(num);
+    }
+
 }
