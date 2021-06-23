@@ -84,5 +84,8 @@ public interface SysAdminService {
      * 管理员升级修改
      */
     int upAdminOk(Map<String,Object> map);
+    /**
+     * 管理员升级修改管理员表状态
+     */
     int changeUpStatus(Map<String,Object> map);
 }

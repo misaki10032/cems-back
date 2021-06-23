@@ -82,6 +82,7 @@
         update sys_admin set admin_level = #{level}
         where id = #{id}
     </update>
+    <!--管理员升级修改管理员表状态-->
     <update id="changeUpStatus" parameterType="map">
         update sys_upgrade set status = #{status}
         where id = #{upid}
