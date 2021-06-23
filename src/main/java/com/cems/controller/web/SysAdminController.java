@@ -1,6 +1,8 @@
 package com.cems.controller.web;
 
 import com.alibaba.fastjson.JSON;
+import com.cems.pojo.ForumArticle;
+import com.cems.pojo.SysAdminInfoBig;
 import com.cems.pojo.SysShenSu;
 import com.cems.pojo.to.LevelUpDTO;
 import com.cems.pojo.to.PageTo;
@@ -52,6 +54,38 @@ public class SysAdminController {
             return "200";
         } catch (Exception e) {
             return "500";
+        }
+    }
+
+    @PostMapping("getAllAdminInfo/{pageNum}/{pageSize}")
+    public String getAllAdminInfo(PageTo pageTo) {
+        HashMap<String, Object> map = new HashMap<>();
+        System.out.println(pageTo);
+        try {
+            PageHelper.startPage(pageTo.getPageNum(), pageTo.getPageSize());
+            PageInfo<SysAdminInfoBig> sysAdminInfoBigPageInfo = new PageInfo<>(sysAdminService.getAllAdminInfo());
+            List<SysAdminInfoBig> sysAdminInfoBigs = sysAdminInfoBigPageInfo.getList();
+            map.put("data", sysAdminInfoBigs);
+            map.put("code", "200");
+            map.put("total", sysAdminInfoBigPageInfo.getTotal());
+        } catch (Exception e) {
+            map.put("code", "500");
+        }
+        return JSON.toJSONString(map);
+    }
+
+    @GetMapping("killAdmin")
+    public String KillUser(Integer rowid, String rowstatus) {
+        try {
+            if (rowstatus.equals("正常")) {
+                rowstatus = "正常";
+            } else {
+                rowstatus = "封禁";
+            }
+            sysAdminService.killAdmin(rowid, rowstatus);
+            return rowstatus;
+        } catch (Exception e) {
+            return "0";
         }
     }
 }

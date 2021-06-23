@@ -70,4 +70,23 @@
         insert into sys_upgrade(admin_id, admin_target, admin_now, admin_reason)
             value (#{id}, #{target}, #{adminNow}, #{desc});
     </insert>
+    <select id="getAllAdminInfo" resultType="SysAdminInfoBig">
+        select admin_num         as adminNum
+             , admin_pwd         as adminPwd
+             , admin_level       as adminLevel
+             , admin_id          as adminId
+             , admin_phone       as adminPhone
+             , admin_house       as adminHouse
+             , admin_birth       as adminBirth
+             , admin_emil        as adminEmil
+             , admin_pwd_protect as adminPwdProtect
+             , admin_status      as adminStatus
+        from sys_admin as admin
+                 inner join sys_admin_info sai on admin.id = sai.admin_id
+    </select>
+    <update id="killAdmin">
+        update sys_admin
+        set admin_status = #{status}
+        where id = #{id}
+    </update>
 </mapper>

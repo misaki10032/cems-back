@@ -4,9 +4,11 @@ package com.cems.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.cems.pojo.SysAdmin;
 import com.cems.pojo.SysAdminInfo;
+import com.cems.pojo.SysAdminInfoBig;
 import com.cems.pojo.SysShenSu;
 import com.cems.pojo.to.LevelUpDTO;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Component;
 
@@ -25,14 +27,26 @@ public interface AdminMapper extends BaseMapper<SysAdmin> {
 
     List<SysAdmin> getAdmins();
 
+    List<SysAdminInfoBig> getAllAdminInfo();
+
+    void killAdmin(@Param("id") int id, @Param("status") String status);
+
     @Select("select * from sys_admin where admin_num = #{num}")
     SysAdmin getAdminNum(String num);
 
-    /**管理员申诉账号密码验证*/
-    SysAdmin gljudgeAP(Map<String,Object> map);
-    /**管理员注册*/
-    int registerSys(Map<String,Object> map);
-    /**添加邮箱*/
+    /**
+     * 管理员申诉账号密码验证
+     */
+    SysAdmin gljudgeAP(Map<String, Object> map);
+
+    /**
+     * 管理员注册
+     */
+    int registerSys(Map<String, Object> map);
+
+    /**
+     * 添加邮箱
+     */
     int insertEmail(Map<String, Object> map);
 
     /**
@@ -73,5 +87,6 @@ public interface AdminMapper extends BaseMapper<SysAdmin> {
     SysAdmin selOneSysZC(String acc);
 
     void addLevelUp(LevelUpDTO level);
+
 }
 

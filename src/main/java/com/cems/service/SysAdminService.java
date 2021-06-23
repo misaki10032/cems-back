@@ -3,6 +3,7 @@ package com.cems.service;
 
 import com.cems.pojo.SysAdmin;
 import com.cems.pojo.SysAdminInfo;
+import com.cems.pojo.SysAdminInfoBig;
 import com.cems.pojo.SysShenSu;
 import com.cems.pojo.to.LevelUpDTO;
 
@@ -18,6 +19,10 @@ import java.util.Map;
 public interface SysAdminService {
 
     List<SysAdmin> getAdmins();
+
+    List<SysAdminInfoBig> getAllAdminInfo();
+
+    void killAdmin(int id, String status);
 
     SysAdmin getAdminNum(String num);
 

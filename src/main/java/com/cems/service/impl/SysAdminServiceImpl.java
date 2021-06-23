@@ -5,6 +5,7 @@ package com.cems.service.impl;
 import com.cems.mapper.AdminMapper;
 import com.cems.pojo.SysAdmin;
 import com.cems.pojo.SysAdminInfo;
+import com.cems.pojo.SysAdminInfoBig;
 import com.cems.pojo.SysShenSu;
 import com.cems.pojo.to.LevelUpDTO;
 import com.cems.service.SysAdminService;
@@ -32,6 +33,16 @@ public class SysAdminServiceImpl implements SysAdminService {
     @Override
     public List<SysAdmin> getAdmins() {
         return adminMapper.selectList(null);
+    }
+
+    @Override
+    public List<SysAdminInfoBig> getAllAdminInfo() {
+        return adminMapper.getAllAdminInfo();
+    }
+
+    @Override
+    public void killAdmin(int id, String status) {
+        adminMapper.killAdmin(id, status);
     }
 
     @Override
