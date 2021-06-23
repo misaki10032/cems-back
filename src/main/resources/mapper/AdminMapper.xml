@@ -102,13 +102,17 @@
     </select>
     <!--管理员升级修改-->
     <update id="upAdminOk" parameterType="map">
-        update sys_admin set admin_level = #{level}
+        update sys_admin
+        set admin_level = #{adminlevel}
         where id = #{id}
     </update>
     <!--管理员升级修改管理员表状态-->
     <update id="changeUpStatus" parameterType="map">
-        update sys_upgrade set status = #{status}
-        where id = #{upid}
+        update sys_upgrade
+        set status = #{status}
+        where admin_id = #{id}
+          and admin_target = #{level}
+          and admin_now = #{jiu}
     </update>
 
 </mapper>

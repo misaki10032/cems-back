@@ -1,7 +1,6 @@
 package com.cems.controller.web;
 
 import com.alibaba.fastjson.JSON;
-import com.cems.pojo.ForumArticle;
 import com.cems.pojo.SysAdminInfoBig;
 import com.cems.pojo.SysShenSu;
 import com.cems.pojo.to.LevelUpDTO;
@@ -90,7 +89,6 @@ public class SysAdminController {
             return "0";
         }
     }
-}
     @PostMapping("selAllUp/{pageNum}/{pageSize}")
     public String selAllUp(PageTo pageTo) {
         HashMap<String, Object> map = new HashMap<>();
@@ -116,14 +114,18 @@ public class SysAdminController {
         if (status.equals("已处理")) {
             map.put("id", adminUp.getAdminId());
             map.put("level", xin);
+            map.put("adminlevel", xin);
+            map.put("jiu", jiu);
             map.put("upid", id);
             map.put("status", "已处理");
             sysAdminService.changeUpStatus(map);
             sysAdminService.upAdminOk(map);
         } else {
             map.put("id", adminUp.getAdminId());
-            map.put("level", jiu);
+            map.put("adminlevel", jiu);
+            map.put("level", xin);
             map.put("upid", id);
+            map.put("jiu", jiu);
             map.put("status", "未处理");
             sysAdminService.changeUpStatus(map);
             sysAdminService.upAdminOk(map);
