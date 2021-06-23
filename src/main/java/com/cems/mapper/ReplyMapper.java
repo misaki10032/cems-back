@@ -17,6 +17,7 @@ import java.util.List;
 @Mapper
 @Component
 public interface ReplyMapper extends BaseMapper<CommentReply> {
+
     List<CommentReply> getReplyByCommId(int id);
 
     List<CommentReply> getReplyLike(@Param("id") int id, @Param("text") String text);

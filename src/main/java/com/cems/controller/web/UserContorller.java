@@ -29,9 +29,7 @@ public class UserContorller {
     @GetMapping("getAllUsers")
     public String getUsers() {
         List<ComUser> users = userService.getUsers();
-        String s = JSON.toJSONString(users);
-        System.out.println(s);
-        return s;
+        return JSON.toJSONString(users);
     }
 
     @GetMapping("killuser")
@@ -60,7 +58,6 @@ public class UserContorller {
             map.put("data",userlimitList);
             map.put("code","200");
             map.put("total",userlimit.getTotal());
-            System.out.println(userlimit.getTotal());
         }catch (Exception e){
             map.put("code","500");
         }
@@ -77,7 +74,6 @@ public class UserContorller {
             map.put("data",userlimitList);
             map.put("code","200");
             map.put("total",userlimit.getTotal());
-            System.out.println(userlimit.getTotal());
         }catch (Exception e){
             map.put("code","500");
         }

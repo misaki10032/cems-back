@@ -24,7 +24,6 @@ import java.util.Map;
 @Component
 public interface UserMapper extends BaseMapper<ComUser> {
 
-
     ComUser selOneUser(int id);
 
     List<ComUser> getUsers();

@@ -7,11 +7,13 @@ import java.util.List;
 
 /*
  *
- *@auth  biewenzhao
+ *@auth  NieWenZhao
  *@date 2021/6/19  20:44
  */
 public interface UserService {
 
     ComUser selOneUser(int id);
+
     List<SysEntrust> byEntrustByType(Integer typeID);
+
 }

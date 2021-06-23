@@ -26,7 +26,6 @@ public class ComUserServiceImpl implements ComUserService {
     UserMapper userMapper;
     @Override
     public List<ComUser> getUsers() {
-
         return userMapper.getUsers();
     }
 
@@ -48,10 +47,8 @@ public class ComUserServiceImpl implements ComUserService {
     @Override
     public List<ComUser> getUserLike(FormInline form) {
         if (form.getUser().equals("") || form.getUser() == null) {
-            System.out.println("查找:phone->%," + form.getRegion());
             return userMapper.getUserLike("%", form.getRegion());
         }
-        System.out.println("查找:phone->%" + form.getUser() + "%," + form.getRegion());
         return userMapper.getUserLike("%" + form.getUser() + "%", form.getRegion());
     }
 

@@ -34,7 +34,6 @@ import java.util.Map;
 public class EntrustController {
     @Autowired
     ComEntrustService entrustService;
-
     @Autowired
     UserService userService;
 
@@ -45,7 +44,6 @@ public class EntrustController {
         System.out.println(s);
         return s;
     }
-
 
     @PostMapping("getEntlimit/{pageNum}/{pageSize}")
     public String getEntLimit(PageTo pageTo) {
@@ -66,15 +64,8 @@ public class EntrustController {
         return JSON.toJSONString(map);
     }
 
-    /**
-     *
-     */
     @GetMapping("updataEntState")
-    public String updataEntState(Integer rowid,
-                                 String rowstatus) {
-        System.out.println(rowid);
-        System.out.println(rowstatus);
-
+    public String updataEntState(Integer rowid, String rowstatus) {
         try {
             if (rowstatus.equals("已审核")) {
                 rowstatus = "未审核";
@@ -112,7 +103,6 @@ public class EntrustController {
         }
         return JSON.toJSONString(map);
     }
-
     @PostMapping("/MoneyBack")
     public String MoneyBack(@RequestBody MoneyBack moneyBack) {
         Double money1 = null;
@@ -120,14 +110,11 @@ public class EntrustController {
         System.err.println("entPlan___>>>>+" + moneyBack.getEntPlan());
         String msg = "";
         if (moneyBack.getEntPlan().equals("已完成")) {
-            //订单已完成 不可推荐
             msg += "ok";
             System.err.println("msgmsgmsgmsg==??" + msg);
             return msg;
         } else {
-
             System.out.println("委托的价格是 entMoney" + moneyBack.getEntMoney());
-            //给委托人反钱
             Map<String, Object> map = new HashMap<>();
             ComUser comUser = userService.selOneUser(moneyBack.getEntConsignor());
             map.put("id", moneyBack.getEntConsignor());
@@ -138,58 +125,34 @@ public class EntrustController {
                 money2 = moneyBack.getEntMoney();
                 map.put("userMoney", moneyBack.getEntMoney() + comUser.getUserMoney());
             }
-            System.err.println(map);
-            int count = entrustService.upQuitEtrustEntMoney(map);
-            //给给代理人加钱一定的
-            //查询委托人 当前的总余额
+            entrustService.upQuitEtrustEntMoney(map);
             ComUser comUser1 = userService.selOneUser(moneyBack.getEntAgent());
             map.put("id", moneyBack.getEntAgent());
             if (moneyBack.getEntAgent() != -1) {
-
                 money1 = moneyBack.getEntMoney() * 0.1;
-
                 map.put("userMoney", moneyBack.getEntMoney() * 0.1 + comUser.getUserMoney());
             }
-            int count1 = entrustService.upQuitEtrustEntMoney(map);
+            entrustService.upQuitEtrustEntMoney(map);
             if (moneyBack.getEntAgent() != -1) {
                 msg += "给委托人返回" + money2
                         + "给接单人返回+" + money1;
             } else {
                 msg += "给委托人返回" + money2;
             }
-            //删除委托
             Integer id = moneyBack.getEntrustId();
             entrustService.delLeisureEntrustById2(id);
-            System.err.println("=====>>>>>?????" + msg);
             return msg;
-
-
         }
-
-
     }
-
-
     @GetMapping("handleDeleteById/{id}")
     public String handleDeleteById(@PathVariable Integer id) {
-        String msg = "";
         try {
-            System.err.println("--------------" + msg);
-            System.err.println("--------------" + id);
             entrustService.handleDeleteById(id);
-            msg = "ok";
-            System.err.println("++++++++++" + msg);
-            System.err.println("--------------" + id);
-            return msg;
-        } finally {
-            msg = "no";
-            System.err.println("sssssssssssssssss+" + msg);
-            System.err.println("--------------" + id);
-            return msg;
+            return "ok";
+        } catch (Exception e) {
+            return "no";
         }
     }
-
-
     // 判断委托类型是否重复
     @PostMapping("verifyAddEntType")
     public String verifyAddEntType(
@@ -200,10 +163,8 @@ public class EntrustController {
         String msg = "";
         if (bool) {
             msg = "ok";
-            System.err.println("ok");
         } else {
             msg = "失败--有重复属性";
-            System.err.println("失败--有重复属性");
         }
         return msg;
     }
@@ -213,30 +174,22 @@ public class EntrustController {
     public StringBuffer addEntType(
             @RequestBody ComEntrustType comEntrustType) {
         StringBuffer str = new StringBuffer();
-        System.out.println(comEntrustType);
         String EntrustType = comEntrustType.getEntType();
-
-        try {
-            boolean bool = entrustService.addEntrustType(EntrustType);
-            if (bool) {
-                str.append("ok");
-            } else {
-                str.append("no");
-            }
-        } finally {
-            System.err.println("____________" + str);
-            return str;
+        boolean bool = entrustService.addEntrustType(EntrustType);
+        if (bool) {
+            str.append("ok");
+        } else {
+            str.append("no");
         }
+        return str;
     }
 
 
-    @PostMapping("/byEentyToEntList/{id}/{pageNum}/{pageSize}")
+    @PostMapping("byEentyToEntList/{id}/{pageNum}/{pageSize}")
     public String byEentyToEntList(PageToById pageTo) {
         HashMap<String, Object> map = new HashMap<>();
         System.out.println(pageTo);
         System.out.println(pageTo);
-
-//        List<SysEntrust> EntrustByTypes = userService.byEntrustByType(typeID);
         try {
             PageHelper.startPage(pageTo.getPageNum(), pageTo.getPageSize());
             PageInfo<SysEntrust> sysEntrustPageInfo = new PageInfo<>(userService.byEntrustByType(pageTo.getId()));

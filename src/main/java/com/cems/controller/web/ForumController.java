@@ -27,7 +27,7 @@ public class ForumController {
     @Autowired
     ForumService forumService;
 
-    @PostMapping("/getArtlimit/{pageNum}/{pageSize}")
+    @PostMapping("getArtlimit/{pageNum}/{pageSize}")
     public String getArticle(PageTo pageTo) {
         HashMap<String, Object> map = new HashMap<>();
         System.out.println(pageTo);
@@ -45,7 +45,7 @@ public class ForumController {
         return JSON.toJSONString(map);
     }
 
-    @PostMapping("/getArtLike")
+    @PostMapping("getArtLike")
     public String getArtInfo(@RequestBody FormArticle form) {
         HashMap<String, Object> map = new HashMap<>();
         System.out.println(form);
@@ -78,7 +78,7 @@ public class ForumController {
         }
     }
 
-    @PostMapping("/getComment/{pageNum}/{pageSize}")
+    @PostMapping("getComment/{pageNum}/{pageSize}")
     public String getComment(PageTo pageTo) {
         HashMap<String, Object> map = new HashMap<>();
         System.out.println(pageTo);
@@ -96,7 +96,7 @@ public class ForumController {
         return JSON.toJSONString(map);
     }
 
-    @PostMapping("/getCommLike")
+    @PostMapping("getCommLike")
     public String getCommLike(@RequestBody FormInline form) {
         HashMap<String, Object> map = new HashMap<>();
         System.out.println(form);
@@ -114,7 +114,7 @@ public class ForumController {
         return JSON.toJSONString(map);
     }
 
-    @PostMapping("/getReplys/{id}/{pageNum}/{pageSize}")
+    @PostMapping("getReplys/{id}/{pageNum}/{pageSize}")
     public String getReplys(PageToById pageTo) {
         HashMap<String, Object> map = new HashMap<>();
         System.out.println(pageTo);
@@ -133,7 +133,7 @@ public class ForumController {
         return JSON.toJSONString(map);
     }
 
-    @PostMapping("/getReplyLike")
+    @PostMapping("getReplyLike")
     public String getReplyLike(@RequestBody FormInline form) {
         HashMap<String, Object> map = new HashMap<>();
         System.out.println(form);

@@ -2,8 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cems.mapper.EntrustMapper">
-
-
     <select id="getEntTypes" resultType="ComEntrustType">
         SELECT t.`id`               id,
                t.ent_type           entType,
@@ -14,7 +12,6 @@
         GROUP BY t.id
         ORDER BY t.id
     </select>
-
     <update id="updataEntState">
 
         update cems.com_entrust
@@ -35,15 +32,12 @@
         from com_entrust
         where id = #{id}
     </delete>
-
-
     <!--删除委托类型-->
     <delete id="handleDeleteById">
         DELETE
         FROM com_entrust_type
         WHERE id = #{id}
     </delete>
-
     <!--添加一个委托-->
     <update id="addEntrustType" parameterType="ComEntrustType">
 
@@ -65,7 +59,6 @@
         ORDER BY t.id;
     </select>
 
-    <!--    //委托计划进度的数据-->
     <select id="getEntPlan" resultType="string">
         SELECT e.ent_plan
         FROM com_entrust e
@@ -82,8 +75,6 @@
         GROUP BY e.ent_plan
         ORDER BY e.ent_plan;
     </select>
-
-    <!--      //委托类型中 存在真正委托的查询-->
     <select id="getExistEnt" resultType="string">
         SELECT t.ent_type
         FROM com_entrust e

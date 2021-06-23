@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -68,9 +67,8 @@ public class LoginContorller {
         }
     }
     /**用户申诉*/
-    @PostMapping("appeal1")
+    @PostMapping("userAppeal")
     public String appeal1(@RequestBody Appeal appeal){
-        System.out.println("appeal======="+appeal);
         String s = ShiroMd5Util.toPwdMd5(appeal.getPhone(), appeal.getPsw());
         Map<String,Object> map = new HashMap<>();
         map.put("phone",appeal.getPhone());
@@ -89,7 +87,6 @@ public class LoginContorller {
     /**管理员申诉*/
     @PostMapping("appeal")
     public String appeal(@RequestBody Appeal appeal){
-        System.out.println("appeal======="+appeal);
         String s = ShiroMd5Util.toPwdMd5(appeal.getPhone(), appeal.getPsw());
         Map<String,Object> map = new HashMap<>();
         map.put("phone",appeal.getPhone());
@@ -110,7 +107,6 @@ public class LoginContorller {
     /**管理员注册*/
     @PostMapping("register")
     public String register(@RequestBody Appeal appeal){
-        System.out.println("appeal===="+appeal);
         String s = ShiroMd5Util.toPwdMd5(appeal.getAcc(), appeal.getPsw());
         Map<String,Object> map = new HashMap<>();
         map.put("acc",appeal.getAcc());

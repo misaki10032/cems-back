@@ -28,19 +28,15 @@ public class ForumServeImpl implements ForumService {
     CommentMapper commentMapper;
     @Autowired
     ReplyMapper replyMapper;
-
     @Override
     public List<ForumArticle> getArticles() {
         return articleMapper.getArticles();
     }
-
     @Override
     public List<ForumArticle> getArticleLike(FormArticle form) {
         if (form.getTitle() == null || form.getTitle().equals("")) {
-            System.out.println("查找:标题->%," + form.getStatus());
             return articleMapper.getArticleLike("%", form.getStatus());
         }
-        System.out.println("查找:标题->%" + form.getTitle() + "%," + form.getStatus());
         return articleMapper.getArticleLike("%" + form.getTitle() + "%", form.getStatus());
     }
 

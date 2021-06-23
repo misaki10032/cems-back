@@ -29,6 +29,5 @@ public interface ComUserService {
 
     ComUser getUserNum(String num);
 
-    /**申诉账号密码验证*/
     ComUser judgeAP(Map<String,Object> map);
 }

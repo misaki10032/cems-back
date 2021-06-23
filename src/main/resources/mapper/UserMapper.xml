@@ -32,7 +32,6 @@
         where user_phone like #{phone} and status = #{status}
     </select>
 
-
     <!--进入个人空间前查找-->
     <!--用户申诉账号密码判断-->
     <select id="judgeAP" parameterType="map" resultType="ComUser">
@@ -67,9 +66,9 @@
                e.ent_state     entState,
                t.ent_type      entType,
                e.ent_plan      entPlan
-        FROM `com_entrust` e,
-             `com_entrust_type` t
-        WHERE e.`ent_type_id` = t.`id`
+        FROM com_entrust e,
+             com_entrust_type t
+        WHERE e.ent_type_id = t.id
           and t.id = #{typeID}
 
     </select>

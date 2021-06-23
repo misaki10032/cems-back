@@ -91,20 +91,14 @@ public class ComEntrustServiceImpl implements ComEntrustService {
 
     @Override
     public boolean addEntrustType(String entrustType) {
-
         List<ComEntrustType> allEtrustType = entrustMapper.getEntTypes();
-        System.err.println(allEtrustType);
-        System.out.println(entrustType);
         LinkedList<String> list = new LinkedList<>();
         for (ComEntrustType type : allEtrustType) {
-            System.err.println(type.getEntType().equals(entrustType));
             list.addLast(type.getEntType());
         }
         if (list.contains(entrustType)) {
-            System.out.println(entrustType + "插入失败");
             return false;
         } else {
-
             entrustMapper.addEntrustType(entrustType);
             return true;
         }

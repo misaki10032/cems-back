@@ -20,25 +20,20 @@ public interface ComEntrustService {
 
     List<ComEntrustType> getEntTypes();
 
-
     void updataEntState(int id, String status);
 
     int upQuitEtrustEntMoney(Map<String, Object> map);
-
-
 
     void delLeisureEntrustById2(Integer id);
 
     String handleDeleteById(Integer id);
 
-
     boolean judgeTypeRep(String entrustType);
 
     boolean addEntrustType(String entrustType);
 
-    //图形查去数据
     List<String> getEntrustName();
-    //图形查去数据
+
     List<Integer> getTypeNums();
 
     List<String> getEntPlan();
