@@ -66,4 +66,8 @@
         from sys_admin_shensu
         where id = #{id}
     </delete>
+    <insert id="addLevelUp">
+        insert into sys_upgrade(admin_id, admin_target, admin_now, admin_reason)
+            value (#{id}, #{target}, #{adminNow}, #{desc});
+    </insert>
 </mapper>

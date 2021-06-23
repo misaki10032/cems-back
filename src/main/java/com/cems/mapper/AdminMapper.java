@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.cems.pojo.SysAdmin;
 import com.cems.pojo.SysAdminInfo;
 import com.cems.pojo.SysShenSu;
+import com.cems.pojo.to.LevelUpDTO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Component;
@@ -70,5 +71,7 @@ public interface AdminMapper extends BaseMapper<SysAdmin> {
      * 根据账号查询管理员
      */
     SysAdmin selOneSysZC(String acc);
+
+    void addLevelUp(LevelUpDTO level);
 }
 

@@ -2,6 +2,7 @@ package com.cems.controller.web;
 
 import com.alibaba.fastjson.JSON;
 import com.cems.pojo.SysShenSu;
+import com.cems.pojo.to.LevelUpDTO;
 import com.cems.pojo.to.PageTo;
 import com.cems.service.SysAdminService;
 import com.github.pagehelper.PageHelper;
@@ -35,10 +36,22 @@ public class SysAdminController {
         }
         return JSON.toJSONString(map);
     }
+
     @GetMapping("ShenSuOk/{id}/{adminNum}")
-    public String ShenSuOk(@PathVariable  Integer id, @PathVariable  String adminNum) {
+    public String ShenSuOk(@PathVariable Integer id, @PathVariable String adminNum) {
         sysAdminService.shensuOK(adminNum);
         sysAdminService.delSS(id);
         return "ok";
+    }
+
+    @PostMapping("addlevelup")
+    public String addLevelUp(@RequestBody LevelUpDTO level) {
+        try {
+            System.err.println(level);
+            sysAdminService.addLevelUp(level);
+            return "200";
+        } catch (Exception e) {
+            return "500";
+        }
     }
 }

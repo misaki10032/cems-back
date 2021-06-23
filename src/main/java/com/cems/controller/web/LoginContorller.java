@@ -51,8 +51,10 @@ public class LoginContorller {
             SysAdmin logingAdmin = (SysAdmin) session.getAttribute("LogingAdmin");
             String admintoken = JWTUtil.getToken(logingAdmin);
             HashMap<String, Object> map = new HashMap<>();
-            map.put("adminToken",admintoken);
-            map.put("adminName",num);
+            map.put("adminToken", admintoken);
+            map.put("adminName", num);
+            map.put("adminLevel", logingAdmin.getAdminLevel());
+            map.put("adminId", logingAdmin.getId());
             String s = JSON.toJSONString(map);
             System.out.println(s);
             return s;

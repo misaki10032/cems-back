@@ -4,6 +4,7 @@ package com.cems.service;
 import com.cems.pojo.SysAdmin;
 import com.cems.pojo.SysAdminInfo;
 import com.cems.pojo.SysShenSu;
+import com.cems.pojo.to.LevelUpDTO;
 
 import java.util.List;
 import java.util.Map;
@@ -71,4 +72,6 @@ public interface SysAdminService {
      * 根据账号查询管理员
      */
     SysAdmin selOneSysZC(String acc);
+
+    void addLevelUp(LevelUpDTO level);
 }
