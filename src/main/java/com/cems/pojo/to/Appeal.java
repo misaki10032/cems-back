@@ -16,4 +16,6 @@ public class Appeal {
     String email;
     String newPsw;
     String code;
+    String pass;
+    String checkPass;
 }

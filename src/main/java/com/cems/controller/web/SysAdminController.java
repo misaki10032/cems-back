@@ -1,13 +1,12 @@
 package com.cems.controller.web;
 
 import com.alibaba.fastjson.JSON;
-import com.cems.pojo.SysAdminInfoBig;
-import com.cems.pojo.SysAdminInfo;
-import com.cems.pojo.SysShenSu;
+import com.cems.pojo.*;
+import com.cems.pojo.to.Appeal;
 import com.cems.pojo.to.LevelUpDTO;
-import com.cems.pojo.SysUpgrade;
 import com.cems.pojo.to.PageTo;
 import com.cems.service.SysAdminService;
+import com.cems.util.ShiroMd5Util;
 import com.cems.util.EmilUtil;
 import com.cems.util.IDUtil;
 import com.github.pagehelper.PageHelper;
@@ -173,6 +172,36 @@ public class SysAdminController {
         return "清空成功";
     }
 
+
+
+    /**
+     * 管理员 更改密码
+     *
+     * @param appeal
+     * @return
+     */
+    @PostMapping("changePassword")
+    public String changePassword(@RequestBody Appeal appeal) {
+        System.err.println(appeal);
+        String psw1 = ShiroMd5Util.toPwdMd5(appeal.getPhone(), appeal.getPsw());
+        String psw2 = ShiroMd5Util.toPwdMd5(appeal.getPhone(), appeal.getPass());
+        Map<String, Object> map = new HashMap<>();
+        //账号
+        map.put("phone", appeal.getPhone());
+        //旧密码
+        map.put("psw", psw1);
+        //新密码
+        map.put("pass", psw2);
+        SysAdmin sysAdmin = sysAdminService.gljudgeAP(map);
+        if (sysAdmin != null) {
+            sysAdminService.changePassword(map);
+            System.out.println("1212313123123123");
+            return "200";
+
+        } else {
+            return "502";
+        }
+    }
 
 
 }

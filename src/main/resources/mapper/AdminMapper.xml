@@ -167,4 +167,14 @@
     </update>
 
 
+    <!--更新管理员密码-->
+    <update id="changePassword" parameterType="map" >
+        update sys_admin
+        set admin_pwd = #{pass}
+        where admin_num = #{phone}
+    </update>
+
+
+
+
 </mapper>

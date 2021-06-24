@@ -121,4 +121,6 @@ public interface SysAdminService {
      * 管理员忘记密码完成
      */
     int forgetPswOk(Map<String,Object> map);
+
+    void changePassword(Map<String, Object> map);
 }
