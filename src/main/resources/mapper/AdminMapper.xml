@@ -149,4 +149,22 @@
         WHERE admin_id = #{adminId} ;
     </update>
 
+    <!--清空管理员升级申请-->
+    <delete id="delAllUp" parameterType="string">
+        delete from sys_upgrade
+        where status = #{status}
+    </delete>
+
+    <select id="selByEmailId" parameterType="map" resultType="SysAdminInfoBig">
+        select sa.id id,sa.admin_num adminNum,sai.admin_emil adminEmil
+        from sys_admin sa inner join sys_admin_info sai
+        where sa.admin_num=#{num} and sai.admin_emil = #{email} and sa.id = sai.admin_id
+    </select>
+    <!--忘记密码完成-->
+    <update id="forgetPswOk" parameterType="map" >
+        update sys_admin set admin_pwd = #{pwd}
+        where admin_num = #{num}
+    </update>
+
+
 </mapper>

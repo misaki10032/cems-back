@@ -8,9 +8,13 @@ import com.cems.pojo.to.LevelUpDTO;
 import com.cems.pojo.SysUpgrade;
 import com.cems.pojo.to.PageTo;
 import com.cems.service.SysAdminService;
+import com.cems.util.EmilUtil;
+import com.cems.util.IDUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -22,6 +26,8 @@ import java.util.Map;
 public class SysAdminController {
     @Autowired
     SysAdminService sysAdminService;
+    @Autowired
+    JavaMailSenderImpl mailSender;
 
     @PostMapping("getAllAppeal/{pageNum}/{pageSize}")
     public String getAllAppeal(PageTo pageTo) {
@@ -158,6 +164,15 @@ public class SysAdminController {
             return "no";
         }
     }
+    @GetMapping("delAllUp")
+    public String delAllUp(String status){
+        int i = sysAdminService.delAllUp(status);
+        if (i==0){
+            return "没有要清空的数据了";
+        }
+        return "清空成功";
+    }
+
 
 
 }

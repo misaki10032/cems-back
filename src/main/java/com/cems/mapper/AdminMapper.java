@@ -110,11 +110,23 @@ public interface AdminMapper extends BaseMapper<SysAdmin> {
 
     int changePwd(@Param("id") int id, @Param("pwd") String newPwd);
 
-    /*
+    /**
      * 根据账号查询管理员详细信息
      */
     SysAdminInfo getAdminInfo(String adminNum);
 
     void updateAdminInfo(SysAdminInfo sysAdminInfo);
+    /**
+     * 删除管理员升级数据
+     */
+    int delAllUp(String status);
+    /**
+     * 管理员忘记密码
+     */
+    List<SysAdminInfoBig> selByEmailId(Map<String,Object> map);
+    /**
+     * 管理员忘记密码完成
+     */
+    int forgetPswOk(Map<String,Object> map);
 }
 

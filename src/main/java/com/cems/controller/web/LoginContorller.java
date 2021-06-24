@@ -1,11 +1,13 @@
 package com.cems.controller.web;
 import com.alibaba.fastjson.JSON;
 import com.cems.pojo.SysAdmin;
+import com.cems.pojo.SysAdminInfoBig;
 import com.cems.pojo.to.Appeal;
 import com.cems.pojo.to.ComUser;
 import com.cems.pojo.to.LoginAdmin;
 import com.cems.service.ComUserService;
 import com.cems.service.SysAdminService;
+import com.cems.util.IDUtil;
 import com.cems.util.JWTUtil;
 import com.cems.util.ShiroMd5Util;
 import org.apache.shiro.SecurityUtils;
@@ -16,11 +18,12 @@ import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -36,6 +39,8 @@ public class LoginContorller {
     ComUserService comUserService;
     @Autowired
     SysAdminService sysAdminService;
+    @Autowired
+    JavaMailSenderImpl mailSender;
     @PostMapping("userlogin")
     public String login(@RequestBody LoginAdmin json){
         System.out.println(json);
@@ -129,4 +134,44 @@ public class LoginContorller {
             return "200";
         }
     }
+
+    @GetMapping("forgetPsw")
+    public String forgetPsw(String acc, String email) {
+        System.out.println("acc===="+acc);
+        System.out.println("email===="+email);
+        Map<String,Object> map = new HashMap<>();
+        map.put("num",acc);
+        map.put("email",email);
+        List<SysAdminInfoBig> sysAdminInfoBigs = sysAdminService.selByEmailId(map);
+        if (sysAdminInfoBigs.size()==0){
+            return "203";
+        }else {
+/*            String msg = IDUtil.getID().substring(0, 6);
+            String title = "【验证码】";
+            String text = "【CEMS校园服务平台】您的验证码为" + msg + "，3分钟以内有效!";
+            EmilUtil.sendEmal(title, text, email);*/
+            String msg = IDUtil.getID().substring(0, 6);
+            String title = "【验证码】";
+            String text = "【CEMS校园服务平台】您的验证码为: " + msg + "，3分钟以内有效!";
+            SimpleMailMessage mailMessage = new SimpleMailMessage();
+            mailMessage.setSubject(title);
+            mailMessage.setText(text);
+            mailMessage.setTo(email);
+            mailMessage.setFrom("fcms_snut@qq.com");
+            mailSender.send(mailMessage);
+            return msg;
+        }
+    }
+    /**管理员忘记密码*/
+    @PostMapping("forgetPswOk")
+    public String forgetPswOk(@RequestBody Appeal appeal){
+        System.out.println(appeal);
+        String s = ShiroMd5Util.toPwdMd5(appeal.getAcc(), appeal.getNewPsw());
+        Map<String,Object> map = new HashMap<>();
+        map.put("pwd",s);
+        map.put("num", appeal.getAcc());
+        int i = sysAdminService.forgetPswOk(map);
+        return "找回密码成功";
+    }
+
 }

@@ -90,9 +90,9 @@
             <version>2.0</version>
         </dependency>
         <!-- emil -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-mail</artifactId>
+        <ependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>sprindg-boot-starter-mail</artifactId>
         </dependency>
         <!-- gson -->
         <dependency>

@@ -14,4 +14,6 @@ public class Appeal {
     String acc;
     String phoneTwo;
     String email;
+    String newPsw;
+    String code;
 }
