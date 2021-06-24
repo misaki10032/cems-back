@@ -1,6 +1,5 @@
 package com.cems.util;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 
@@ -11,9 +10,6 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
  * @Version 1.0
  */
 public class EmilUtil {
-    @Autowired
-    private static JavaMailSenderImpl mailSender;
-
     /**
      * 发送邮件
      *
@@ -21,7 +17,7 @@ public class EmilUtil {
      * @param Text  邮件内容
      * @param to    发送给的对象
      */
-    public static void sendEmal(String title, String Text, String to) {
+    public static void sendEmal(JavaMailSenderImpl mailSender, String title, String Text, String to) {
         SimpleMailMessage mailMessage = new SimpleMailMessage();
         mailMessage.setSubject(title);
         mailMessage.setText(Text);
