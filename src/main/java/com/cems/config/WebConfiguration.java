@@ -21,6 +21,7 @@ public class WebConfiguration extends WebMvcConfigurationSupport {
                         , "/web/forgetPsw"
                         , "/web/forgetPswOk"
                         , "/uniApp/*"
+                        , "/uniApp/getEnts"
                 );
     }
 }

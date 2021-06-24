@@ -21,7 +21,6 @@ import java.util.List;
 public class Uni_EntrustController {
     @Autowired
     ComEntrustService entrustService;
-
     @GetMapping("getEnts")
     public String getEnts() {
         List<ComEntrust> entrusts = entrustService.getEntrusts();
