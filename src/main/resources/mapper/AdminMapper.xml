@@ -69,20 +69,30 @@
 
     <select id="getAdminInfo" parameterType="string" resultType="SysAdminInfo">
 
-        SELECT
-            sa.id adminId,
-            sa.admin_num adminNum,
-            sa.admin_pwd adminPwd,
-            sai.admin_phone adminPhone,
-            sai.admin_emil adminEmail,
-            sai.admin_house adminHouse,
-            sai.admin_birth adminBirth
-        FROM
-            sys_admin sa
-                LEFT JOIN sys_admin_info sai
-                          ON sa.id = sai.admin_id
+        SELECT sa.id           adminId,
+               sa.admin_num    adminNum,
+               sa.admin_pwd    adminPwd,
+               sai.admin_phone adminPhone,
+               sai.admin_emil  adminEmail,
+               sai.admin_house adminHouse,
+               sai.admin_birth adminBirth
+        FROM sys_admin sa
+                 LEFT JOIN sys_admin_info sai
+                           ON sa.id = sai.admin_id
         WHERE sa.admin_num = #{adminNum};
 
     </select>
+
+    <!--更新管理员数据-->
+    <update id="updateAdminInfo">
+        UPDATE
+        sys_admin_info
+        <set>
+            admin_phone = #{adminPhone},
+            admin_house = #{adminHouse},
+            admin_birth = #{adminBirth}
+        </set>
+        WHERE admin_id = #{adminId} ;
+    </update>
 
 </mapper>

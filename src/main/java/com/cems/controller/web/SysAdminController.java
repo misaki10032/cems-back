@@ -50,4 +50,16 @@ public class SysAdminController {
         return sysAdminService.getAdminInfo(num);
     }
 
+    @PostMapping("updateAdminByNum")
+    public String updateAdminByNum(@RequestBody SysAdminInfo sysAdminInfo) {
+        try {
+            sysAdminService.updateAdminInfo(sysAdminInfo);
+            return "ok";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "no";
+        }
+    }
+
+
 }

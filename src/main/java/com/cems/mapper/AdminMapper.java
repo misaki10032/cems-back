@@ -83,5 +83,7 @@ public interface AdminMapper extends BaseMapper<SysAdmin> {
      * 根据账号查询管理员详细信息
      */
     SysAdminInfo getAdminInfo(String adminNum);
+
+    void updateAdminInfo(SysAdminInfo sysAdminInfo);
 }
 

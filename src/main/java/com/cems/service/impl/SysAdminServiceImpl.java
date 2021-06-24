@@ -89,6 +89,11 @@ public class SysAdminServiceImpl implements SysAdminService {
     }
 
     @Override
+    public void updateAdminInfo(SysAdminInfo sysAdminInfo) {
+        adminMapper.updateAdminInfo(sysAdminInfo);
+    }
+
+    @Override
     public SysAdminInfo getAdminInfo(String adminNum) {
         return adminMapper.getAdminInfo(adminNum);
     }
