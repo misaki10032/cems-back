@@ -40,7 +40,6 @@
     </delete>
     <!--添加一个委托-->
     <update id="addEntrustType" parameterType="ComEntrustType">
-
         INSERT INTO com_entrust_type (ent_type) VALUE (#{entType})
     </update>
     <!--图形需要的名称-->
@@ -91,5 +90,17 @@
         GROUP BY t.id
         ORDER BY t.id;
     </select>
-
+    <select id="getEntrusts" resultType="ComEntrust">
+        select id,
+               ent_data,
+               ent_consignor,
+               ent_agent,
+               ent_state,
+               ent_type_id,
+               ent_plan,
+               gmt_create,
+               gmt_end,
+               ent_money
+        from com_entrust
+    </select>
 </mapper>

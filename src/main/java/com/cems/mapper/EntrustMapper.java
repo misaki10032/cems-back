@@ -22,7 +22,6 @@ import java.util.Map;
 @Mapper
 public interface EntrustMapper extends BaseMapper<ComEntrust> {
 
-    @Select("select * from com_entrust")
     List<ComEntrust> getEntrusts();
 
     List<ComEntrustType> getEntTypes();
