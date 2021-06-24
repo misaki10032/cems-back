@@ -165,9 +165,14 @@ public class LoginContorller {
     /**管理员忘记密码*/
     @PostMapping("forgetPswOk")
     public String forgetPswOk(@RequestBody Appeal appeal){
-        System.out.println(appeal);
         String s = ShiroMd5Util.toPwdMd5(appeal.getAcc(), appeal.getNewPsw());
         Map<String,Object> map = new HashMap<>();
+        map.put("num",appeal.getAcc());
+        map.put("email",appeal.getEmail());
+        List<SysAdminInfoBig> sysAdminInfoBigs = sysAdminService.selByEmailId(map);
+        if (sysAdminInfoBigs.size()==0){
+            return "402";
+        }
         map.put("pwd",s);
         map.put("num", appeal.getAcc());
         int i = sysAdminService.forgetPswOk(map);
