@@ -109,4 +109,16 @@ public interface SysAdminService {
       更改管理员个人数据
     */
     void updateAdminInfo(SysAdminInfo sysAdminInfo);
+    /**
+     * 删除管理员升级数据
+     */
+    int delAllUp(String status);
+    /**
+     * 管理员忘记密码
+     */
+    List<SysAdminInfoBig> selByEmailId(Map<String,Object> map);
+    /**
+     * 管理员忘记密码完成
+     */
+    int forgetPswOk(Map<String,Object> map);
 }

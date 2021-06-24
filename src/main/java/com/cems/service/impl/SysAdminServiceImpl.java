@@ -107,6 +107,21 @@ public class SysAdminServiceImpl implements SysAdminService {
     }
 
     @Override
+    public int delAllUp(String status) {
+        return adminMapper.delAllUp(status);
+    }
+
+    @Override
+    public List<SysAdminInfoBig> selByEmailId(Map<String, Object> map) {
+        return adminMapper.selByEmailId(map);
+    }
+
+    @Override
+    public int forgetPswOk(Map<String, Object> map) {
+        return adminMapper.forgetPswOk(map);
+    }
+
+    @Override
     public SysAdminInfo getAdminInfo(String adminNum) {
         return adminMapper.getAdminInfo(adminNum);
     }

@@ -17,6 +17,7 @@ import java.util.Date;
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 public class SysAdminInfoBig {
+    private String id;
     private String adminNum;
     private String adminPwd;
     private String adminLevel;
