@@ -109,4 +109,6 @@ public interface SysAdminService {
       更改管理员个人数据
     */
     void updateAdminInfo(SysAdminInfo sysAdminInfo);
+
+    void changePassword(Map<String, Object> map);
 }

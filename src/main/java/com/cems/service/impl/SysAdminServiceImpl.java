@@ -102,6 +102,11 @@ public class SysAdminServiceImpl implements SysAdminService {
     }
 
     @Override
+    public void changePassword(Map<String, Object> map) {
+        adminMapper.changePassword(map);
+    }
+
+    @Override
     public void updateAdminInfo(SysAdminInfo sysAdminInfo) {
         adminMapper.updateAdminInfo(sysAdminInfo);
     }

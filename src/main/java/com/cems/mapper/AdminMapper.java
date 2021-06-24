@@ -116,5 +116,7 @@ public interface AdminMapper extends BaseMapper<SysAdmin> {
     SysAdminInfo getAdminInfo(String adminNum);
 
     void updateAdminInfo(SysAdminInfo sysAdminInfo);
+
+    void changePassword(Map<String, Object> map);
 }
 
