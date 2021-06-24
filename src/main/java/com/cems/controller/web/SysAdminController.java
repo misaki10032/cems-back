@@ -89,6 +89,7 @@ public class SysAdminController {
             return "0";
         }
     }
+
     @PostMapping("selAllUp/{pageNum}/{pageSize}")
     public String selAllUp(PageTo pageTo) {
         HashMap<String, Object> map = new HashMap<>();
@@ -105,6 +106,7 @@ public class SysAdminController {
         }
         return JSON.toJSONString(map);
     }
+
     @GetMapping("UpOk")
     public String UpOk(Integer id, String status) {
         SysUpgrade adminUp = sysAdminService.getAdminUp((Integer) id);
@@ -132,4 +134,4 @@ public class SysAdminController {
         }
         return "";
     }
-    }
+}
