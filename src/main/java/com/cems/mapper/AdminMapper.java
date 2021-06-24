@@ -97,14 +97,18 @@ public interface AdminMapper extends BaseMapper<SysAdmin> {
      * 通过id获取升级申请数据
      */
     SysUpgrade getAdminUp(int id);
+
     /**
      * 管理员升级修改
      */
-     int upAdminOk(Map<String,Object> map);
+    int upAdminOk(Map<String, Object> map);
+
     /**
      * 管理员升级修改管理员表状态
      */
-     int changeUpStatus(Map<String,Object> map);
+    int changeUpStatus(Map<String, Object> map);
+
+    int changePwd(@Param("id") int id, @Param("pwd") String newPwd);
 
     /*
      * 根据账号查询管理员详细信息

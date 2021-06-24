@@ -114,6 +114,11 @@
           and admin_target = #{level}
           and admin_now = #{jiu}
     </update>
+    <update id="changePwd">
+        update sys_admin
+        set admin_pwd = #{pwd}
+        where id = #{id}
+    </update>
 
 
     <select id="getAdminInfo" parameterType="string" resultType="SysAdminInfo">

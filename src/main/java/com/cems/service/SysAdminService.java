@@ -89,13 +89,16 @@ public interface SysAdminService {
     /**
      * 管理员升级修改
      */
-    int upAdminOk(Map<String,Object> map);
+    int upAdminOk(Map<String, Object> map);
+
     /**
      * 管理员升级修改管理员表状态
      */
-    int changeUpStatus(Map<String,Object> map);
+    int changeUpStatus(Map<String, Object> map);
 
     void addLevelUp(LevelUpDTO level);
+
+    void changePwd(int id, String pwd);
 
     /*
     根据账号查询管理员详细信息

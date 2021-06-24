@@ -122,6 +122,11 @@ public class SysAdminServiceImpl implements SysAdminService {
     }
 
     @Override
+    public void changePwd(int id, String pwd) {
+        adminMapper.changePwd(id, pwd);
+    }
+
+    @Override
     public List<SysUpgrade> selAllUp() {
         return adminMapper.selAllUp();
     }

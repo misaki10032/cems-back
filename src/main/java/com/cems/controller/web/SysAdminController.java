@@ -136,6 +136,12 @@ public class SysAdminController {
         return "";
     }
 
+    @PostMapping("changePwd")
+    public String changePwd(String msg) {
+        System.out.println(msg);
+        return "200";
+    }
+
     @PostMapping("AdminByNum/{num}")
     public SysAdminInfo AdminByNum(@PathVariable String num) {
         System.err.println(num);
