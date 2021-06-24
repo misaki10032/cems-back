@@ -103,11 +103,10 @@ public class EntrustController {
         }
         return JSON.toJSONString(map);
     }
-    @PostMapping("/MoneyBack")
+    @PostMapping("MoneyBack")
     public String MoneyBack(@RequestBody MoneyBack moneyBack) {
         Double money1 = null;
         Double money2 = null;
-        System.err.println("entPlan___>>>>+" + moneyBack.getEntPlan());
         String msg = "";
         if (moneyBack.getEntPlan().equals("已完成")) {
             msg += "ok";
