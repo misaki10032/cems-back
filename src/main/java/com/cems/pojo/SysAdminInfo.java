@@ -20,4 +20,9 @@ public class SysAdminInfo {
     private Date adminBirth;
     private String adminEmail;
     private String adminPwdProtect;
+
+    private String adminNum;
+    private String adminPwd;
+
+
 }

@@ -96,4 +96,14 @@ public interface SysAdminService {
     int changeUpStatus(Map<String,Object> map);
 
     void addLevelUp(LevelUpDTO level);
+
+    /*
+    根据账号查询管理员详细信息
+     */
+    SysAdminInfo getAdminInfo(String adminNum);
+
+    /*
+      更改管理员个人数据
+    */
+    void updateAdminInfo(SysAdminInfo sysAdminInfo);
 }

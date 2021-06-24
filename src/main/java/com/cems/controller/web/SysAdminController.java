@@ -2,6 +2,7 @@ package com.cems.controller.web;
 
 import com.alibaba.fastjson.JSON;
 import com.cems.pojo.SysAdminInfoBig;
+import com.cems.pojo.SysAdminInfo;
 import com.cems.pojo.SysShenSu;
 import com.cems.pojo.to.LevelUpDTO;
 import com.cems.pojo.SysUpgrade;
@@ -134,4 +135,23 @@ public class SysAdminController {
         }
         return "";
     }
+
+    @PostMapping("AdminByNum/{num}")
+    public SysAdminInfo AdminByNum(@PathVariable String num) {
+        System.err.println(num);
+        return sysAdminService.getAdminInfo(num);
+    }
+
+    @PostMapping("updateAdminByNum")
+    public String updateAdminByNum(@RequestBody SysAdminInfo sysAdminInfo) {
+        try {
+            sysAdminService.updateAdminInfo(sysAdminInfo);
+            return "ok";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "no";
+        }
+    }
+
+
 }

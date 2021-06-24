@@ -105,5 +105,12 @@ public interface AdminMapper extends BaseMapper<SysAdmin> {
      * 管理员升级修改管理员表状态
      */
      int changeUpStatus(Map<String,Object> map);
+
+    /*
+     * 根据账号查询管理员详细信息
+     */
+    SysAdminInfo getAdminInfo(String adminNum);
+
+    void updateAdminInfo(SysAdminInfo sysAdminInfo);
 }
 
