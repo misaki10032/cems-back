@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.cems.pojo.SysAdmin;
 import com.cems.pojo.to.ComUser;
 import com.cems.pojo.to.LoginAdmin;
+import com.cems.service.ComUserService;
 import com.cems.util.JWTUtil;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
@@ -12,6 +13,7 @@ import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @ClassName LoginController
@@ -29,6 +32,8 @@ import java.util.Map;
 @RestController
 @RequestMapping("uniApp")
 public class UniLoginController {
+    @Autowired
+    ComUserService userService;
 
     @PostMapping("uniAppLogin")
     public Map<String, Object> UserLogin(@RequestBody LoginAdmin json) {
@@ -62,6 +67,20 @@ public class UniLoginController {
         } catch (Exception e) {
             map.put("code", "503");
             map.put("msg", "服务器异常!");
+        }
+        return map;
+    }
+
+    @PostMapping("userResiger")
+    public Map<String, Object> userResiger(@RequestBody ComUser user) {
+        Map<String, Object> map = new ConcurrentHashMap<>();
+        try {
+            userService.userResiger(user);
+            map.put("msg", "注册成功!");
+            map.put("code", "200");
+        } catch (Exception e) {
+            map.put("msg", "服务器异常!");
+            map.put("code", "500");
         }
         return map;
     }

@@ -8,6 +8,7 @@ import com.cems.pojo.to.ComUser;
 import com.cems.pojo.to.ComUserInfo;
 import com.cems.pojo.to.FormInline;
 import com.cems.service.ComUserService;
+import com.cems.util.ShiroMd5Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -78,6 +79,15 @@ public class ComUserServiceImpl implements ComUserService {
     @Override
     public ComUser judgeAP(Map<String, Object> map) {
         return userMapper.judgeAP(map);
+    }
+
+    @Override
+    public void userResiger(ComUser user) {
+        user.setUserPwd(ShiroMd5Util.toPwdMd5(user.getUserPhone(), user.getUserPwd()));
+        userMapper.userResiger(user);
+        ComUser userNum = userMapper.getUserNum(user.getUserPhone());
+        user.setUserId(userNum.getId());
+        userMapper.addUserInfo(user);
     }
 
 }

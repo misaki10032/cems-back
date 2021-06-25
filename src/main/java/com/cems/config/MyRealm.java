@@ -60,7 +60,7 @@ public class MyRealm extends AuthorizingRealm {
                 }
             }
         } else {
-            ComUser user;
+            ComUser user = userService.getUserNum(username);
             try {
                 user = userService.getUserNum(username);
             } catch (Exception e) {

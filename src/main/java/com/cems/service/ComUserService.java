@@ -29,5 +29,7 @@ public interface ComUserService {
 
     ComUser getUserNum(String num);
 
-    ComUser judgeAP(Map<String,Object> map);
+    ComUser judgeAP(Map<String, Object> map);
+
+    void userResiger(ComUser user);
 }

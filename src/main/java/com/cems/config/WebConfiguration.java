@@ -15,13 +15,15 @@ public class WebConfiguration extends WebMvcConfigurationSupport {
         registry.addInterceptor(new TokenInterceptor()).
                 addPathPatterns("/**").
                 excludePathPatterns(
-                            "/web/userlogin"
+                        "/web/userlogin"
                         , "/web/appeal"
                         , "/web/register"
                         , "/web/forgetPsw"
                         , "/web/forgetPswOk"
+                        , "/uniApp/uniAppLogin"
                         , "/uniApp/*"
                         , "/uniApp/getEnts"
+                        , "/uniApp/userResiger"
                 );
     }
 }

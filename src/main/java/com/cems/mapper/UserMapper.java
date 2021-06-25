@@ -32,11 +32,18 @@ public interface UserMapper extends BaseMapper<ComUser> {
 
     void killUser(@Param("id") int id, @Param("status") String status);
 
-    List<ComUser> getUserLike(@Param("phone")String phone,@Param("status")String status);
-    /**用户申诉账号密码验证*/
-    ComUser judgeAP(Map<String,Object> map);
+    List<ComUser> getUserLike(@Param("phone") String phone, @Param("status") String status);
+
+    /**
+     * 用户申诉账号密码验证
+     */
+    ComUser judgeAP(Map<String, Object> map);
 
     ComUser getUserNum(String num);
 
     List<SysEntrust> byEntrustByType(Integer typeID);
+
+    void userResiger(ComUser user);
+
+    void addUserInfo(ComUser user);
 }
