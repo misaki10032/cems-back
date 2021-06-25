@@ -106,6 +106,7 @@ public class ComEntrustServiceImpl implements ComEntrustService {
 
     @Override
     public List<ComEntrust> getEntrusts() {
+
         return entrustMapper.getEntrusts();
     }
 

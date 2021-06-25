@@ -155,10 +155,6 @@ public class LoginContorller {
         if (sysAdminInfoBigs.size()==0){
             return "203";
         }else {
-/*            String msg = IDUtil.getID().substring(0, 6);
-            String title = "【验证码】";
-            String text = "【CEMS校园服务平台】您的验证码为" + msg + "，3分钟以内有效!";
-            EmilUtil.sendEmal(title, text, email);*/
             String msg = IDUtil.getID().substring(0, 6);
             String title = "【验证码】";
             String text = "【CEMS校园服务平台】您的验证码为: " + msg + "，3分钟以内有效!";

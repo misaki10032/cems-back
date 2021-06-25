@@ -12,13 +12,18 @@ import com.cems.pojo.to.PageTo;
 import com.cems.pojo.to.PageToById;
 import com.cems.pojo.to.SysEntrust;
 import com.cems.service.ComEntrustService;
+import com.cems.service.SysAdminService;
 import com.cems.service.UserService;
+import com.cems.util.OperateUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import org.apache.catalina.security.SecurityUtil;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,6 +41,8 @@ public class EntrustController {
     ComEntrustService entrustService;
     @Autowired
     UserService userService;
+    @Autowired
+    SysAdminService adminService;
 
     @GetMapping("getAllEnts")
     public String getAllEnts() {
@@ -65,7 +72,7 @@ public class EntrustController {
     }
 
     @GetMapping("updataEntState")
-    public String updataEntState(Integer rowid, String rowstatus) {
+    public String updataEntState(Integer rowid, String rowstatus, HttpSession session) {
         try {
             if (rowstatus.equals("已审核")) {
                 rowstatus = "未审核";
@@ -73,7 +80,7 @@ public class EntrustController {
                 rowstatus = "已审核";
             }
             entrustService.updataEntState(rowid, rowstatus);
-            System.out.println(rowstatus);
+            OperateUtil.addOperate(session, adminService);
             return rowstatus;
         } catch (Exception e) {
             return "0";
@@ -83,7 +90,6 @@ public class EntrustController {
 
     /**
      * 获得所有的类型名称 以及对应的数量
-     *
      * @param pageTo
      * @return
      */
@@ -97,7 +103,6 @@ public class EntrustController {
             map.put("data", entLimitList);
             map.put("code", "200");
             map.put("total", entList.getTotal());
-            System.out.println(entList.getTotal());
         } catch (Exception e) {
             map.put("code", "500");
         }
@@ -110,10 +115,8 @@ public class EntrustController {
         String msg = "";
         if (moneyBack.getEntPlan().equals("已完成")) {
             msg += "ok";
-            System.err.println("msgmsgmsgmsg==??" + msg);
             return msg;
         } else {
-            System.out.println("委托的价格是 entMoney" + moneyBack.getEntMoney());
             Map<String, Object> map = new HashMap<>();
             ComUser comUser = userService.selOneUser(moneyBack.getEntConsignor());
             map.put("id", moneyBack.getEntConsignor());
@@ -125,21 +128,19 @@ public class EntrustController {
                 map.put("userMoney", moneyBack.getEntMoney() + comUser.getUserMoney());
             }
             entrustService.upQuitEtrustEntMoney(map);
-            ComUser comUser1 = userService.selOneUser(moneyBack.getEntAgent());
             map.put("id", moneyBack.getEntAgent());
             if (moneyBack.getEntAgent() != -1) {
                 money1 = moneyBack.getEntMoney() * 0.1;
                 map.put("userMoney", moneyBack.getEntMoney() * 0.1 + comUser.getUserMoney());
-            }
-            entrustService.upQuitEtrustEntMoney(map);
-            if (moneyBack.getEntAgent() != -1) {
                 msg += "给委托人返回" + money2
                         + "给接单人返回+" + money1;
             } else {
                 msg += "给委托人返回" + money2;
             }
+            entrustService.upQuitEtrustEntMoney(map);
             Integer id = moneyBack.getEntrustId();
             entrustService.delLeisureEntrustById2(id);
+            OperateUtil.addOperate((HttpSession) SecurityUtils.getSubject().getSession(), adminService);
             return msg;
         }
     }
@@ -152,7 +153,7 @@ public class EntrustController {
             return "no";
         }
     }
-    // 判断委托类型是否重复
+
     @PostMapping("verifyAddEntType")
     public String verifyAddEntType(
             @RequestBody ComEntrustType comEntrustType) {
@@ -177,6 +178,7 @@ public class EntrustController {
         boolean bool = entrustService.addEntrustType(EntrustType);
         if (bool) {
             str.append("ok");
+            OperateUtil.addOperate((HttpSession) SecurityUtils.getSubject().getSession(), adminService);
         } else {
             str.append("no");
         }
@@ -187,8 +189,6 @@ public class EntrustController {
     @PostMapping("byEentyToEntList/{id}/{pageNum}/{pageSize}")
     public String byEentyToEntList(PageToById pageTo) {
         HashMap<String, Object> map = new HashMap<>();
-        System.out.println(pageTo);
-        System.out.println(pageTo);
         try {
             PageHelper.startPage(pageTo.getPageNum(), pageTo.getPageSize());
             PageInfo<SysEntrust> sysEntrustPageInfo = new PageInfo<>(userService.byEntrustByType(pageTo.getId()));
@@ -196,7 +196,6 @@ public class EntrustController {
             map.put("data", replies);
             map.put("code", "200");
             map.put("total", sysEntrustPageInfo.getTotal());
-            System.out.println(sysEntrustPageInfo.getTotal());
         } catch (Exception e) {
             map.put("code", "500");
         }

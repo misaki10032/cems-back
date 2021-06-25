@@ -6,11 +6,15 @@ import com.cems.pojo.to.ComUser;
 import com.cems.pojo.to.FormInline;
 import com.cems.pojo.to.PageTo;
 import com.cems.service.ComUserService;
+import com.cems.service.SysAdminService;
+import com.cems.util.OperateUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
 
@@ -25,6 +29,8 @@ import java.util.List;
 public class UserContorller {
     @Autowired
     ComUserService userService;
+    @Autowired
+    SysAdminService adminService;
 
     @GetMapping("getAllUsers")
     public String getUsers() {
@@ -41,6 +47,7 @@ public class UserContorller {
                 rowstatus = "封禁";
             }
             userService.KillUser(rowid, rowstatus);
+            OperateUtil.addOperate((HttpSession) SecurityUtils.getSubject().getSession(), adminService);
             return rowstatus;
         } catch (Exception e) {
             return "0";

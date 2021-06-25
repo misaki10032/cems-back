@@ -8,10 +8,15 @@ import com.cems.pojo.to.FormInline;
 import com.cems.pojo.to.PageTo;
 import com.cems.pojo.to.PageToById;
 import com.cems.service.ForumService;
+import com.cems.service.SysAdminService;
+import com.cems.util.OperateUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
 
@@ -26,6 +31,8 @@ import java.util.List;
 public class ForumController {
     @Autowired
     ForumService forumService;
+    @Autowired
+    SysAdminService adminService;
 
     @PostMapping("getArtlimit/{pageNum}/{pageSize}")
     public String getArticle(PageTo pageTo) {
@@ -72,6 +79,7 @@ public class ForumController {
                 rowstatus = "未审核";
             }
             forumService.killArticle(rowid, rowstatus);
+            OperateUtil.addOperate((HttpSession) SecurityUtils.getSubject().getSession(), adminService);
             return rowstatus;
         } catch (Exception e) {
             return "0";
