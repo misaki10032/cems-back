@@ -14,6 +14,6 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 public class LoginAdmin {
-    String num;
-    String pwd;
+    private String num;
+    private String pwd;
 }

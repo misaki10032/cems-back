@@ -15,7 +15,7 @@ public class WebConfiguration extends WebMvcConfigurationSupport {
         registry.addInterceptor(new TokenInterceptor()).
                 addPathPatterns("/**").
                 excludePathPatterns(
-                        "/web/userlogin"
+                            "/web/userlogin"
                         , "/web/appeal"
                         , "/web/register"
                         , "/web/forgetPsw"

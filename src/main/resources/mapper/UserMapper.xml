@@ -29,7 +29,8 @@
     <select id="getUserLike" resultType="ComUser">
         select id, user_phone, user_pwd, user_role, status
         from cems.com_user
-        where user_phone like #{phone} and status = #{status}
+        where user_phone like #{phone}
+          and status = #{status}
     </select>
 
     <!--进入个人空间前查找-->
@@ -37,7 +38,8 @@
     <select id="judgeAP" parameterType="map" resultType="ComUser">
         select id, user_phone, user_pwd, user_role, status
         from com_user
-        where user_phone = #{phone} and user_pwd = #{psw}
+        where user_phone = #{phone}
+          and user_pwd = #{psw}
     </select>
 
     <!--进入个人空间前查找-->
@@ -70,7 +72,12 @@
              com_entrust_type t
         WHERE e.ent_type_id = t.id
           and t.id = #{typeID}
+    </select>
 
+    <select id="getUserNum" resultType="com.cems.pojo.to.ComUser">
+        select id, user_phone, user_pwd, user_role, status
+        from com_user
+        where user_phone = #{num}
     </select>
 
 </mapper>

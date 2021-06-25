@@ -54,7 +54,25 @@ public class ComUserServiceImpl implements ComUserService {
 
     @Override
     public ComUser getUserNum(String num) {
-        return userMapper.getUserNum(num);
+        ComUser userNum = userMapper.getUserNum(num);
+        ComUser userInfo = userMapper.selOneUser(userNum.getId());
+        ComUser user = new ComUser();
+        user.setId(userNum.getId())
+                .setUserPhone(userNum.getUserPhone())
+                .setUserPwd(userNum.getUserPwd())
+                .setUserRole(userNum.getUserRole())
+                .setStatus(userNum.getStatus())
+                .setUserId(userInfo.getUserId())
+                .setUserPname(userInfo.getUserPname())
+                .setUserName(userInfo.getUserName())
+                .setUserSex(userInfo.getUserSex())
+                .setUserBirth(userInfo.getUserBirth())
+                .setUserEmail(userInfo.getUserEmail())
+                .setUserHouse(userInfo.getUserHouse())
+                .setUserPwdProtect(userInfo.getUserPwdProtect())
+                .setUserDec(userInfo.getUserDec())
+                .setUserMoney(userInfo.getUserMoney());
+        return user;
     }
 
     @Override

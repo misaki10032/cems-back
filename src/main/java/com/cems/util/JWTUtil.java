@@ -6,6 +6,7 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.cems.pojo.SysAdmin;
+import com.cems.pojo.to.ComUser;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -18,30 +19,56 @@ public class JWTUtil {
 
     /**
      * 根据用户id,账号生成token
-     * @param u
+     *
+     * @param o
      * @return
      */
-    public static String getToken(SysAdmin u) {
+    public static String getToken(Object o) {
         String token = "";
-        try {
-            //过期时间 为1970.1.1 0:0:0 至 过期时间  当前的毫秒值 + 有效时间
-            Date expireDate = new Date(new Date().getTime() + 10*24*60*1000);
-            //秘钥及加密算法
-            Algorithm algorithm = Algorithm.HMAC256("ZCEQIUBFKSJBFJH2020BQWE");
-            //设置头部信息
-            Map<String,Object> header = new HashMap<>();
-            header.put("typ","JWT");
-            header.put("alg","HS256");
-            //携带id，账号信息，生成签名
-            token = JWT.create()
-                    .withHeader(header)
-                    .withClaim("id",u.getId())
-                    .withClaim("account",u.getAdminNum())
-                    .withExpiresAt(expireDate)
-                    .sign(algorithm);
-        }catch (Exception e){
-            e.printStackTrace();
-            return  null;
+        if (o instanceof SysAdmin) {
+            SysAdmin admin = (SysAdmin) o;
+            try {
+                //过期时间 为1970.1.1 0:0:0 至 过期时间  当前的毫秒值 + 有效时间
+                Date expireDate = new Date(new Date().getTime() + 10 * 24 * 60 * 1000);
+                //秘钥及加密算法
+                Algorithm algorithm = Algorithm.HMAC256("ZCEQIUBFKSJBFJH2020BQWE");
+                //设置头部信息
+                Map<String, Object> header = new HashMap<>();
+                header.put("typ", "JWT");
+                header.put("alg", "HS256");
+                //携带id，账号信息，生成签名
+                token = JWT.create()
+                        .withHeader(header)
+                        .withClaim("id", admin.getId())
+                        .withClaim("account", admin.getAdminNum())
+                        .withExpiresAt(expireDate)
+                        .sign(algorithm);
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
+        } else {
+            ComUser user = (ComUser) o;
+            try {
+                //过期时间 为1970.1.1 0:0:0 至 过期时间  当前的毫秒值 + 有效时间
+                Date expireDate = new Date(new Date().getTime() + 10 * 24 * 60 * 1000);
+                //秘钥及加密算法
+                Algorithm algorithm = Algorithm.HMAC256("ZCEQIUBFKSJBFJH2020BQWE");
+                //设置头部信息
+                Map<String, Object> header = new HashMap<>();
+                header.put("typ", "JWT");
+                header.put("alg", "HS256");
+                //携带id，账号信息，生成签名
+                token = JWT.create()
+                        .withHeader(header)
+                        .withClaim("id", user.getId())
+                        .withClaim("account", user.getUserPhone())
+                        .withExpiresAt(expireDate)
+                        .sign(algorithm);
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
         }
         return token;
     }
