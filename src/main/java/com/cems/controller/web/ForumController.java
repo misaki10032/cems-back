@@ -9,14 +9,11 @@ import com.cems.pojo.to.PageTo;
 import com.cems.pojo.to.PageToById;
 import com.cems.service.ForumService;
 import com.cems.service.SysAdminService;
-import com.cems.util.OperateUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
 
@@ -63,7 +60,6 @@ public class ForumController {
             map.put("data", articles);
             map.put("code", "200");
             map.put("total", articlePageInfo.getTotal());
-            System.out.println(articlePageInfo.getTotal());
         } catch (Exception e) {
             map.put("code", "500");
         }
@@ -79,7 +75,6 @@ public class ForumController {
                 rowstatus = "未审核";
             }
             forumService.killArticle(rowid, rowstatus);
-            OperateUtil.addOperate((HttpSession) SecurityUtils.getSubject().getSession(), adminService);
             return rowstatus;
         } catch (Exception e) {
             return "0";
@@ -97,7 +92,6 @@ public class ForumController {
             map.put("data", comments);
             map.put("code", "200");
             map.put("total", commentPageInfo.getTotal());
-            System.out.println(commentPageInfo.getTotal());
         } catch (Exception e) {
             map.put("code", "500");
         }
@@ -115,7 +109,6 @@ public class ForumController {
             map.put("data", comments);
             map.put("code", "200");
             map.put("total", commentPageInfo.getTotal());
-            System.out.println(commentPageInfo.getTotal());
         } catch (Exception e) {
             map.put("code", "500");
         }
@@ -134,7 +127,6 @@ public class ForumController {
             map.put("data", replies);
             map.put("code", "200");
             map.put("total", commentReplyPageInfo.getTotal());
-            System.out.println(commentReplyPageInfo.getTotal());
         } catch (Exception e) {
             map.put("code", "500");
         }
@@ -152,7 +144,6 @@ public class ForumController {
             map.put("data", replies);
             map.put("code", "200");
             map.put("total", replyPageInfo.getTotal());
-            System.out.println(replyPageInfo.getTotal());
         } catch (Exception e) {
             map.put("code", "500");
         }

@@ -2,6 +2,8 @@ package com.cems.controller.web;
 
 
 import com.alibaba.fastjson.JSON;
+import com.cems.pojo.SysAdmin;
+import com.cems.pojo.SysAdminSuc;
 import com.cems.pojo.to.ComUser;
 import com.cems.pojo.to.FormInline;
 import com.cems.pojo.to.PageTo;
@@ -11,12 +13,14 @@ import com.cems.util.OperateUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.session.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @ClassName UserContorller
@@ -47,9 +51,9 @@ public class UserContorller {
                 rowstatus = "封禁";
             }
             userService.KillUser(rowid, rowstatus);
-            OperateUtil.addOperate((HttpSession) SecurityUtils.getSubject().getSession(), adminService);
             return rowstatus;
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             return "0";
         }
     }

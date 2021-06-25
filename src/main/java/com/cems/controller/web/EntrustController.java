@@ -48,7 +48,6 @@ public class EntrustController {
     public String getAllEnts() {
         List<ComEntrust> entrusts = entrustService.getEntrusts();
         String s = JSON.toJSONString(entrusts);
-        System.out.println(s);
         return s;
     }
 
@@ -63,7 +62,6 @@ public class EntrustController {
             map.put("data", entLimitList);
             map.put("code", "200");
             map.put("total", entList.getTotal());
-            System.out.println(entList.getTotal());
         } catch (Exception e) {
             map.put("code", "500");
         }
@@ -80,7 +78,6 @@ public class EntrustController {
                 rowstatus = "已审核";
             }
             entrustService.updataEntState(rowid, rowstatus);
-            OperateUtil.addOperate(session, adminService);
             return rowstatus;
         } catch (Exception e) {
             return "0";
@@ -140,7 +137,6 @@ public class EntrustController {
             entrustService.upQuitEtrustEntMoney(map);
             Integer id = moneyBack.getEntrustId();
             entrustService.delLeisureEntrustById2(id);
-            OperateUtil.addOperate((HttpSession) SecurityUtils.getSubject().getSession(), adminService);
             return msg;
         }
     }
@@ -178,7 +174,6 @@ public class EntrustController {
         boolean bool = entrustService.addEntrustType(EntrustType);
         if (bool) {
             str.append("ok");
-            OperateUtil.addOperate((HttpSession) SecurityUtils.getSubject().getSession(), adminService);
         } else {
             str.append("no");
         }

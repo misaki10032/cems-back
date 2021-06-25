@@ -52,7 +52,6 @@ public class SysAdminController {
     public String ShenSuOk(@PathVariable Integer id, @PathVariable String adminNum, HttpSession session) {
         sysAdminService.shensuOK(adminNum);
         sysAdminService.delSS(id);
-        OperateUtil.addOperate(session, sysAdminService);
         return "ok";
     }
 
@@ -92,7 +91,6 @@ public class SysAdminController {
                 rowstatus = "封禁";
             }
             sysAdminService.killAdmin(rowid, rowstatus);
-            OperateUtil.addOperate(session, sysAdminService);
             return rowstatus;
         } catch (Exception e) {
             return "0";
@@ -128,7 +126,6 @@ public class SysAdminController {
             map.put("jiu", jiu);
             map.put("upid", id);
             map.put("status", "已处理");
-            OperateUtil.addOperate(session, sysAdminService);
             sysAdminService.changeUpStatus(map);
             sysAdminService.upAdminOk(map);
         } else {
@@ -138,7 +135,6 @@ public class SysAdminController {
             map.put("upid", id);
             map.put("jiu", jiu);
             map.put("status", "未处理");
-            OperateUtil.addOperate(session, sysAdminService);
             sysAdminService.changeUpStatus(map);
             sysAdminService.upAdminOk(map);
         }
@@ -159,7 +155,6 @@ public class SysAdminController {
     public String updateAdminByNum(@RequestBody SysAdminInfo sysAdminInfo, HttpSession session) {
         try {
             sysAdminService.updateAdminInfo(sysAdminInfo);
-            OperateUtil.addOperate(session, sysAdminService);
             return "ok";
         } catch (Exception e) {
             e.printStackTrace();
@@ -173,7 +168,6 @@ public class SysAdminController {
         if (i==0){
             return "没有要清空的数据了";
         }
-        OperateUtil.addOperate(session, sysAdminService);
         return "清空成功";
     }
 
@@ -200,9 +194,7 @@ public class SysAdminController {
         SysAdmin sysAdmin = sysAdminService.gljudgeAP(map);
         if (sysAdmin != null) {
             sysAdminService.changePassword(map);
-            System.out.println("1212313123123123");
             return "200";
-
         } else {
             return "502";
         }

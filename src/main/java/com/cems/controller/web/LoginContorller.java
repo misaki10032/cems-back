@@ -61,6 +61,7 @@ public class LoginContorller {
             map.put("adminName", num);
             map.put("adminLevel", logingAdmin.getAdminLevel());
             map.put("adminId", logingAdmin.getId());
+            session.setAttribute("adminId", logingAdmin.getId());
             String s = JSON.toJSONString(map);
             System.out.println(s);
             return s;
