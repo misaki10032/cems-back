@@ -2,12 +2,8 @@ package com.cems.mapper;
 
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.cems.pojo.SysAdmin;
-import com.cems.pojo.SysAdminInfo;
-import com.cems.pojo.SysAdminInfoBig;
-import com.cems.pojo.SysShenSu;
+import com.cems.pojo.*;
 import com.cems.pojo.to.LevelUpDTO;
-import com.cems.pojo.SysUpgrade;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
@@ -130,5 +126,17 @@ public interface AdminMapper extends BaseMapper<SysAdmin> {
     int forgetPswOk(Map<String,Object> map);
 
     void changePassword(Map<String, Object> map);
+    /**
+     * 管理员注册添加绩效信息
+     */
+    int insertSysSuc(int id);
+    /**
+     * 查询某个管理员绩效
+     */
+    SysAdminSuc selOneSysSuc(int adminId);
+    /**
+     * 更新次数
+     */
+    int setSysLoginGraph(Map<String, Object> map);
 }
 

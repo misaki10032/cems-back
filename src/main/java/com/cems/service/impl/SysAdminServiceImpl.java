@@ -3,12 +3,8 @@ package com.cems.service.impl;
 
 
 import com.cems.mapper.AdminMapper;
-import com.cems.pojo.SysAdmin;
-import com.cems.pojo.SysAdminInfo;
-import com.cems.pojo.SysAdminInfoBig;
-import com.cems.pojo.SysShenSu;
+import com.cems.pojo.*;
 import com.cems.pojo.to.LevelUpDTO;
-import com.cems.pojo.SysUpgrade;
 import com.cems.service.SysAdminService;
 import com.cems.util.RedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -104,6 +100,21 @@ public class SysAdminServiceImpl implements SysAdminService {
     @Override
     public void changePassword(Map<String, Object> map) {
         adminMapper.changePassword(map);
+    }
+
+    @Override
+    public int insertSysSuc(int id) {
+        return adminMapper.insertSysSuc(id);
+    }
+
+    @Override
+    public SysAdminSuc selOneSysSuc(int adminId) {
+        return adminMapper.selOneSysSuc(adminId);
+    }
+
+    @Override
+    public int setSysLoginGraph(Map<String, Object> map) {
+        return adminMapper.setSysLoginGraph(map);
     }
 
     @Override

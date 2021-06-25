@@ -16,6 +16,7 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -56,7 +57,6 @@ public class SysAdminController {
     @PostMapping("addlevelup")
     public String addLevelUp(@RequestBody LevelUpDTO level) {
         try {
-            System.err.println(level);
             sysAdminService.addLevelUp(level);
             return "200";
         } catch (Exception e) {
@@ -82,7 +82,7 @@ public class SysAdminController {
     }
 
     @GetMapping("killAdmin")
-    public String KillUser(Integer rowid, String rowstatus) {
+    public String KillUser(Integer rowid, String rowstatus, HttpSession session) {
         try {
             if (rowstatus.equals("正常")) {
                 rowstatus = "正常";
@@ -93,6 +93,13 @@ public class SysAdminController {
             return rowstatus;
         } catch (Exception e) {
             return "0";
+        }finally {
+            SysAdmin admin = (SysAdmin) session.getAttribute("LogingAdmin");
+            SysAdminSuc sysAdminSuc = sysAdminService.selOneSysSuc(admin.getId());
+            Map<String,Object> map = new HashMap<>();
+            map.put("adminId",admin.getId());
+            map.put("operateNum",sysAdminSuc.getOperateNum()+1);
+            sysAdminService.setSysLoginGraph(map);
         }
     }
 
@@ -114,36 +121,44 @@ public class SysAdminController {
     }
 
     @GetMapping("UpOk")
-    public String UpOk(Integer id, String status) {
-        SysUpgrade adminUp = sysAdminService.getAdminUp((Integer) id);
-        String jiu = adminUp.getAdminNow();
-        String xin = adminUp.getAdminTarget();
-        Map<String, Object> map = new HashMap<>();
-        if (status.equals("已处理")) {
-            map.put("id", adminUp.getAdminId());
-            map.put("level", xin);
-            map.put("adminlevel", xin);
-            map.put("jiu", jiu);
-            map.put("upid", id);
-            map.put("status", "已处理");
-            sysAdminService.changeUpStatus(map);
-            sysAdminService.upAdminOk(map);
-        } else {
-            map.put("id", adminUp.getAdminId());
-            map.put("adminlevel", jiu);
-            map.put("level", xin);
-            map.put("upid", id);
-            map.put("jiu", jiu);
-            map.put("status", "未处理");
-            sysAdminService.changeUpStatus(map);
-            sysAdminService.upAdminOk(map);
+    public String UpOk(Integer id, String status,HttpSession session) {
+        try {
+            SysUpgrade adminUp = sysAdminService.getAdminUp((Integer) id);
+            String jiu = adminUp.getAdminNow();
+            String xin = adminUp.getAdminTarget();
+            Map<String, Object> map = new HashMap<>();
+            if (status.equals("已处理")) {
+                map.put("id", adminUp.getAdminId());
+                map.put("level", xin);
+                map.put("adminlevel", xin);
+                map.put("jiu", jiu);
+                map.put("upid", id);
+                map.put("status", "已处理");
+                sysAdminService.changeUpStatus(map);
+                sysAdminService.upAdminOk(map);
+            } else {
+                map.put("id", adminUp.getAdminId());
+                map.put("adminlevel", jiu);
+                map.put("level", xin);
+                map.put("upid", id);
+                map.put("jiu", jiu);
+                map.put("status", "未处理");
+                sysAdminService.changeUpStatus(map);
+                sysAdminService.upAdminOk(map);
+            }
+            return "";
+        }finally {
+            SysAdmin admin = (SysAdmin) session.getAttribute("LogingAdmin");
+            SysAdminSuc sysAdminSuc = sysAdminService.selOneSysSuc(admin.getId());
+            Map<String,Object> map = new HashMap<>();
+            map.put("adminId",admin.getId());
+            map.put("operateNum",sysAdminSuc.getOperateNum()+1);
+            sysAdminService.setSysLoginGraph(map);
         }
-        return "";
     }
 
     @PostMapping("changePwd")
     public String changePwd(String msg) {
-        System.out.println(msg);
         return "200";
     }
 
@@ -164,12 +179,21 @@ public class SysAdminController {
         }
     }
     @GetMapping("delAllUp")
-    public String delAllUp(String status){
+    public String delAllUp(String status,HttpSession session){
+        try{
         int i = sysAdminService.delAllUp(status);
         if (i==0){
             return "没有要清空的数据了";
         }
         return "清空成功";
+        }finally {
+            SysAdmin admin = (SysAdmin) session.getAttribute("LogingAdmin");
+            SysAdminSuc sysAdminSuc = sysAdminService.selOneSysSuc(admin.getId());
+            Map<String,Object> map = new HashMap<>();
+            map.put("adminId",admin.getId());
+            map.put("operateNum",sysAdminSuc.getOperateNum()+1);
+            sysAdminService.setSysLoginGraph(map);
+        }
     }
 
 

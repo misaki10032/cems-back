@@ -173,6 +173,30 @@
         set admin_pwd = #{pass}
         where admin_num = #{phone}
     </update>
+    <!--管理员注册添加绩效信息-->
+    <insert id="insertSysSuc" parameterType="int">
+        insert into sys_admin_suc (admin_id, login_num, operate_num, admin_type)
+        values (#{id}, 0, 0, 'unfinished')
+    </insert>
+    <!--查询某个管理员绩效-->
+    <select id="selOneSysSuc" parameterType="int" resultType="SysAdminSuc">
+        select admin_id, login_num, operate_num, admin_type
+        from sys_admin_suc
+        where admin_id = #{adminId}
+    </select>
+    <!--更新次数-->
+    <update id="setSysLoginGraph" parameterType="map">
+        update sys_admin_suc
+        <set>
+            <if test="loginNum!=null">
+                login_num=#{loginNum},
+            </if>
+            <if test="operateNum!=null">
+                operate_num=#{operateNum},
+            </if>
+        </set>
+        where admin_id = #{adminId}
+    </update>
 
 
 

@@ -2,6 +2,7 @@ package com.cems.controller.web;
 import com.alibaba.fastjson.JSON;
 import com.cems.pojo.SysAdmin;
 import com.cems.pojo.SysAdminInfoBig;
+import com.cems.pojo.SysAdminSuc;
 import com.cems.pojo.to.Appeal;
 import com.cems.pojo.to.ComUser;
 import com.cems.pojo.to.LoginAdmin;
@@ -71,6 +72,13 @@ public class LoginContorller {
             return "403";
         } catch (Exception e) {
             return "500";
+        }finally {
+            SysAdmin admin = (SysAdmin) session.getAttribute("LogingAdmin");
+            SysAdminSuc sysAdminSuc = sysAdminService.selOneSysSuc(admin.getId());
+            Map<String,Object> map = new HashMap<>();
+            map.put("adminId",admin.getId());
+            map.put("loginNum",sysAdminSuc.getLoginNum()+1);
+            sysAdminService.setSysLoginGraph(map);
         }
     }
     /**用户申诉*/
@@ -131,6 +139,7 @@ public class LoginContorller {
             SysAdmin sysAdmin = sysAdminService.selOneSysZC(appeal.getAcc());
             map.put("id", sysAdmin.getId());
             sysAdminService.insertEmail(map);
+            sysAdminService.insertSysSuc(sysAdmin.getId());
             return "200";
         }
     }
