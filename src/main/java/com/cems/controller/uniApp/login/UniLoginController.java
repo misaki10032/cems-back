@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @ClassName LoginController
@@ -27,10 +28,11 @@ import java.util.HashMap;
  */
 @RestController
 @RequestMapping("uniApp")
-public class LoginController {
+public class UniLoginController {
 
     @PostMapping("uniAppLogin")
-    public String UserLogin(@RequestBody LoginAdmin json) {
+    public Map<String, Object> UserLogin(@RequestBody LoginAdmin json) {
+        HashMap<String, Object> map = new HashMap<>();
         System.out.println(json);
         String num = json.getNum();
         String pwd = json.getPwd();
@@ -43,23 +45,25 @@ public class LoginController {
             subject.login(token);//通过subject取
             ComUser loginUser = (ComUser) session.getAttribute("loginUser");
             String userToken = JWTUtil.getToken(loginUser);
-            HashMap<String, Object> map = new HashMap<>();
             map.put("token", userToken);
             map.put("loginUser", loginUser);
             map.put("pName", loginUser.getUserPname());
             map.put("userId", loginUser.getId());
-            String s = JSON.toJSONString(map);
-            System.out.println(s);
-            return s;
+            map.put("code", "200");
         } catch (UnknownAccountException uae) {
-            return "404";
+            map.put("code", "500");
+            map.put("msg", "账号未注册!");
         } catch (IncorrectCredentialsException ice) {
-            return "502";
+            map.put("code", "501");
+            map.put("msg", "密码或账号错误!");
         } catch (LockedAccountException lae) {
-            return "403";
+            map.put("code", "502");
+            map.put("msg", "账号被锁定!");
         } catch (Exception e) {
-            return "500";
+            map.put("code", "503");
+            map.put("msg", "服务器异常!");
         }
+        return map;
     }
 
 }
