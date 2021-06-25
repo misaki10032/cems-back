@@ -2,8 +2,11 @@ package com.cems.service.impl;
 
 
 import com.cems.mapper.EntrustMapper;
+import com.cems.mapper.UserMapper;
 import com.cems.pojo.ComEntrust;
 import com.cems.pojo.ComEntrustType;
+import com.cems.pojo.to.ComUser;
+import com.cems.pojo.uni.UniEntrust;
 import com.cems.service.ComEntrustService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,6 +25,8 @@ import java.util.Map;
 public class ComEntrustServiceImpl implements ComEntrustService {
     @Autowired
     EntrustMapper entrustMapper;
+    @Autowired
+    UserMapper userMapper;
 
     @Override
     public int upQuitEtrustEntMoney(Map<String, Object> map) {
@@ -53,7 +58,6 @@ public class ComEntrustServiceImpl implements ComEntrustService {
             System.err.println(entrustType + "有重复的");
             return false;
         } else {
-//            entrustMapper.addEntrustType(entrustType);
             System.err.println(entrustType + "无重复");
             return true;
         }
@@ -85,6 +89,27 @@ public class ComEntrustServiceImpl implements ComEntrustService {
     }
 
     @Override
+    public UniEntrust getEntById(int id) {
+        UniEntrust entrust = new UniEntrust();
+        ComEntrust oldEnt = entrustMapper.getEntById(id);
+        entrust.setId(oldEnt.getId())
+                .setEntData(oldEnt.getEntData())
+                .setEntState(oldEnt.getEntState())
+                .setEntPlan(oldEnt.getEntPlan())
+                .setGmtCreate(oldEnt.getGmtCreate())
+                .setGmtEnd(oldEnt.getGmtEnd())
+                .setGmtMoney(Integer.parseInt(oldEnt.getEntMoney()));
+        entrust.setEntConsignor(userMapper.selOneUser(oldEnt.getEntConsignor()).getUserPname());
+        if (oldEnt.getEntAgent() != -1) {
+            entrust.setEntAgent(userMapper.selOneUser(oldEnt.getEntConsignor()).getUserPname());
+        } else {
+            entrust.setEntAgent("还没有被接取");
+        }
+        entrust.setEntType(entrustMapper.getEntTypeById(Integer.parseInt(oldEnt.getEntTypeId())).getEntType());
+        return entrust;
+    }
+
+    @Override
     public List<Integer> getTypeNums() {
         return entrustMapper.getTypeNums();
     }
@@ -106,8 +131,12 @@ public class ComEntrustServiceImpl implements ComEntrustService {
 
     @Override
     public List<ComEntrust> getEntrusts() {
-
         return entrustMapper.getEntrusts();
+    }
+
+    @Override
+    public List<ComEntrust> getEntrustsOk() {
+        return entrustMapper.getEntrustsOk();
     }
 
     @Override

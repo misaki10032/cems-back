@@ -24,12 +24,13 @@ public interface EntrustMapper extends BaseMapper<ComEntrust> {
 
     List<ComEntrust> getEntrusts();
 
+    List<ComEntrust> getEntrustsOk();
+
     List<ComEntrustType> getEntTypes();
 
     void updataEntState(@Param("id") int id, @Param("status") String status);
 
     int upQuitEtrustEntMoney(Map<String, Object> map);
-
 
     void delLeisureEntrustById2(Integer id);
 
@@ -50,4 +51,10 @@ public interface EntrustMapper extends BaseMapper<ComEntrust> {
     List<String> getExistEnt();
 
     List<Integer> getExistEntNums();
+
+    ComEntrust getEntById(int id);
+
+    ComEntrustType getEntTypeById(int id);
+
+
 }

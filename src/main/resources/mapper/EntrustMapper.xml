@@ -3,9 +3,9 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cems.mapper.EntrustMapper">
     <select id="getEntTypes" resultType="ComEntrustType">
-        SELECT t.`id`               id,
-               t.ent_type           entType,
-               COUNT(e.ent_type_id) entTypeNum
+        SELECT t.id                 as id,
+               t.ent_type           as entType,
+               COUNT(e.ent_type_id) as entTypeNum
         FROM com_entrust e
                  RIGHT JOIN com_entrust_type t
                             ON e.ent_type_id = t.id
@@ -13,7 +13,6 @@
         ORDER BY t.id
     </select>
     <update id="updataEntState">
-
         update cems.com_entrust
         set ent_state = #{status}
         where id = #{id}
@@ -102,5 +101,39 @@
                gmt_end,
                ent_money
         from com_entrust
+    </select>
+    <select id="getEntrustsOk" resultType="ComEntrust">
+        select id,
+               ent_data,
+               ent_consignor,
+               ent_agent,
+               ent_state,
+               ent_type_id,
+               ent_plan,
+               gmt_create,
+               gmt_end,
+               ent_money
+        from com_entrust
+        where ent_state = '已审核';
+    </select>
+    <select id="getEntById" resultType="ComEntrust">
+        select id,
+               ent_data,
+               ent_consignor,
+               ent_agent,
+               ent_state,
+               ent_type_id,
+               ent_plan,
+               gmt_create,
+               gmt_end,
+               ent_money
+        from com_entrust
+        where ent_state = '已审核'
+          and id = #{id}
+    </select>
+    <select id="getEntTypeById" resultType="ComEntrustType">
+        select id, ent_type
+        from com_entrust_type
+        where id = #{id}
     </select>
 </mapper>
