@@ -46,4 +46,10 @@ public interface UserMapper extends BaseMapper<ComUser> {
     void userResiger(ComUser user);
 
     void addUserInfo(ComUser user);
+
+    ComUser getUserEmil(@Param("emil") String emil, @Param("id") String id);
+
+    void updateUserPwd(@Param("id") int id, @Param("pwd") String pwd);
+
+    ComUser getUserById(int id);
 }

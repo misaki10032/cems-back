@@ -32,4 +32,8 @@ public interface ComUserService {
     ComUser judgeAP(Map<String, Object> map);
 
     void userResiger(ComUser user);
+
+    ComUser getUserEmil(String emil, String phone);
+
+    void updateUserPwd(int id, String pwd);
 }

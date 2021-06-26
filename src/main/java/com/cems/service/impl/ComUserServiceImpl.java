@@ -90,4 +90,25 @@ public class ComUserServiceImpl implements ComUserService {
         userMapper.addUserInfo(user);
     }
 
+    @Override
+    public ComUser getUserEmil(String emil, String phone) {
+        ComUser userNum = userMapper.getUserNum(phone);
+        ComUser userEmil = userMapper.getUserEmil(emil, String.valueOf(userNum.getId()));
+        if (userEmil == null) {
+            return null;
+        }
+        return userEmil;
+    }
+
+    @Override
+    public void updateUserPwd(int id, String pwd) {
+        ComUser comUser = userMapper.getUserById(id);
+        System.err.println(id + "=-------------------------=" + pwd);
+        //将新密码加密存储
+        System.err.println("========================" + comUser);
+        String newPwd = ShiroMd5Util.toPwdMd5(comUser.getUserPhone(), pwd);
+        System.err.println(newPwd);
+        userMapper.updateUserPwd(id, newPwd);
+    }
+
 }

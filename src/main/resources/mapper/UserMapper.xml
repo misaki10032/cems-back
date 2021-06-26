@@ -82,5 +82,37 @@
         insert into com_user_info(user_id, user_email, user_pname, user_money)
             value (#{userId}, #{userEmail}, #{userPname}, 0)
     </insert>
-
+    <select id="getUserEmil" resultType="com.cems.pojo.to.ComUser">
+        select user_id,
+               user_email
+        from com_user_info
+        where user_email = #{emil}
+          and user_id = #{id}
+    </select>
+    <update id="updateUserPwd">
+        update com_user
+        set user_pwd = #{pwd}
+        where id = #{id}
+    </update>
+    <select id="getUserById" resultType="com.cems.pojo.to.ComUser">
+        select f.id,
+               f.user_id,
+               f.user_email,
+               f.user_house,
+               f.user_birth,
+               f.user_pwd_protect,
+               f.user_dec,
+               f.user_name,
+               f.user_pname,
+               f.user_sex,
+               f.user_money,
+               c.user_phone,
+               c.user_pwd,
+               c.status,
+               c.user_role
+        from com_user_info f
+                 inner join com_user c
+                            on f.user_id = c.id
+        where user_id = #{userId}
+    </select>
 </mapper>
