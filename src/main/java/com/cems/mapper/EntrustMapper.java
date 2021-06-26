@@ -34,10 +34,8 @@ public interface EntrustMapper extends BaseMapper<ComEntrust> {
 
     void delLeisureEntrustById2(Integer id);
 
-    //删除委托
     String handleDeleteById(Integer id);
 
-    //添加一个委托
     void addEntrustType(String entrustType);
 
     List<String> getEntrustName();
@@ -55,6 +53,16 @@ public interface EntrustMapper extends BaseMapper<ComEntrust> {
     ComEntrust getEntById(int id);
 
     ComEntrustType getEntTypeById(int id);
+
+    void getThisEntrust(@Param("taskId") int taskId, @Param("userId") int userId);
+
+    ComEntrustType getTypeById(int id);
+
+    ComEntrustType getTypeByName(String text);
+
+    List<ComEntrust> getEntByText(@Param("text") String text, @Param("textType") String textType, @Param("entPlan") String entPlan);
+
+    List<ComEntrust> getEntByPlan(String entPlan);
 
 
 }

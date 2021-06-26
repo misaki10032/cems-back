@@ -3,8 +3,8 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cems.mapper.EntrustMapper">
     <select id="getEntTypes" resultType="ComEntrustType">
-        SELECT t.id                 as id,
-               t.ent_type           as entType,
+        SELECT t.id       as id,
+               t.ent_type as entType,
                COUNT(e.ent_type_id) as entTypeNum
         FROM com_entrust e
                  RIGHT JOIN com_entrust_type t
@@ -17,14 +17,12 @@
         set ent_state = #{status}
         where id = #{id}
     </update>
-
     <update id="upQuitEtrustEntMoney" parameterType="map">
         UPDATE
             com_user_info
         SET user_money = #{userMoney}
         where id = #{id}
     </update>
-
     <!--丢弃该委托 并删除-->
     <delete id="delLeisureEntrustById2" parameterType="int">
         delete
@@ -56,7 +54,6 @@
         GROUP BY t.id
         ORDER BY t.id;
     </select>
-
     <select id="getEntPlan" resultType="string">
         SELECT e.ent_plan
         FROM com_entrust e
@@ -114,7 +111,7 @@
                gmt_end,
                ent_money
         from com_entrust
-        where ent_state = '已审核';
+        where ent_state = '已审核'
     </select>
     <select id="getEntById" resultType="ComEntrust">
         select id,
@@ -136,4 +133,58 @@
         from com_entrust_type
         where id = #{id}
     </select>
+    <update id="getThisEntrust">
+        update com_entrust
+        set ent_agent = #{userId}
+          , ent_plan='已被接'
+        where id = #{taskId}
+    </update>
+    <select id="getEntByPlan" resultType="ComEntrust">
+        select id,
+               ent_data,
+               ent_consignor,
+               ent_agent,
+               ent_state,
+               ent_type_id,
+               ent_plan,
+               gmt_create,
+               gmt_end,
+               ent_money
+        from com_entrust
+        where ent_state = '已审核'
+          and ent_plan = #{entPlan}
+    </select>
+    <select id="getEntByText" resultType="ComEntrust">
+        select id,
+        ent_data,
+        ent_consignor,
+        ent_agent,
+        ent_state,
+        ent_type_id,
+        ent_plan,
+        gmt_create,
+        gmt_end,
+        ent_money
+        from com_entrust
+        where ent_state = '已审核'
+        and ent_plan = #{entPlan}
+        <if test="textType!=null">
+            or ent_type_id like #{textType}
+        </if>
+        and ent_data like #{text}
+        or gmt_create like #{text}
+        or gmt_end like #{text}
+
+    </select>
+    <select id="getTypeByName" resultType="ComEntrustType">
+        select id, ent_type
+        from com_entrust_type
+        where ent_type = #{text}
+    </select>
+    <select id="getTypeById" resultType="ComEntrustType">
+        select id, ent_type
+        from com_entrust_type
+        where id = #{id}
+    </select>
+
 </mapper>

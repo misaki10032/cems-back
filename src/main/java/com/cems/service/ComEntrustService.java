@@ -48,4 +48,11 @@ public interface ComEntrustService {
 
     UniEntrust getEntById(int id);
 
+    void getThisTask(int taskId, int userId);
+
+    List<ComEntrust> getEntByPlan(String plan);
+
+    List<ComEntrust> getEntByText(String text, String plan);
+
+
 }
