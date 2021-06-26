@@ -84,6 +84,7 @@ public class Uni_EntrustController {
     @GetMapping("getEntsByText")
     public Map<String, Object> getEntsbyText(UniPage page) {
         try {
+            System.err.println(page);
             PageHelper.startPage(Integer.parseInt(page.getPageIndex()), Integer.parseInt(page.getPageSize()));
             PageInfo<ComEntrust> entList = new PageInfo<>(entrustService.getEntByText(page.getText(), page.getEntPlan()));
             Map<String, Object> map = new HashMap<>();

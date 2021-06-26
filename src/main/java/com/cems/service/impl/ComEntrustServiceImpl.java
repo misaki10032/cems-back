@@ -5,9 +5,11 @@ import com.cems.mapper.EntrustMapper;
 import com.cems.mapper.UserMapper;
 import com.cems.pojo.ComEntrust;
 import com.cems.pojo.ComEntrustType;
-import com.cems.pojo.to.ComUser;
 import com.cems.pojo.uni.UniEntrust;
+import com.cems.pojo.uni.UniPage;
 import com.cems.service.ComEntrustService;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -131,12 +133,25 @@ public class ComEntrustServiceImpl implements ComEntrustService {
         if (typeByName != null) {
             type = String.valueOf(typeByName.getId());
         }
-        List<ComEntrust> entByText = entrustMapper.getEntByText(text, type, plan);
-        for (ComEntrust comEntrust : entByText) {
+        if (plan.equals("全部")) {
+            plan = null;
+        }
+        List<ComEntrust> entList = entrustMapper.getEntByText("%" + text + "%", type, plan);
+        for (ComEntrust comEntrust : entList) {
             String entTypeId = comEntrust.getEntTypeId();
             comEntrust.setEntTypeId(entrustMapper.getTypeById(Integer.parseInt(entTypeId)).getEntType());
         }
-        return entByText;
+        return entList;
+    }
+
+    @Override
+    public String getEntIdByName(String name) {
+        return entrustMapper.getTypeByName(name).getEntType();
+    }
+
+    @Override
+    public int getTypeById(int id) {
+        return entrustMapper.getTypeById(id).getId();
     }
 
     @Override

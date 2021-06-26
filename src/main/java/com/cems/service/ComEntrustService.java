@@ -4,6 +4,8 @@ package com.cems.service;
 import com.cems.pojo.ComEntrust;
 import com.cems.pojo.ComEntrustType;
 import com.cems.pojo.uni.UniEntrust;
+import com.cems.pojo.uni.UniPage;
+import com.github.pagehelper.PageInfo;
 
 import java.util.List;
 import java.util.Map;
@@ -54,5 +56,7 @@ public interface ComEntrustService {
 
     List<ComEntrust> getEntByText(String text, String plan);
 
+    String getEntIdByName(String name);
 
+    int getTypeById(int id);
 }

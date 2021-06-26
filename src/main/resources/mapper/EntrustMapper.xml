@@ -167,13 +167,20 @@
         ent_money
         from com_entrust
         where ent_state = '已审核'
-        and ent_plan = #{entPlan}
-        <if test="textType!=null">
-            or ent_type_id like #{textType}
+        <if test="entPlan!=null">
+            and ent_plan = #{entPlan}
         </if>
-        and ent_data like #{text}
-        or gmt_create like #{text}
-        or gmt_end like #{text}
+        <if test="textType!=null">
+            and ent_type_id = #{textType}
+        </if>
+        <if test="textType==null">
+            and (
+            ent_data like #{text}
+            or gmt_create like #{text}
+            or gmt_end like #{text}
+            )
+        </if>
+
 
     </select>
     <select id="getTypeByName" resultType="ComEntrustType">
