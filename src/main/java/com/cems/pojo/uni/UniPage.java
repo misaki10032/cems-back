@@ -18,4 +18,5 @@ public class UniPage {
     private String pageSize;
     private String entPlan;
     private String text;
+    private String id;
 }

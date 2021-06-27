@@ -127,6 +127,16 @@ public class ComEntrustServiceImpl implements ComEntrustService {
     }
 
     @Override
+    public List<ComEntrust> getUserEntByPlan(String plan, int id) {
+        List<ComEntrust> entByPlan = entrustMapper.getUserEntByPlan(plan, id);
+        for (ComEntrust comEntrust : entByPlan) {
+            String entTypeId = comEntrust.getEntTypeId();
+            comEntrust.setEntTypeId(entrustMapper.getTypeById(Integer.parseInt(entTypeId)).getEntType());
+        }
+        return entByPlan;
+    }
+
+    @Override
     public List<ComEntrust> getEntByText(String text, String plan) {
         ComEntrustType typeByName = entrustMapper.getTypeByName(text);
         String type = null;
@@ -145,6 +155,24 @@ public class ComEntrustServiceImpl implements ComEntrustService {
     }
 
     @Override
+    public List<ComEntrust> getUserEntByText(String text, String plan, int id) {
+        ComEntrustType typeByName = entrustMapper.getTypeByName(text);
+        String type = null;
+        if (typeByName != null) {
+            type = String.valueOf(typeByName.getId());
+        }
+        if (plan.equals("全部")) {
+            plan = null;
+        }
+        List<ComEntrust> entList = entrustMapper.getUserEntByText("%" + text + "%", type, plan, id);
+        for (ComEntrust comEntrust : entList) {
+            String entTypeId = comEntrust.getEntTypeId();
+            comEntrust.setEntTypeId(entrustMapper.getTypeById(Integer.parseInt(entTypeId)).getEntType());
+        }
+        return entList;
+    }
+
+    @Override
     public String getEntIdByName(String name) {
         return entrustMapper.getTypeByName(name).getEntType();
     }
@@ -152,6 +180,16 @@ public class ComEntrustServiceImpl implements ComEntrustService {
     @Override
     public int getTypeById(int id) {
         return entrustMapper.getTypeById(id).getId();
+    }
+
+    @Override
+    public List<ComEntrust> getUserEntrustsOk(int id) {
+        List<ComEntrust> userEntrustsOk = entrustMapper.getUserEntrustsOk(id);
+        for (ComEntrust comEntrust : userEntrustsOk) {
+            String entTypeId = comEntrust.getEntTypeId();
+            comEntrust.setEntTypeId(entrustMapper.getTypeById(Integer.parseInt(entTypeId)).getEntType());
+        }
+        return userEntrustsOk;
     }
 
     @Override

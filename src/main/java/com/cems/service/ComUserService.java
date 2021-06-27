@@ -36,4 +36,8 @@ public interface ComUserService {
     ComUser getUserEmil(String emil, String phone);
 
     void updateUserPwd(int id, String pwd);
+
+    int revUserInfo(ComUser user);
+
+    ComUser getUserById(int id);
 }

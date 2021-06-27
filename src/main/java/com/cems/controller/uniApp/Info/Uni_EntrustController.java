@@ -97,4 +97,50 @@ public class Uni_EntrustController {
         }
     }
 
+    @GetMapping("getUserEnts")
+    public Map<String, Object> getEnts(String pageIndex, String pageSize, String id) {
+        try {
+            PageHelper.startPage(Integer.parseInt(pageIndex), Integer.parseInt(pageSize));
+            PageInfo<ComEntrust> entList = new PageInfo<>(entrustService.getUserEntrustsOk(Integer.parseInt(id)));
+            Map<String, Object> map = new HashMap<>();
+            map.put("data", entList.getList());
+            map.put("total", entList.getTotal());
+            return map;
+        } catch (Exception e) {
+            System.err.println("查找失败!!!");
+            return null;
+        }
+    }
+
+    @GetMapping("getUserEntsByPlan")
+    public Map<String, Object> getUserEntsbyPlan(UniPage page) {
+        try {
+            PageHelper.startPage(Integer.parseInt(page.getPageIndex()), Integer.parseInt(page.getPageSize()));
+            PageInfo<ComEntrust> entList = new PageInfo<>(entrustService.getUserEntByPlan(page.getEntPlan(), Integer.parseInt(page.getId())));
+            Map<String, Object> map = new HashMap<>();
+            map.put("data", entList.getList());
+            map.put("total", entList.getTotal());
+            return map;
+        } catch (Exception e) {
+            System.err.println("查找失败!!!");
+            return null;
+        }
+    }
+
+    @GetMapping("getUserEntsByText")
+    public Map<String, Object> getUserEntsbyText(UniPage page) {
+        try {
+            System.err.println(page);
+            PageHelper.startPage(Integer.parseInt(page.getPageIndex()), Integer.parseInt(page.getPageSize()));
+            PageInfo<ComEntrust> entList = new PageInfo<>(entrustService.getUserEntByText(page.getText(), page.getEntPlan(), Integer.parseInt(page.getId())));
+            Map<String, Object> map = new HashMap<>();
+            map.put("data", entList.getList());
+            map.put("total", entList.getTotal());
+            return map;
+        } catch (Exception e) {
+            System.err.println("查找失败!!!");
+            return null;
+        }
+    }
+
 }

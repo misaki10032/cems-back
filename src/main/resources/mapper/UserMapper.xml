@@ -115,4 +115,33 @@
                             on f.user_id = c.id
         where user_id = #{userId}
     </select>
+    <update id="revUserInfo">
+        update com_user_info
+        set
+        <if test="userEmail!=null">
+            user_email = #{userEmail}
+        </if>
+        <if test="userHouse!=null">
+            ,user_house = #{userHouse}
+        </if>
+        <if test="userBirth!=null">
+            ,user_birth = #{userBirth}
+        </if>
+        <if test="userPwdProtect!=null">
+            ,user_pwd_protect = #{userPwdProtect}
+        </if>
+        <if test="userDec!=null">
+            ,user_dec = #{userDec}
+        </if>
+        <if test="userName!=null">
+            ,user_name = #{userName}
+        </if>
+        <if test="userPname!=null">
+            ,user_pname = #{userPname}
+        </if>
+        <if test="userSex!=null">
+            ,user_sex = #{userSex}
+        </if>
+        where user_id = #{userId}
+    </update>
 </mapper>

@@ -64,5 +64,10 @@ public interface EntrustMapper extends BaseMapper<ComEntrust> {
 
     List<ComEntrust> getEntByPlan(String entPlan);
 
+    List<ComEntrust> getUserEntrustsOk(int id);
+
+    List<ComEntrust> getUserEntByText(@Param("text") String text, @Param("textType") String textType, @Param("entPlan") String entPlan, @Param("id") int id);
+
+    List<ComEntrust> getUserEntByPlan(@Param("entPlan") String entPlan, @Param("id") int id);
 
 }

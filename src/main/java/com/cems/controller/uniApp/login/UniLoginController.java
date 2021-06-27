@@ -1,7 +1,4 @@
 package com.cems.controller.uniApp.login;
-
-import com.alibaba.fastjson.JSON;
-import com.cems.pojo.SysAdmin;
 import com.cems.pojo.to.ComUser;
 import com.cems.pojo.to.LoginAdmin;
 import com.cems.service.ComUserService;
@@ -18,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -113,7 +109,6 @@ public class UniLoginController {
             mailMessage.setTo(email);
             mailMessage.setFrom("fcms_snut@qq.com");
             mailSender.send(mailMessage);
-            System.err.println("=============================成功发送=============================");
             map.put("code", "200");
             map.put("msg", msg);
         } catch (Exception e) {

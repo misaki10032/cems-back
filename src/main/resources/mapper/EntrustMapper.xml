@@ -3,8 +3,8 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cems.mapper.EntrustMapper">
     <select id="getEntTypes" resultType="ComEntrustType">
-        SELECT t.id       as id,
-               t.ent_type as entType,
+        SELECT t.id                 as id,
+               t.ent_type           as entType,
                COUNT(e.ent_type_id) as entTypeNum
         FROM com_entrust e
                  RIGHT JOIN com_entrust_type t
@@ -112,6 +112,7 @@
                ent_money
         from com_entrust
         where ent_state = '已审核'
+        order by ent_plan
     </select>
     <select id="getEntById" resultType="ComEntrust">
         select id,
@@ -193,5 +194,66 @@
         from com_entrust_type
         where id = #{id}
     </select>
+    <select id="getUserEntrustsOk" resultType="ComEntrust">
+        select id,
+               ent_data,
+               ent_consignor,
+               ent_agent,
+               ent_state,
+               ent_type_id,
+               ent_plan,
+               gmt_create,
+               gmt_end,
+               ent_money
+        from com_entrust
+        where ent_state = '已审核'
+          and ent_agent = #{id}
+        order by ent_plan
+    </select>
+    <select id="getUserEntByPlan" resultType="ComEntrust">
+        select id,
+               ent_data,
+               ent_consignor,
+               ent_agent,
+               ent_state,
+               ent_type_id,
+               ent_plan,
+               gmt_create,
+               gmt_end,
+               ent_money
+        from com_entrust
+        where ent_state = '已审核'
+          and ent_plan = #{entPlan}
+          and ent_agent = #{id}
+    </select>
+    <select id="getUserEntByText" resultType="ComEntrust">
+        select id,
+        ent_data,
+        ent_consignor,
+        ent_agent,
+        ent_state,
+        ent_type_id,
+        ent_plan,
+        gmt_create,
+        gmt_end,
+        ent_money
+        from com_entrust
+        where ent_state = '已审核'
+        and ent_agent = #{id}
+        <if test="entPlan!=null">
+            and ent_plan = #{entPlan}
+        </if>
+        <if test="textType!=null">
+            and ent_type_id = #{textType}
+        </if>
+        <if test="textType==null">
+            and (
+            ent_data like #{text}
+            or gmt_create like #{text}
+            or gmt_end like #{text}
+            )
+        </if>
 
+
+    </select>
 </mapper>

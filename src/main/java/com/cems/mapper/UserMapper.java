@@ -52,4 +52,6 @@ public interface UserMapper extends BaseMapper<ComUser> {
     void updateUserPwd(@Param("id") int id, @Param("pwd") String pwd);
 
     ComUser getUserById(int id);
+
+    int revUserInfo(ComUser user);
 }
