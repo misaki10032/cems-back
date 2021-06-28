@@ -65,4 +65,6 @@ public interface ComEntrustService {
     public List<ComEntrust> getUserEntByPlan(String plan, int id);
 
     public List<ComEntrust> getUserEntByText(String text, String plan, int id);
+
+    List<String> getAllEntrustType();
 }

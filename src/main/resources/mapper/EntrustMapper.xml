@@ -253,7 +253,9 @@
             or gmt_end like #{text}
             )
         </if>
+    </select>
 
-
+    <select id="getAllEntrustType" resultType="string">
+        select ent_type from com_entrust_type
     </select>
 </mapper>
