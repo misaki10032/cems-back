@@ -11,6 +11,7 @@ import org.springframework.data.redis.connection.RedisGeoCommands;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @ClassName Uni_NearPeoController
@@ -35,8 +36,10 @@ public class Uni_NearPeoController {
             String redisKey = "cems_JW";
             redisGeoUtil.geoAdd(redisKey, new Point(Double.parseDouble(longitude), Double.parseDouble(latitude)), userId);
             redisUtil.set("cems_jw_info_" + userId, userInfo);
+            redisUtil.expire("cems_jw_info_" + userId,24*60, TimeUnit.MINUTES);
             List<Point> points = redisGeoUtil.geoGet(redisKey, String.valueOf(userId));
             System.err.println("添加位置坐标点:" + userId + points);
+            redisUtil.expire("cems_JW",24*60, TimeUnit.MINUTES);
             map.put("code", "200");
             map.put("msg", "成功获取位置信息!");
         } catch (Exception e) {
