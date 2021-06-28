@@ -4,6 +4,7 @@ package com.cems.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.cems.pojo.ComEntrust;
 import com.cems.pojo.ComEntrustType;
+import com.cems.pojo.uni.UniAddEntrust;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
@@ -72,6 +73,8 @@ public interface EntrustMapper extends BaseMapper<ComEntrust> {
 
     List<String> getAllEntrustType();
 
+    List<String> getAllEntrustTypeId();
 
+    void addEntrust(UniAddEntrust entrust);
 
 }

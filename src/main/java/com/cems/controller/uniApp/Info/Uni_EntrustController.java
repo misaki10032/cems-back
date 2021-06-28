@@ -1,18 +1,19 @@
 package com.cems.controller.uniApp.Info;
 import com.cems.pojo.ComEntrust;
 import com.cems.pojo.ComEntrustType;
+import com.cems.pojo.uni.UniAddEntrust;
 import com.cems.pojo.uni.UniEntrust;
 import com.cems.pojo.uni.UniPage;
 import com.cems.service.ComEntrustService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @ClassName EntrustController
@@ -146,14 +147,35 @@ public class Uni_EntrustController {
     }
 
     @GetMapping("getAllEntrustType")
-    public Map<String, Object> getAllEntrustType(){
-        Map<String, Object> map = new HashMap<>();
-        List<String> allEntrustType = entrustService.getAllEntrustType();
-        map.put("data",allEntrustType);
-        map.put("code",200);
+    public Map<String, Object> getAllEntrustType() {
+        Map<String, Object> map = new ConcurrentHashMap<>();
+        try {
+            List<String> allEntrustType = entrustService.getAllEntrustType();
+            List<String> allEntrustTypeId = entrustService.getAllEntrustTypeId();
+            map.put("data", allEntrustType);
+            map.put("dataId", allEntrustTypeId);
+            map.put("code", 200);
+        } catch (Exception e) {
+            map.put("msg", "服务器故障!");
+            map.put("code", 500);
+        }
         return map;
     }
 
+    @GetMapping("addEntrust")
+    public Map<String, Object> addEntrust(UniAddEntrust entrust) {
+        System.out.println(entrust);
+        Map<String, Object> map = new ConcurrentHashMap<>();
+        try {
+            entrustService.addEntrust(entrust);
+            map.put("msg", "添加成功!");
+            map.put("code", 200);
+        } catch (Exception e) {
+            map.put("msg", "服务器故障!");
+            map.put("code", 500);
+        }
+        return map;
+    }
 
 
 }

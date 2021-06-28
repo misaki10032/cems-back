@@ -3,6 +3,7 @@ package com.cems.service;
 
 import com.cems.pojo.ComEntrust;
 import com.cems.pojo.ComEntrustType;
+import com.cems.pojo.uni.UniAddEntrust;
 import com.cems.pojo.uni.UniEntrust;
 import com.cems.pojo.uni.UniPage;
 import com.github.pagehelper.PageInfo;
@@ -67,4 +68,8 @@ public interface ComEntrustService {
     public List<ComEntrust> getUserEntByText(String text, String plan, int id);
 
     List<String> getAllEntrustType();
+
+    List<String> getAllEntrustTypeId();
+
+    void addEntrust(UniAddEntrust entrust);
 }

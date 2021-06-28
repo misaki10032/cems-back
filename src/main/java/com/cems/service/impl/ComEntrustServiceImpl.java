@@ -5,6 +5,7 @@ import com.cems.mapper.EntrustMapper;
 import com.cems.mapper.UserMapper;
 import com.cems.pojo.ComEntrust;
 import com.cems.pojo.ComEntrustType;
+import com.cems.pojo.uni.UniAddEntrust;
 import com.cems.pojo.uni.UniEntrust;
 import com.cems.pojo.uni.UniPage;
 import com.cems.service.ComEntrustService;
@@ -175,6 +176,17 @@ public class ComEntrustServiceImpl implements ComEntrustService {
     @Override
     public List<String> getAllEntrustType() {
         return entrustMapper.getAllEntrustType();
+    }
+
+    @Override
+    public List<String> getAllEntrustTypeId() {
+        return entrustMapper.getAllEntrustTypeId();
+    }
+
+    @Override
+    public void addEntrust(UniAddEntrust entrust) {
+        entrust.setMoney(String.valueOf(Integer.parseInt(entrust.getMoney())));
+        entrustMapper.addEntrust(entrust);
     }
 
     @Override

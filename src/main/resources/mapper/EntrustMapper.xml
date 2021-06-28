@@ -254,8 +254,24 @@
             )
         </if>
     </select>
-
     <select id="getAllEntrustType" resultType="string">
-        select ent_type from com_entrust_type
+        select ent_type
+        from com_entrust_type
+        order by id
     </select>
+    <select id="getAllEntrustTypeId" resultType="string">
+        select id
+        from com_entrust_type
+        order by id
+    </select>
+    <insert id="addEntrust">
+        insert into com_entrust( ent_data
+                               , ent_consignor
+                               , ent_type_id
+                               , gmt_create
+                               , gmt_end
+                               , ent_money)
+        VALUES (#{data}, #{id}, #{type}, now(), #{time}, #{money})
+    </insert>
+
 </mapper>
