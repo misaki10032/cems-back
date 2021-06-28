@@ -7,6 +7,7 @@ import com.cems.pojo.to.FormArticle;
 import com.cems.pojo.to.FormInline;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @InterfaceName ForumService
@@ -29,4 +30,6 @@ public interface ForumService {
     List<CommentReply> getReplyByCommId(int id);
 
     List<CommentReply> getReplyLike(FormInline form);
+
+    void addForum(Map<String, Object> map);
 }
