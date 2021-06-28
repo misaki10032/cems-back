@@ -116,6 +116,12 @@ public class ComUserServiceImpl implements ComUserService {
         return userMapper.revUserInfo(user);
     }
 
+
+    @Override
+    public void updateUserPsw(int id,String pwd) {
+        userMapper.updateUserPwd(id, pwd);
+    }
+
     @Override
     public ComUser getUserById(int id) {
         return userMapper.getUserById(id);
