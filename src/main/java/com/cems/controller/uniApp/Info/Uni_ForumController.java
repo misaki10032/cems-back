@@ -3,10 +3,7 @@ package com.cems.controller.uniApp.Info;
 import com.cems.pojo.uni.UniForum;
 import com.cems.service.ForumService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -19,12 +16,12 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 @RestController
 @RequestMapping("uniApp")
-public class UniForumController {
+public class Uni_ForumController {
     @Autowired
     ForumService forumService;
 
-    @PostMapping("addForum")
-    public Map<String, Object> addForum(@RequestBody UniForum uniForum) {
+    @GetMapping("addArticle")
+    public Map<String, Object> addForum(UniForum uniForum) {
         System.out.println(uniForum);
         Map<String, Object> retMap = new ConcurrentHashMap<>();
         try {

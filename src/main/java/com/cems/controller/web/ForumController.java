@@ -72,7 +72,7 @@ public class ForumController {
             if (rowstatus.equals("已审核")) {
                 rowstatus = "已审核";
             } else {
-                rowstatus = "未审核";
+                rowstatus = "待审核";
             }
             forumService.killArticle(rowid, rowstatus);
             return rowstatus;

@@ -21,8 +21,9 @@
     <update id="addForum" parameterType="map">
         INSERT INTO forum_article (user_id,
                                    fo_title,
-                                   `fo_data`,
-                                   `gmt_create`) VALUE (#{userId}, #{foTitle}, #{foDate}, NOW())
+                                   fo_data,
+                                   gmt_create)
+            VALUE (#{userId}, #{foTitle}, #{foDate}, NOW())
     </update>
 
 </mapper>
