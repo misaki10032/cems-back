@@ -32,8 +32,6 @@
         where user_phone like #{phone}
           and status = #{status}
     </select>
-
-    <!--进入个人空间前查找-->
     <!--用户申诉账号密码判断-->
     <select id="judgeAP" parameterType="map" resultType="ComUser">
         select id, user_phone, user_pwd, user_role, status
@@ -41,7 +39,6 @@
         where user_phone = #{phone}
           and user_pwd = #{psw}
     </select>
-
     <!--进入个人空间前查找-->
     <select id="selOneUser" resultType="com.cems.pojo.to.ComUser">
         select id,
@@ -58,7 +55,6 @@
         from com_user_info
         where user_id = #{userId}
     </select>
-
     <!--根据委托类型查找数据类型-->
     <select id="byEntrustByType" resultType="SysEntrust">
         SELECT e.id            entrustId,
@@ -73,11 +69,79 @@
         WHERE e.ent_type_id = t.id
           and t.id = #{typeID}
     </select>
-
     <select id="getUserNum" resultType="com.cems.pojo.to.ComUser">
         select id, user_phone, user_pwd, user_role, status
         from com_user
         where user_phone = #{num}
     </select>
-
+    <insert id="userResiger">
+        insert into com_user(user_phone, user_pwd, user_role, status)
+            value (#{userPhone}, #{userPwd}, 'agent', '正常')
+    </insert>
+    <insert id="addUserInfo">
+        insert into com_user_info(user_id, user_email, user_pname, user_money)
+            value (#{userId}, #{userEmail}, #{userPname}, 0)
+    </insert>
+    <select id="getUserEmil" resultType="com.cems.pojo.to.ComUser">
+        select user_id,
+               user_email
+        from com_user_info
+        where user_email = #{emil}
+          and user_id = #{id}
+    </select>
+    <update id="updateUserPwd">
+        update com_user
+        set user_pwd = #{pwd}
+        where id = #{id}
+    </update>
+    <select id="getUserById" resultType="com.cems.pojo.to.ComUser">
+        select f.id,
+               f.user_id,
+               f.user_email,
+               f.user_house,
+               f.user_birth,
+               f.user_pwd_protect,
+               f.user_dec,
+               f.user_name,
+               f.user_pname,
+               f.user_sex,
+               f.user_money,
+               c.user_phone,
+               c.user_pwd,
+               c.status,
+               c.user_role
+        from com_user_info f
+                 inner join com_user c
+                            on f.user_id = c.id
+        where user_id = #{userId}
+    </select>
+    <update id="revUserInfo">
+        update com_user_info
+        set
+        <if test="userEmail!=null">
+            user_email = #{userEmail}
+        </if>
+        <if test="userHouse!=null">
+            ,user_house = #{userHouse}
+        </if>
+        <if test="userBirth!=null">
+            ,user_birth = #{userBirth}
+        </if>
+        <if test="userPwdProtect!=null">
+            ,user_pwd_protect = #{userPwdProtect}
+        </if>
+        <if test="userDec!=null">
+            ,user_dec = #{userDec}
+        </if>
+        <if test="userName!=null">
+            ,user_name = #{userName}
+        </if>
+        <if test="userPname!=null">
+            ,user_pname = #{userPname}
+        </if>
+        <if test="userSex!=null">
+            ,user_sex = #{userSex}
+        </if>
+        where user_id = #{userId}
+    </update>
 </mapper>

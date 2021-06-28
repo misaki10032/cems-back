@@ -2,9 +2,14 @@ package com.cems.service.impl;
 
 
 import com.cems.mapper.EntrustMapper;
+import com.cems.mapper.UserMapper;
 import com.cems.pojo.ComEntrust;
 import com.cems.pojo.ComEntrustType;
+import com.cems.pojo.uni.UniEntrust;
+import com.cems.pojo.uni.UniPage;
 import com.cems.service.ComEntrustService;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +27,8 @@ import java.util.Map;
 public class ComEntrustServiceImpl implements ComEntrustService {
     @Autowired
     EntrustMapper entrustMapper;
+    @Autowired
+    UserMapper userMapper;
 
     @Override
     public int upQuitEtrustEntMoney(Map<String, Object> map) {
@@ -53,7 +60,6 @@ public class ComEntrustServiceImpl implements ComEntrustService {
             System.err.println(entrustType + "有重复的");
             return false;
         } else {
-//            entrustMapper.addEntrustType(entrustType);
             System.err.println(entrustType + "无重复");
             return true;
         }
@@ -85,6 +91,108 @@ public class ComEntrustServiceImpl implements ComEntrustService {
     }
 
     @Override
+    public UniEntrust getEntById(int id) {
+        UniEntrust entrust = new UniEntrust();
+        ComEntrust oldEnt = entrustMapper.getEntById(id);
+        entrust.setId(oldEnt.getId())
+                .setEntData(oldEnt.getEntData())
+                .setEntState(oldEnt.getEntState())
+                .setEntPlan(oldEnt.getEntPlan())
+                .setGmtCreate(oldEnt.getGmtCreate())
+                .setGmtEnd(oldEnt.getGmtEnd())
+                .setGmtMoney(Integer.parseInt(oldEnt.getEntMoney()));
+        entrust.setEntConsignor(userMapper.selOneUser(oldEnt.getEntConsignor()).getUserPname());
+        if (oldEnt.getEntAgent() != -1) {
+            entrust.setEntAgent(userMapper.selOneUser(oldEnt.getEntAgent()).getUserPname());
+        } else {
+            entrust.setEntAgent("还没有被接取");
+        }
+        entrust.setEntType(entrustMapper.getEntTypeById(Integer.parseInt(oldEnt.getEntTypeId())).getEntType());
+        return entrust;
+    }
+
+    @Override
+    public void getThisTask(int taskId, int userId) {
+        entrustMapper.getThisEntrust(taskId, userId);
+    }
+
+    @Override
+    public List<ComEntrust> getEntByPlan(String plan) {
+        List<ComEntrust> entByPlan = entrustMapper.getEntByPlan(plan);
+        for (ComEntrust comEntrust : entByPlan) {
+            String entTypeId = comEntrust.getEntTypeId();
+            comEntrust.setEntTypeId(entrustMapper.getTypeById(Integer.parseInt(entTypeId)).getEntType());
+        }
+        return entByPlan;
+    }
+
+    @Override
+    public List<ComEntrust> getUserEntByPlan(String plan, int id) {
+        List<ComEntrust> entByPlan = entrustMapper.getUserEntByPlan(plan, id);
+        for (ComEntrust comEntrust : entByPlan) {
+            String entTypeId = comEntrust.getEntTypeId();
+            comEntrust.setEntTypeId(entrustMapper.getTypeById(Integer.parseInt(entTypeId)).getEntType());
+        }
+        return entByPlan;
+    }
+
+    @Override
+    public List<ComEntrust> getEntByText(String text, String plan) {
+        ComEntrustType typeByName = entrustMapper.getTypeByName(text);
+        String type = null;
+        if (typeByName != null) {
+            type = String.valueOf(typeByName.getId());
+        }
+        if (plan.equals("全部")) {
+            plan = null;
+        }
+        List<ComEntrust> entList = entrustMapper.getEntByText("%" + text + "%", type, plan);
+        for (ComEntrust comEntrust : entList) {
+            String entTypeId = comEntrust.getEntTypeId();
+            comEntrust.setEntTypeId(entrustMapper.getTypeById(Integer.parseInt(entTypeId)).getEntType());
+        }
+        return entList;
+    }
+
+    @Override
+    public List<ComEntrust> getUserEntByText(String text, String plan, int id) {
+        ComEntrustType typeByName = entrustMapper.getTypeByName(text);
+        String type = null;
+        if (typeByName != null) {
+            type = String.valueOf(typeByName.getId());
+        }
+        if (plan.equals("全部")) {
+            plan = null;
+        }
+        List<ComEntrust> entList = entrustMapper.getUserEntByText("%" + text + "%", type, plan, id);
+        for (ComEntrust comEntrust : entList) {
+            String entTypeId = comEntrust.getEntTypeId();
+            comEntrust.setEntTypeId(entrustMapper.getTypeById(Integer.parseInt(entTypeId)).getEntType());
+        }
+        return entList;
+    }
+
+    @Override
+    public String getEntIdByName(String name) {
+        return entrustMapper.getTypeByName(name).getEntType();
+    }
+
+    @Override
+    public int getTypeById(int id) {
+        return entrustMapper.getTypeById(id).getId();
+    }
+
+    @Override
+    public List<ComEntrust> getUserEntrustsOk(int id) {
+        List<ComEntrust> userEntrustsOk = entrustMapper.getUserEntrustsOk(id);
+        for (ComEntrust comEntrust : userEntrustsOk) {
+            String entTypeId = comEntrust.getEntTypeId();
+            comEntrust.setEntTypeId(entrustMapper.getTypeById(Integer.parseInt(entTypeId)).getEntType());
+        }
+        return userEntrustsOk;
+    }
+
+    @Override
     public List<Integer> getTypeNums() {
         return entrustMapper.getTypeNums();
     }
@@ -106,8 +214,17 @@ public class ComEntrustServiceImpl implements ComEntrustService {
 
     @Override
     public List<ComEntrust> getEntrusts() {
-
         return entrustMapper.getEntrusts();
+    }
+
+    @Override
+    public List<ComEntrust> getEntrustsOk() {
+        List<ComEntrust> entrustsOk = entrustMapper.getEntrustsOk();
+        for (ComEntrust comEntrust : entrustsOk) {
+            String entTypeId = comEntrust.getEntTypeId();
+            comEntrust.setEntTypeId(entrustMapper.getTypeById(Integer.parseInt(entTypeId)).getEntType());
+        }
+        return entrustsOk;
     }
 
     @Override

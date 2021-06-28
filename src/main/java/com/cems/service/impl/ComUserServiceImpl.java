@@ -8,6 +8,7 @@ import com.cems.pojo.to.ComUser;
 import com.cems.pojo.to.ComUserInfo;
 import com.cems.pojo.to.FormInline;
 import com.cems.service.ComUserService;
+import com.cems.util.ShiroMd5Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -78,6 +79,46 @@ public class ComUserServiceImpl implements ComUserService {
     @Override
     public ComUser judgeAP(Map<String, Object> map) {
         return userMapper.judgeAP(map);
+    }
+
+    @Override
+    public void userResiger(ComUser user) {
+        user.setUserPwd(ShiroMd5Util.toPwdMd5(user.getUserPhone(), user.getUserPwd()));
+        userMapper.userResiger(user);
+        ComUser userNum = userMapper.getUserNum(user.getUserPhone());
+        user.setUserId(userNum.getId());
+        userMapper.addUserInfo(user);
+    }
+
+    @Override
+    public ComUser getUserEmil(String emil, String phone) {
+        ComUser userNum = userMapper.getUserNum(phone);
+        ComUser userEmil = userMapper.getUserEmil(emil, String.valueOf(userNum.getId()));
+        if (userEmil == null) {
+            return null;
+        }
+        return userEmil;
+    }
+
+    @Override
+    public void updateUserPwd(int id, String pwd) {
+        ComUser comUser = userMapper.getUserById(id);
+        System.err.println(id + "=-------------------------=" + pwd);
+        //将新密码加密存储
+        System.err.println("========================" + comUser);
+        String newPwd = ShiroMd5Util.toPwdMd5(comUser.getUserPhone(), pwd);
+        System.err.println(newPwd);
+        userMapper.updateUserPwd(id, newPwd);
+    }
+
+    @Override
+    public int revUserInfo(ComUser user) {
+        return userMapper.revUserInfo(user);
+    }
+
+    @Override
+    public ComUser getUserById(int id) {
+        return userMapper.getUserById(id);
     }
 
 }

@@ -3,7 +3,9 @@ package com.cems.service;
 
 import com.cems.pojo.ComEntrust;
 import com.cems.pojo.ComEntrustType;
-import org.apache.ibatis.annotations.Param;
+import com.cems.pojo.uni.UniEntrust;
+import com.cems.pojo.uni.UniPage;
+import com.github.pagehelper.PageInfo;
 
 import java.util.List;
 import java.util.Map;
@@ -17,6 +19,8 @@ import java.util.Map;
 public interface ComEntrustService {
 
     List<ComEntrust> getEntrusts();
+
+    List<ComEntrust> getEntrustsOk();
 
     List<ComEntrustType> getEntTypes();
 
@@ -43,4 +47,22 @@ public interface ComEntrustService {
     List<String> getExistEnt();
 
     List<Integer> getExistEntNums();
+
+    UniEntrust getEntById(int id);
+
+    void getThisTask(int taskId, int userId);
+
+    List<ComEntrust> getEntByPlan(String plan);
+
+    List<ComEntrust> getEntByText(String text, String plan);
+
+    String getEntIdByName(String name);
+
+    int getTypeById(int id);
+
+    List<ComEntrust> getUserEntrustsOk(int id);
+
+    public List<ComEntrust> getUserEntByPlan(String plan, int id);
+
+    public List<ComEntrust> getUserEntByText(String text, String plan, int id);
 }

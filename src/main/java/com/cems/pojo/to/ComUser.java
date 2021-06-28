@@ -3,6 +3,7 @@ package com.cems.pojo.to;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
@@ -26,6 +27,7 @@ public class ComUser {
     private String  userPname;
     private String userName;
     private String userSex;
+    @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss")
     private Date userBirth;
     private String userEmail;
     private String userHouse;

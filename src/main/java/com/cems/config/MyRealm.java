@@ -42,9 +42,14 @@ public class MyRealm extends AuthorizingRealm {
         Session session = SecurityUtils.getSubject().getSession();
         Boolean isAdmin = (Boolean) session.getAttribute("isAdmin");
         if (isAdmin) {
-            SysAdmin admin = adminService.getAdminNum(username);
+            SysAdmin admin;
+            try {
+                admin = adminService.getAdminNum(username);
+            } catch (Exception e) {
+                throw new UnknownAccountException();
+            }
             if (admin == null) {
-                return null;
+                throw new UnknownAccountException();
             } else {
                 if (!admin.getAdminStatus().equals("正常")) {
                     throw new LockedAccountException();
@@ -55,18 +60,20 @@ public class MyRealm extends AuthorizingRealm {
                 }
             }
         } else {
-            ComUser user = userService.getUserNum(username);
-            if (user == null) {
-                return null;
-            } else {
-                if (!user.getStatus().equals("正常")) {
-                    throw new LockedAccountException();
-                } else {
-                    session.setAttribute("LogingUser", user);
-                    ByteSource salt = ByteSource.Util.bytes(user.getUserPhone());//md5盐值
-                    return new SimpleAuthenticationInfo(user, user.getUserPwd(), salt, realmName);
-                }
+            ComUser user;
+            try {
+                user = userService.getUserNum(username);
+            } catch (Exception e) {
+                throw new UnknownAccountException();
             }
+            if (!user.getStatus().equals("正常")) {
+                throw new LockedAccountException();
+            } else {
+                session.setAttribute("loginUser", user);
+                ByteSource salt = ByteSource.Util.bytes(user.getUserPhone());//md5盐值
+                return new SimpleAuthenticationInfo(user, user.getUserPwd(), salt, realmName);
+            }
+
         }
     }
 
