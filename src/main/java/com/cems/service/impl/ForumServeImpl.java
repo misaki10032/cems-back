@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @ClassName ForumServeImpl
@@ -26,12 +27,17 @@ public class ForumServeImpl implements ForumService {
     ArticleMapper articleMapper;
     @Autowired
     CommentMapper commentMapper;
+
+
+
     @Autowired
     ReplyMapper replyMapper;
+
     @Override
     public List<ForumArticle> getArticles() {
         return articleMapper.getArticles();
     }
+
     @Override
     public List<ForumArticle> getArticleLike(FormArticle form) {
         if (form.getTitle() == null || form.getTitle().equals("")) {
@@ -61,6 +67,11 @@ public class ForumServeImpl implements ForumService {
     @Override
     public List<CommentReply> getReplyByCommId(int id) {
         return replyMapper.getReplyByCommId(id);
+    }
+
+    @Override
+    public void addForum(Map<String, Object> map) {
+        articleMapper.addForum(map);
     }
 
     @Override

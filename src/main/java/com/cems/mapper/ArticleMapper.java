@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @InterfaceName ArticleMapper
@@ -25,4 +26,5 @@ public interface ArticleMapper extends BaseMapper<ForumArticle> {
 
     void killArticle(@Param("id") int id, @Param("status") String status);
 
+    void addForum(Map<String, Object> map);
 }
