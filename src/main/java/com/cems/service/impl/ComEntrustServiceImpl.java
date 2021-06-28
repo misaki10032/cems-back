@@ -173,6 +173,11 @@ public class ComEntrustServiceImpl implements ComEntrustService {
     }
 
     @Override
+    public List<String> getAllEntrustType() {
+        return entrustMapper.getAllEntrustType();
+    }
+
+    @Override
     public String getEntIdByName(String name) {
         return entrustMapper.getTypeByName(name).getEntType();
     }
@@ -236,4 +241,6 @@ public class ComEntrustServiceImpl implements ComEntrustService {
     public void updataEntState(int id, String status) {
         entrustMapper.updataEntState(id, status);
     }
+
+
 }

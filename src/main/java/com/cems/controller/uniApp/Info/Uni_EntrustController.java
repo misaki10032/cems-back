@@ -1,5 +1,6 @@
 package com.cems.controller.uniApp.Info;
 import com.cems.pojo.ComEntrust;
+import com.cems.pojo.ComEntrustType;
 import com.cems.pojo.uni.UniEntrust;
 import com.cems.pojo.uni.UniPage;
 import com.cems.service.ComEntrustService;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -142,5 +144,16 @@ public class Uni_EntrustController {
             return null;
         }
     }
+
+    @GetMapping("getAllEntrustType")
+    public Map<String, Object> getAllEntrustType(){
+        Map<String, Object> map = new HashMap<>();
+        List<String> allEntrustType = entrustService.getAllEntrustType();
+        map.put("data",allEntrustType);
+        map.put("code",200);
+        return map;
+    }
+
+
 
 }
