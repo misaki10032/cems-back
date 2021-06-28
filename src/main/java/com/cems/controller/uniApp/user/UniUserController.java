@@ -1,11 +1,14 @@
 package com.cems.controller.uniApp.user;
 
+import com.cems.pojo.UniUserFriend;
 import com.cems.pojo.to.ComUser;
 import com.cems.service.ComUserService;
+import com.cems.service.FriendService;
 import com.cems.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -23,6 +26,8 @@ public class UniUserController {
     ComUserService comUserService;
     @Autowired
     UserService userService;
+    @Autowired
+    FriendService friendService;
 
     @PostMapping("revUserInfo")
     public Map<String, Object> revUserInfo(@RequestBody ComUser user) {
@@ -50,6 +55,55 @@ public class UniUserController {
         } catch (Exception e) {
             map.put("code", "500");
             map.put("msg", "服务器异常!");
+        }
+        return map;
+    }
+
+    @GetMapping("addFriend")
+    public Map<String, Object> addFriend(int userId, int friendId) {
+        Map<String, Object> map = new ConcurrentHashMap<>();
+        try {
+            boolean contains = friendService.FriendContains(userId, friendId);
+            if (!contains) {
+                map.put("code", "501");
+                map.put("msg", "已经关注该用户了!");
+                return map;
+            }
+            friendService.addFriend(userId, friendId);
+            String userPname = comUserService.getUserById(friendId).getUserPname();
+            map.put("code", "200");
+            map.put("msg", "成功关注[" + userPname + "]!");
+        } catch (Exception e) {
+            map.put("code", "500");
+            map.put("msg", "服务器故障!");
+        }
+        return map;
+    }
+
+    @GetMapping("getMyFriend")
+    public Map<String, Object> getMyFriend(int id) {
+        Map<String, Object> map = new ConcurrentHashMap<>();
+        try {
+            List<UniUserFriend> myFriend = friendService.getMyFriend(id);
+            map.put("code", "200");
+            map.put("data", myFriend);
+        } catch (Exception e) {
+            map.put("code", "500");
+            map.put("msg", "服务器故障!");
+        }
+        return map;
+    }
+
+    @GetMapping("getMyFocus")
+    public Map<String, Object> getMyFocus(int id) {
+        Map<String, Object> map = new ConcurrentHashMap<>();
+        try {
+            List<UniUserFriend> myFocus = friendService.getMyFocus(id);
+            map.put("code", "200");
+            map.put("data", myFocus);
+        } catch (Exception e) {
+            map.put("code", "500");
+            map.put("msg", "服务器故障!");
         }
         return map;
     }

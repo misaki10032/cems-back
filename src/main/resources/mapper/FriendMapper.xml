@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cems.mapper.FriendMapper">
+    <insert id="addFriend">
+        insert into com_user_friend(user_id, friend_id)
+            value (#{userId}, #{friendId})
+    </insert>
+    <select id="getMyFocus" resultType="UniUserFriend">
+        select id, user_id, friend_id
+        from com_user_friend
+        where user_id = #{id}
+    </select>
+    <select id="getMyFriend" resultType="UniUserFriend">
+        select id, user_id, friend_id
+        from com_user_friend
+        where friend_id = #{userId}
+    </select>
+    <select id="getMsg" resultType="UniUserFriend">
+        select id, user_id, friend_id
+        from com_user_friend
+        where user_id = #{userId}
+          and friend_id = #{friendId}
+    </select>
+</mapper>
