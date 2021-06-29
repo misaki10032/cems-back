@@ -164,4 +164,30 @@ public class UniUserController {
         return map;
     }
 
+    @PostMapping("addUserMoney")
+    public Map<String, Object> addUserMoney(@RequestBody UniUpUserSole UniUpUserSole) {
+        System.out.println(UniUpUserSole);
+
+        Map<String, Object> map = new ConcurrentHashMap<>();
+
+        ComUser comUser = userService.selOneUser(UniUpUserSole.getId());
+        // 未充值之前钱数
+        Integer userMoney = comUser.getUserMoney();
+        Integer upMoney = UniUpUserSole.getUpMoney() + userMoney;
+        try {
+            comUserService.addUserMoney(UniUpUserSole.getId(), upMoney);
+            comUser.setUserMoney(comUser.getUserMoney() + upMoney);
+            map.put("code", 200);
+            map.put("loginUser", comUser);
+            map.put("msg", "充值成功!");
+        } catch (Exception e) {
+            map.put("code", 500);
+            map.put("loginUser", comUser);
+            map.put("msg", "请稍后重试!");
+        }
+        System.out.println(map);
+        return map;
+    }
+
+
 }
