@@ -1,10 +1,12 @@
 package com.cems.controller.uniApp.Info;
 import com.cems.pojo.ComEntrust;
 import com.cems.pojo.ComEntrustType;
+import com.cems.pojo.to.ComUser;
 import com.cems.pojo.uni.UniAddEntrust;
 import com.cems.pojo.uni.UniEntrust;
 import com.cems.pojo.uni.UniPage;
 import com.cems.service.ComEntrustService;
+import com.cems.service.ComUserService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +28,8 @@ import java.util.concurrent.ConcurrentHashMap;
 public class Uni_EntrustController {
     @Autowired
     ComEntrustService entrustService;
+    @Autowired
+    ComUserService userService;
     @GetMapping("getEnts")
     public Map<String, Object> getEnts(String pageIndex, String pageSize) {
         try {
@@ -210,11 +214,25 @@ public class Uni_EntrustController {
 
     @GetMapping("addEntrust")
     public Map<String, Object> addEntrust(UniAddEntrust entrust) {
-        System.out.println(entrust);
         Map<String, Object> map = new ConcurrentHashMap<>();
         try {
+            ComUser userById = userService.getUserById(Integer.parseInt(entrust.getId()));
+            if(userById.getUserMoney()<Integer.parseInt(entrust.getMoney())){
+                map.put("msg", "余额不足!");
+                map.put("code", 501);
+                return map;
+            }
+            Integer upMoney = userById.getUserMoney() - Integer.parseInt(entrust.getMoney());
+            userService.updataUserMoney(Integer.valueOf(entrust.getId()),upMoney);
+            if(userById.getUserRole().equals("agent")){
+                map.put("msg", "权限不足!");
+                map.put("code", 502);
+                return map;
+            }
             entrustService.addEntrust(entrust);
+            userById.setUserMoney(upMoney);
             map.put("msg", "添加成功!");
+            map.put("loginUser", userById);
             map.put("code", 200);
         } catch (Exception e) {
             map.put("msg", "服务器故障!");

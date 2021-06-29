@@ -44,8 +44,9 @@ public interface ComUserService {
 
     void updateUserPsw(int id,String pwd);
 
-
     void updateUserRole(Integer id, String userRole, Integer upMoney);
 
     void addUserMoney(Integer id, Integer upMoney);
+
+    void updataUserMoney(Integer id, Integer upMoney);
 }
