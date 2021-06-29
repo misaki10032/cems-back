@@ -36,10 +36,10 @@ public class Uni_NearPeoController {
             String redisKey = "cems_JW";
             redisGeoUtil.geoAdd(redisKey, new Point(Double.parseDouble(longitude), Double.parseDouble(latitude)), userId);
             redisUtil.set("cems_jw_info_" + userId, userInfo);
-            redisUtil.expire("cems_jw_info_" + userId,24*60, TimeUnit.MINUTES);
+            redisUtil.expire("cems_jw_info_" + userId,24*60*30, TimeUnit.MINUTES);
             List<Point> points = redisGeoUtil.geoGet(redisKey, String.valueOf(userId));
             System.err.println("添加位置坐标点:" + userId + points);
-            redisUtil.expire("cems_JW",24*60, TimeUnit.MINUTES);
+            redisUtil.expire("cems_JW",24*60*30, TimeUnit.MINUTES);
             map.put("code", "200");
             map.put("msg", "成功获取位置信息!");
         } catch (Exception e) {
@@ -84,12 +84,13 @@ public class Uni_NearPeoController {
                 otherPeople.add(other);
             }
             if (otherPeople.size() == 0) {
+                map.put("code", "201");
                 map.put("userMsg", "你附近没有其他人!");
             } else {
+                map.put("code", "200");
                 map.put("userMsg", "获取成功!");
             }
             map.put("list", otherPeople);
-            map.put("code", "200");
         } catch (Exception e) {
             map.put("code", "500");
             map.put("msg", "系统未知故障!");

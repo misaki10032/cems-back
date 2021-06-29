@@ -210,6 +210,22 @@
           and ent_agent = #{id}
         order by ent_plan
     </select>
+    <select id="getPrincipalEntrusts" resultType="ComEntrust">
+        select id,
+               ent_data,
+               ent_consignor,
+               ent_agent,
+               ent_state,
+               ent_type_id,
+               ent_plan,
+               gmt_create,
+               gmt_end,
+               ent_money
+        from com_entrust
+        where ent_state = '已审核'
+          and ent_consignor = #{id}
+        order by ent_plan
+    </select>
     <select id="getUserEntByPlan" resultType="ComEntrust">
         select id,
                ent_data,
@@ -240,6 +256,50 @@
         from com_entrust
         where ent_state = '已审核'
         and ent_agent = #{id}
+        <if test="entPlan!=null">
+            and ent_plan = #{entPlan}
+        </if>
+        <if test="textType!=null">
+            and ent_type_id = #{textType}
+        </if>
+        <if test="textType==null">
+            and (
+            ent_data like #{text}
+            or gmt_create like #{text}
+            or gmt_end like #{text}
+            )
+        </if>
+    </select>
+    <select id="getPrincipalEntByPlan" resultType="ComEntrust">
+        select id,
+               ent_data,
+               ent_consignor,
+               ent_agent,
+               ent_state,
+               ent_type_id,
+               ent_plan,
+               gmt_create,
+               gmt_end,
+               ent_money
+        from com_entrust
+        where ent_state = '已审核'
+          and ent_plan = #{entPlan}
+          and ent_consignor = #{id}
+    </select>
+    <select id="getPrincipalEntByText" resultType="ComEntrust">
+        select id,
+        ent_data,
+        ent_consignor,
+        ent_agent,
+        ent_state,
+        ent_type_id,
+        ent_plan,
+        gmt_create,
+        gmt_end,
+        ent_money
+        from com_entrust
+        where ent_state = '已审核'
+        and ent_consignor = #{id}
         <if test="entPlan!=null">
             and ent_plan = #{entPlan}
         </if>

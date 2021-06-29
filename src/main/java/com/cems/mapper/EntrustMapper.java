@@ -67,9 +67,15 @@ public interface EntrustMapper extends BaseMapper<ComEntrust> {
 
     List<ComEntrust> getUserEntrustsOk(int id);
 
+    List<ComEntrust> getPrincipalEntrusts(int id);
+
     List<ComEntrust> getUserEntByText(@Param("text") String text, @Param("textType") String textType, @Param("entPlan") String entPlan, @Param("id") int id);
 
+    List<ComEntrust> getPrincipalEntByText(@Param("text") String text, @Param("textType") String textType, @Param("entPlan") String entPlan, @Param("id") int id);
+
     List<ComEntrust> getUserEntByPlan(@Param("entPlan") String entPlan, @Param("id") int id);
+
+    List<ComEntrust> getPrincipalEntByPlan(@Param("entPlan") String entPlan, @Param("id") int id);
 
     List<String> getAllEntrustType();
 

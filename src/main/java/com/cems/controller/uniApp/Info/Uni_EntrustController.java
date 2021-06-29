@@ -115,6 +115,52 @@ public class Uni_EntrustController {
         }
     }
 
+    @GetMapping("getPrincipalEntrusts")
+    public Map<String, Object> getPrincipalEntrusts(String pageIndex, String pageSize, String id) {
+        try {
+            PageHelper.startPage(Integer.parseInt(pageIndex), Integer.parseInt(pageSize));
+            PageInfo<ComEntrust> entList = new PageInfo<>(entrustService.getPrincipalEntrusts(Integer.parseInt(id)));
+            Map<String, Object> map = new ConcurrentHashMap<>();
+            map.put("data", entList.getList());
+            map.put("total", entList.getTotal());
+            return map;
+        } catch (Exception e) {
+            System.err.println("查找失败!!!");
+            return null;
+        }
+    }
+
+    @GetMapping("getPrincipalEntbyPlan")
+    public Map<String, Object> getPrincipalEntbyPlan(UniPage page) {
+        try {
+            PageHelper.startPage(Integer.parseInt(page.getPageIndex()), Integer.parseInt(page.getPageSize()));
+            PageInfo<ComEntrust> entList = new PageInfo<>(entrustService.getPrincipalEntByPlan(page.getEntPlan(), Integer.parseInt(page.getId())));
+            Map<String, Object> map = new HashMap<>();
+            map.put("data", entList.getList());
+            map.put("total", entList.getTotal());
+            return map;
+        } catch (Exception e) {
+            System.err.println("查找失败!!!");
+            return null;
+        }
+    }
+
+    @GetMapping("getPrincipalEntbyText")
+    public Map<String, Object> getPrincipalEntbyText(UniPage page) {
+        try {
+            System.err.println(page);
+            PageHelper.startPage(Integer.parseInt(page.getPageIndex()), Integer.parseInt(page.getPageSize()));
+            PageInfo<ComEntrust> entList = new PageInfo<>(entrustService.getPrincipalEntByText(page.getText(), page.getEntPlan(), Integer.parseInt(page.getId())));
+            Map<String, Object> map = new HashMap<>();
+            map.put("data", entList.getList());
+            map.put("total", entList.getTotal());
+            return map;
+        } catch (Exception e) {
+            System.err.println("查找失败!!!");
+            return null;
+        }
+    }
+
     @GetMapping("getUserEntsByPlan")
     public Map<String, Object> getUserEntsbyPlan(UniPage page) {
         try {

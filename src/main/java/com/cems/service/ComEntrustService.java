@@ -5,8 +5,7 @@ import com.cems.pojo.ComEntrust;
 import com.cems.pojo.ComEntrustType;
 import com.cems.pojo.uni.UniAddEntrust;
 import com.cems.pojo.uni.UniEntrust;
-import com.cems.pojo.uni.UniPage;
-import com.github.pagehelper.PageInfo;
+
 
 import java.util.List;
 import java.util.Map;
@@ -63,9 +62,15 @@ public interface ComEntrustService {
 
     List<ComEntrust> getUserEntrustsOk(int id);
 
-    public List<ComEntrust> getUserEntByPlan(String plan, int id);
+    List<ComEntrust> getPrincipalEntrusts(int id);
 
-    public List<ComEntrust> getUserEntByText(String text, String plan, int id);
+    List<ComEntrust> getUserEntByPlan(String plan, int id);
+
+    List<ComEntrust> getPrincipalEntByPlan(String plan, int id);
+
+    List<ComEntrust> getUserEntByText(String text, String plan, int id);
+
+    List<ComEntrust> getPrincipalEntByText(String text, String plan, int id);
 
     List<String> getAllEntrustType();
 
