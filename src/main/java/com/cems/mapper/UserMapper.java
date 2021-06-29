@@ -56,4 +56,9 @@ public interface UserMapper extends BaseMapper<ComUser> {
 
     int revUserInfo(ComUser user);
 
+
+    void updateUserRole(@Param("id") Integer id, @Param("userRole") String userRole);
+
+
+    void updateUserMoney( @Param("id")  Integer id,  @Param("money") String money);
 }
