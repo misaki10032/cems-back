@@ -46,4 +46,6 @@ public interface ComUserService {
 
 
     void updateUserRole(Integer id, String userRole, Integer upMoney);
+
+    void addUserMoney(Integer id, Integer upMoney);
 }

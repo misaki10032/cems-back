@@ -134,6 +134,12 @@ public class ComUserServiceImpl implements ComUserService {
 //    }
 
     @Override
+    public void addUserMoney(Integer id, Integer upMoney) {
+        String money  = String.valueOf(upMoney);
+        userMapper.updateUserMoney(id, money);
+    }
+
+    @Override
     public void updateUserRole(Integer id, String userRole, Integer upMoney) {
         userMapper.updateUserRole(id, userRole);
         String money  = String.valueOf(upMoney);
