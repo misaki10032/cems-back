@@ -3,6 +3,7 @@ package com.cems.controller.uniApp.user;
 import com.cems.pojo.UniUserFriend;
 import com.cems.pojo.to.ComUser;
 import com.cems.pojo.to.LoginUser;
+import com.cems.pojo.uni.UniUpUserSole;
 import com.cems.service.ComUserService;
 import com.cems.service.FriendService;
 import com.cems.service.UserService;
@@ -116,9 +117,9 @@ public class UniUserController {
         Map<String, Object> serMap = new ConcurrentHashMap<>();
         Map<String, Object> map = new ConcurrentHashMap<>();
         String psw1 = ShiroMd5Util.toPwdMd5(loginUser.getUserPhone(), loginUser.getPsw());
-        System.err.println("旧密码"+psw1);
+        System.err.println("旧密码" + psw1);
         String psw2 = ShiroMd5Util.toPwdMd5(loginUser.getUserPhone(), loginUser.getNewPsw());
-        System.err.println("新密码"+psw2);
+        System.err.println("新密码" + psw2);
         //账号
         serMap.put("id", loginUser.getId());
         //旧密码
@@ -130,9 +131,9 @@ public class UniUserController {
             ComUser comUser = comUserService.getUserById(loginUser.getId());
             System.err.println(comUser);
             if (psw1.equals(comUser.getUserPwd())) {
-                comUserService.updateUserPsw(loginUser.getId(),psw2);
+                comUserService.updateUserPsw(loginUser.getId(), psw2);
                 map.put("code", 200);
-            }else{
+            } else {
                 //密码错误
                 map.put("code", 400);
             }
@@ -141,6 +142,26 @@ public class UniUserController {
         }
         return map;
 
+    }
+
+    @PostMapping("upUserRole")
+    public Map<String, Object> upUserRole(@RequestBody UniUpUserSole UniUpUserSole) {
+        System.out.println(UniUpUserSole);
+        Map<String, Object> map = new ConcurrentHashMap<>();
+        Integer money = UniUpUserSole.getMoney();
+        Integer upMoney = UniUpUserSole.getUpMoney();
+        if (money - upMoney < 0) {
+            map.put("code", 500);
+            return map;
+        }
+        try {
+            comUserService.updateUserRole(UniUpUserSole.getId(), "complete", money - upMoney);
+            map.put("code", 200);
+        } catch (Exception e) {
+            map.put("code", 500);
+        }
+        System.out.println(map);
+        return map;
     }
 
 }
