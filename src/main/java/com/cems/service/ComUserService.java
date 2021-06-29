@@ -40,4 +40,13 @@ public interface ComUserService {
     int revUserInfo(ComUser user);
 
     ComUser getUserById(int id);
+
+
+    void updateUserPsw(int id,String pwd);
+
+    void updateUserRole(Integer id, String userRole, Integer upMoney);
+
+    void addUserMoney(Integer id, Integer upMoney);
+
+    void updataUserMoney(Integer id, Integer upMoney);
 }

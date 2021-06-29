@@ -48,6 +48,7 @@ public class UniLoginController {
             subject.login(token);//通过subject取
             ComUser loginUser = (ComUser) session.getAttribute("loginUser");
             String userToken = JWTUtil.getToken(loginUser);
+            System.err.println("====================token==========" + userToken);
             map.put("token", userToken);
             map.put("loginUser", loginUser);
             map.put("pName", loginUser.getUserPname());

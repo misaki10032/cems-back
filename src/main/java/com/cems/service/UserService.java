@@ -16,5 +16,4 @@ public interface UserService {
 
     List<SysEntrust> byEntrustByType(Integer typeID);
 
-
 }

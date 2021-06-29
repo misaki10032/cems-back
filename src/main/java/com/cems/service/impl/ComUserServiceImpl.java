@@ -1,7 +1,6 @@
 package com.cems.service.impl;
 
 
-
 import com.cems.mapper.UserMapper;
 import com.cems.pojo.ComUserBig;
 import com.cems.pojo.to.ComUser;
@@ -25,6 +24,7 @@ import java.util.Map;
 public class ComUserServiceImpl implements ComUserService {
     @Autowired
     UserMapper userMapper;
+
     @Override
     public List<ComUser> getUsers() {
         return userMapper.getUsers();
@@ -41,8 +41,8 @@ public class ComUserServiceImpl implements ComUserService {
     }
 
     @Override
-    public void KillUser(int id,String status) {
-        userMapper.killUser(id,status);
+    public void KillUser(int id, String status) {
+        userMapper.killUser(id, status);
     }
 
     @Override
@@ -114,6 +114,48 @@ public class ComUserServiceImpl implements ComUserService {
     @Override
     public int revUserInfo(ComUser user) {
         return userMapper.revUserInfo(user);
+    }
+
+
+//    @Override
+//    public void updateUserMoney(Integer id, Integer upMoney) {
+//        userMapper.updateUserPwd(id, String.valueOf(upMoney));
+//    }
+//
+//    @Override
+//    public boolean updateUserRole(Integer id, String userRole) {
+//        return userMapper.updateUserRole(id,userRole);
+//    }
+
+//    @Override
+//    public boolean updateUserRole(Map<String, Object> serMap) {
+//        return userMapper.updateUserRole(serMap);
+//
+//    }
+
+    @Override
+    public void addUserMoney(Integer id, Integer upMoney) {
+        String money  = String.valueOf(upMoney);
+        userMapper.updateUserMoney(id, money);
+    }
+
+    @Override
+    public void updataUserMoney(Integer id, Integer upMoney) {
+        String money  = String.valueOf(upMoney);
+        userMapper.updateUserMoney(id, money);
+    }
+
+    @Override
+    public void updateUserRole(Integer id, String userRole, Integer upMoney) {
+        userMapper.updateUserRole(id, userRole);
+        String money  = String.valueOf(upMoney);
+        userMapper.updateUserMoney(id, money);
+
+    }
+
+    @Override
+    public void updateUserPsw(int id, String pwd) {
+        userMapper.updateUserPwd(id, pwd);
     }
 
     @Override

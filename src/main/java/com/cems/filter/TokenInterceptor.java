@@ -16,7 +16,7 @@ public class TokenInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object hander) throws Exception {
         response.setCharacterEncoding("utf-8");
         String token = request.getHeader("token");
-        System.out.println("得到的token是"+token);
+        System.err.println("===============得到的token是=======================" + token);
         boolean verify = JWTUtil.verify(token);
         if (!verify){
             Map<String,Object> map = new HashMap<>();

@@ -5,6 +5,7 @@ import com.cems.mapper.EntrustMapper;
 import com.cems.mapper.UserMapper;
 import com.cems.pojo.ComEntrust;
 import com.cems.pojo.ComEntrustType;
+import com.cems.pojo.uni.UniAddEntrust;
 import com.cems.pojo.uni.UniEntrust;
 import com.cems.pojo.uni.UniPage;
 import com.cems.service.ComEntrustService;
@@ -135,7 +136,15 @@ public class ComEntrustServiceImpl implements ComEntrustService {
         }
         return entByPlan;
     }
-
+    @Override
+    public List<ComEntrust> getPrincipalEntByPlan(String plan, int id) {
+        List<ComEntrust> entByPlan = entrustMapper.getPrincipalEntByPlan(plan, id);
+        for (ComEntrust comEntrust : entByPlan) {
+            String entTypeId = comEntrust.getEntTypeId();
+            comEntrust.setEntTypeId(entrustMapper.getTypeById(Integer.parseInt(entTypeId)).getEntType());
+        }
+        return entByPlan;
+    }
     @Override
     public List<ComEntrust> getEntByText(String text, String plan) {
         ComEntrustType typeByName = entrustMapper.getTypeByName(text);
@@ -173,8 +182,37 @@ public class ComEntrustServiceImpl implements ComEntrustService {
     }
 
     @Override
+    public List<ComEntrust> getPrincipalEntByText(String text, String plan, int id) {
+        ComEntrustType typeByName = entrustMapper.getTypeByName(text);
+        String type = null;
+        if (typeByName != null) {
+            type = String.valueOf(typeByName.getId());
+        }
+        if (plan.equals("全部")) {
+            plan = null;
+        }
+        List<ComEntrust> entList = entrustMapper.getPrincipalEntByText("%" + text + "%", type, plan, id);
+        for (ComEntrust comEntrust : entList) {
+            String entTypeId = comEntrust.getEntTypeId();
+            comEntrust.setEntTypeId(entrustMapper.getTypeById(Integer.parseInt(entTypeId)).getEntType());
+        }
+        return entList;
+    }
+
+    @Override
     public List<String> getAllEntrustType() {
         return entrustMapper.getAllEntrustType();
+    }
+
+    @Override
+    public List<String> getAllEntrustTypeId() {
+        return entrustMapper.getAllEntrustTypeId();
+    }
+
+    @Override
+    public void addEntrust(UniAddEntrust entrust) {
+        entrust.setMoney(String.valueOf(Integer.parseInt(entrust.getMoney())));
+        entrustMapper.addEntrust(entrust);
     }
 
     @Override
@@ -190,6 +228,16 @@ public class ComEntrustServiceImpl implements ComEntrustService {
     @Override
     public List<ComEntrust> getUserEntrustsOk(int id) {
         List<ComEntrust> userEntrustsOk = entrustMapper.getUserEntrustsOk(id);
+        for (ComEntrust comEntrust : userEntrustsOk) {
+            String entTypeId = comEntrust.getEntTypeId();
+            comEntrust.setEntTypeId(entrustMapper.getTypeById(Integer.parseInt(entTypeId)).getEntType());
+        }
+        return userEntrustsOk;
+    }
+
+    @Override
+    public List<ComEntrust> getPrincipalEntrusts(int id) {
+        List<ComEntrust> userEntrustsOk = entrustMapper.getPrincipalEntrusts(id);
         for (ComEntrust comEntrust : userEntrustsOk) {
             String entTypeId = comEntrust.getEntTypeId();
             comEntrust.setEntTypeId(entrustMapper.getTypeById(Integer.parseInt(entTypeId)).getEntType());

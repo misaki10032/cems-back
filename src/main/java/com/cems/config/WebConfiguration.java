@@ -8,23 +8,17 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupp
 
 @Configuration
 public class WebConfiguration extends WebMvcConfigurationSupport {
-
     @Override
     protected void addInterceptors(InterceptorRegistry registry) {
         System.out.println("开始拦截");
         registry.addInterceptor(new TokenInterceptor()).
-                addPathPatterns("/**").
+                addPathPatterns("/web/**").
                 excludePathPatterns(
                         "/web/userlogin"
                         , "/web/appeal"
                         , "/web/register"
                         , "/web/forgetPsw"
                         , "/web/forgetPswOk"
-                        , "/uniApp/uniAppLogin"
-                        , "/uniApp/**"
-                        , "/uniApp/getEnts"
-                        , "/uniApp/userResiger"
-                        , "/uniApp/toTaskDone"
                 );
     }
 }

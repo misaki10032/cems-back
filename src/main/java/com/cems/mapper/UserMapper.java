@@ -2,11 +2,10 @@ package com.cems.mapper;
 
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.cems.pojo.SysAdmin;
 import com.cems.pojo.to.ComUser;
 import com.cems.pojo.to.ComUserInfo;
+import com.cems.pojo.to.LoginUser;
 import com.cems.pojo.to.SysEntrust;
-import com.cems.service.ComUserService;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
@@ -23,6 +22,8 @@ import java.util.Map;
 @Mapper
 @Component
 public interface UserMapper extends BaseMapper<ComUser> {
+
+    LoginUser selOneSysUser(Map<String, Object> serMap);
 
     ComUser selOneUser(int id);
 
@@ -54,4 +55,10 @@ public interface UserMapper extends BaseMapper<ComUser> {
     ComUser getUserById(int id);
 
     int revUserInfo(ComUser user);
+
+
+    void updateUserRole(@Param("id") Integer id, @Param("userRole") String userRole);
+
+
+    void updateUserMoney( @Param("id")  Integer id,  @Param("money") String money);
 }

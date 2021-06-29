@@ -1,18 +1,21 @@
 package com.cems.controller.uniApp.Info;
 import com.cems.pojo.ComEntrust;
 import com.cems.pojo.ComEntrustType;
+import com.cems.pojo.to.ComUser;
+import com.cems.pojo.uni.UniAddEntrust;
 import com.cems.pojo.uni.UniEntrust;
 import com.cems.pojo.uni.UniPage;
 import com.cems.service.ComEntrustService;
+import com.cems.service.ComUserService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @ClassName EntrustController
@@ -25,6 +28,8 @@ import java.util.Map;
 public class Uni_EntrustController {
     @Autowired
     ComEntrustService entrustService;
+    @Autowired
+    ComUserService userService;
     @GetMapping("getEnts")
     public Map<String, Object> getEnts(String pageIndex, String pageSize) {
         try {
@@ -114,6 +119,52 @@ public class Uni_EntrustController {
         }
     }
 
+    @GetMapping("getPrincipalEntrusts")
+    public Map<String, Object> getPrincipalEntrusts(String pageIndex, String pageSize, String id) {
+        try {
+            PageHelper.startPage(Integer.parseInt(pageIndex), Integer.parseInt(pageSize));
+            PageInfo<ComEntrust> entList = new PageInfo<>(entrustService.getPrincipalEntrusts(Integer.parseInt(id)));
+            Map<String, Object> map = new ConcurrentHashMap<>();
+            map.put("data", entList.getList());
+            map.put("total", entList.getTotal());
+            return map;
+        } catch (Exception e) {
+            System.err.println("查找失败!!!");
+            return null;
+        }
+    }
+
+    @GetMapping("getPrincipalEntbyPlan")
+    public Map<String, Object> getPrincipalEntbyPlan(UniPage page) {
+        try {
+            PageHelper.startPage(Integer.parseInt(page.getPageIndex()), Integer.parseInt(page.getPageSize()));
+            PageInfo<ComEntrust> entList = new PageInfo<>(entrustService.getPrincipalEntByPlan(page.getEntPlan(), Integer.parseInt(page.getId())));
+            Map<String, Object> map = new HashMap<>();
+            map.put("data", entList.getList());
+            map.put("total", entList.getTotal());
+            return map;
+        } catch (Exception e) {
+            System.err.println("查找失败!!!");
+            return null;
+        }
+    }
+
+    @GetMapping("getPrincipalEntbyText")
+    public Map<String, Object> getPrincipalEntbyText(UniPage page) {
+        try {
+            System.err.println(page);
+            PageHelper.startPage(Integer.parseInt(page.getPageIndex()), Integer.parseInt(page.getPageSize()));
+            PageInfo<ComEntrust> entList = new PageInfo<>(entrustService.getPrincipalEntByText(page.getText(), page.getEntPlan(), Integer.parseInt(page.getId())));
+            Map<String, Object> map = new HashMap<>();
+            map.put("data", entList.getList());
+            map.put("total", entList.getTotal());
+            return map;
+        } catch (Exception e) {
+            System.err.println("查找失败!!!");
+            return null;
+        }
+    }
+
     @GetMapping("getUserEntsByPlan")
     public Map<String, Object> getUserEntsbyPlan(UniPage page) {
         try {
@@ -146,14 +197,49 @@ public class Uni_EntrustController {
     }
 
     @GetMapping("getAllEntrustType")
-    public Map<String, Object> getAllEntrustType(){
-        Map<String, Object> map = new HashMap<>();
-        List<String> allEntrustType = entrustService.getAllEntrustType();
-        map.put("data",allEntrustType);
-        map.put("code",200);
+    public Map<String, Object> getAllEntrustType() {
+        Map<String, Object> map = new ConcurrentHashMap<>();
+        try {
+            List<String> allEntrustType = entrustService.getAllEntrustType();
+            List<String> allEntrustTypeId = entrustService.getAllEntrustTypeId();
+            map.put("data", allEntrustType);
+            map.put("dataId", allEntrustTypeId);
+            map.put("code", 200);
+        } catch (Exception e) {
+            map.put("msg", "服务器故障!");
+            map.put("code", 500);
+        }
         return map;
     }
 
+    @GetMapping("addEntrust")
+    public Map<String, Object> addEntrust(UniAddEntrust entrust) {
+        Map<String, Object> map = new ConcurrentHashMap<>();
+        try {
+            ComUser userById = userService.getUserById(Integer.parseInt(entrust.getId()));
+            if(userById.getUserMoney()<Integer.parseInt(entrust.getMoney())){
+                map.put("msg", "余额不足!");
+                map.put("code", 501);
+                return map;
+            }
+            Integer upMoney = userById.getUserMoney() - Integer.parseInt(entrust.getMoney());
+            userService.updataUserMoney(Integer.valueOf(entrust.getId()),upMoney);
+            if(userById.getUserRole().equals("agent")){
+                map.put("msg", "权限不足!");
+                map.put("code", 502);
+                return map;
+            }
+            entrustService.addEntrust(entrust);
+            userById.setUserMoney(upMoney);
+            map.put("msg", "添加成功!");
+            map.put("loginUser", userById);
+            map.put("code", 200);
+        } catch (Exception e) {
+            map.put("msg", "服务器故障!");
+            map.put("code", 500);
+        }
+        return map;
+    }
 
 
 }

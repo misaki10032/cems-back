@@ -94,6 +94,8 @@
         set user_pwd = #{pwd}
         where id = #{id}
     </update>
+
+
     <select id="getUserById" resultType="com.cems.pojo.to.ComUser">
         select f.id,
                f.user_id,
@@ -144,4 +146,17 @@
         </if>
         where user_id = #{userId}
     </update>
+
+    <update id="updateUserRole">
+        UPDATE com_user
+        SET user_role = #{userRole}
+        WHERE id = #{id}
+    </update>
+
+    <update id="updateUserMoney">
+        UPDATE com_user_info
+        SET user_money = #{money}
+        WHERE user_id = #{id}
+    </update>
+
 </mapper>
