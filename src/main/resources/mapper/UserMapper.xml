@@ -158,5 +158,58 @@
         SET user_money = #{money}
         WHERE user_id = #{id}
     </update>
+    <resultMap id="myFriend" type="com.cems.pojo.uni.UniMyFriend">
+        <id column="userId" property="userId"/>
+        <collection property="friends" ofType="com.cems.pojo.to.ComUser">
+            <id column="friendId" property="userId"/>
+            <result column="userPname" property="userPname"/>
+            <result column="userName" property="userName"/>
+            <result column="userSex" property="userSex"/>
+            <result column="userBirth" property="userBirth"/>
+            <result column="userHouse" property="userHouse"/>
+            <result column="userEmail" property="userEmail"/>
+            <result column="userPwdProtect" property="userPwdProtect"/>
+            <result column="userDec" property="userDec"/>
+            <result column="userMoney" property="userMoney"/>
+        </collection>
+    </resultMap>
+    <select id="getMyFocus" resultMap="myFriend">
+        select
+               friend_id as friendId,
+               cuf.user_id as userId,
+               user_email as userEmail,
+               user_house as userHouse,
+               user_birth as userBirth,
+               user_pwd_protect as userPwdProtext,
+               user_dec as userDec,
+               user_name as userName,
+               user_pname as userPname,
+               user_sex as userSex,
+               user_money as userMoney,
+               user_picture as userPicture
+        from com_user_friend cuf
+                 inner join com_user_info cui
+                            on cuf.friend_id = cui.user_id
+        where cuf.user_id =#{id}
+    </select>
+    <select id="getMyFriend" resultMap="myFriend">
+        select
+            cuf.user_id as friendId,
+            cuf.friend_id as userId,
+            user_email as userEmail,
+            user_house as userHouse,
+            user_birth as userBirth,
+            user_pwd_protect as userPwdProtext,
+            user_dec as userDec,
+            user_name as userName,
+            user_pname as userPname,
+            user_sex as userSex,
+            user_money as userMoney,
+            user_picture as userPicture
+        from com_user_friend cuf
+                 inner join com_user_info cui
+                            on cuf.user_id = cui.user_id
+        where cuf.friend_id =#{id}
+    </select>
 
 </mapper>

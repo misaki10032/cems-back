@@ -1,6 +1,7 @@
 package com.cems.service;
 
 import com.cems.pojo.UniUserFriend;
+import com.cems.pojo.uni.UniMyFriend;
 
 import java.util.List;
 
@@ -14,9 +15,9 @@ public interface FriendService {
 
     void addFriend(int userId, int friendId);
 
-    List<UniUserFriend> getMyFocus(int id);
+    UniMyFriend getMyFocus(int id);
 
-    List<UniUserFriend> getMyFriend(int id);
+    UniMyFriend getMyFriend(int id);
 
     boolean FriendContains(int userId, int friendId);
 
