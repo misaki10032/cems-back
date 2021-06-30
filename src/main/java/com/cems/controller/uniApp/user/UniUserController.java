@@ -1,15 +1,13 @@
 package com.cems.controller.uniApp.user;
 
 import com.cems.pojo.ForumArticle;
-import com.cems.pojo.Message;
-import com.cems.pojo.UniUserFriend;
 import com.cems.pojo.to.ComUser;
 import com.cems.pojo.to.LoginUser;
+import com.cems.pojo.uni.UniMyFriend;
 import com.cems.pojo.uni.UniUpUserSole;
 import com.cems.service.ComUserService;
 import com.cems.service.FriendService;
 import com.cems.service.UserService;
-import com.cems.util.DateUtil;
 import com.cems.util.ShiroMd5Util;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;

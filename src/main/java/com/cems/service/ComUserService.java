@@ -42,7 +42,6 @@ public interface ComUserService {
 
     ComUser getUserById(int id);
 
-
     void updateUserPsw(int id,String pwd);
 
     void updateUserRole(Integer id, String userRole, Integer upMoney);
