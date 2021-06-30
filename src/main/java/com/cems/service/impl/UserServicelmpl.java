@@ -66,4 +66,9 @@ public class UserServicelmpl implements UserService {
     public int delArticeById(int id) {
         return userMapper.delArticeById(id);
     }
+
+    @Override
+    public List<ForumArticle> selAllArtice() {
+        return userMapper.selAllArtice();
+    }
 }

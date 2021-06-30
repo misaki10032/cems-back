@@ -25,6 +25,6 @@ public interface UserService {
     List<ForumArticle> selDelArticleByUId(int artId);
     ForumArticle  selArticleById(int id);
     int delArticeById(int id);
-
+    List<ForumArticle> selAllArtice();
 
 }

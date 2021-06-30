@@ -222,4 +222,24 @@ public class UniUserController {
         }
     }
 
+    @GetMapping("selAllArticle")
+    public Map<String, Object> selAllArticle(String pageIndex, String pageSize, String id) {
+        try {
+            PageHelper.startPage(Integer.parseInt(pageIndex), Integer.parseInt(pageSize));
+            List<ForumArticle> forumArticles = userService.selAllArtice();
+            for (ForumArticle forum:forumArticles) {
+                forum.setDel(true);
+            }
+            System.out.println(forumArticles);
+            PageInfo<ForumArticle> forumList = new PageInfo<>(forumArticles);
+            Map<String, Object> map = new ConcurrentHashMap<>();
+            map.put("data", forumList.getList());
+            map.put("total", forumList.getTotal());
+            return map;
+        } catch (Exception e) {
+            System.err.println("查找失败!!!");
+            return null;
+        }
+    }
+
 }

@@ -24,4 +24,5 @@ public class ForumArticle {
     private String status;
     private String gmtCreate;
     private boolean del;
+    private String pname;
 }

@@ -72,4 +72,6 @@ public interface UserMapper extends BaseMapper<ComUser> {
     List<ForumArticle> selDelArticleByUId(int artId);
     ForumArticle  selArticleById(int id);
     int delArticeById(int id);
+
+    List<ForumArticle> selAllArtice();
 }

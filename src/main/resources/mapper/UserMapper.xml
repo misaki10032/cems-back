@@ -200,4 +200,9 @@
         update forum_article set is_delete = 1
         where id = #{id};
     </update>
+    <select id="selAllArtice" resultType="ForumArticle">
+        select fa.id id, fa.user_id user_id, fa.fo_title fo_title, fa.fo_data fo_data, fa.status status, fa.gmt_create gmt_create,cui.user_pname pname
+        from forum_article fa inner join com_user_info cui on fa.user_id = cui.user_id
+        where fa.is_delete=0 and fa.status='已审核'
+    </select>
 </mapper>
