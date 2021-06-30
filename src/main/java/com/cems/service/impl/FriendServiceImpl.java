@@ -47,4 +47,14 @@ public class FriendServiceImpl implements FriendService {
         }
         return false;
     }
+
+    @Override
+    public int countUserFans(int id) {
+        return friendMapper.countFans(id);
+    }
+
+    @Override
+    public int countUserFocus(int id) {
+        return friendMapper.countFocus(id);
+    }
 }

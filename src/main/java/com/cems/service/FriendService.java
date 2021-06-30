@@ -21,4 +21,8 @@ public interface FriendService {
 
     boolean FriendContains(int userId, int friendId);
 
+    int countUserFans(int id);
+
+    int countUserFocus(int id);
+
 }
