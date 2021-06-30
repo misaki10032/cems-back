@@ -212,4 +212,50 @@
         where cuf.friend_id =#{id}
     </select>
 
+    <select id="selAllMessageById" parameterType="int" resultType="com.cems.pojo.Message">
+        select id, user_id, user_message, user_time
+        from table_name
+        where user_id = #{userId}
+        order by user_time desc
+    </select>
+
+    <delete id="delMessage" parameterType="int">
+        delete
+        from table_name
+        where id = #{id}
+    </delete>
+    <delete id="delMessageByUid" parameterType="int">
+        delete
+        from table_name
+        where user_id = #{id}
+    </delete>
+
+    <!--获取某个人的发帖集合-->
+    <select id="selArticleByUId" parameterType="int" resultType="ForumArticle">
+        SELECT id, user_id, fo_title, fo_data, status, gmt_create
+        from forum_article
+        where user_id = #{userId} and is_delete=0
+    </select>
+    <!--获取某个人的回收站帖子-->
+    <select id="selDelArticleByUId" parameterType="int" resultType="ForumArticle">
+        SELECT id, user_id, fo_title, fo_data, status, gmt_create
+        from forum_article
+        where user_id = #{userId} and is_delete=1
+    </select>
+    <!--根据帖子id获得某个帖子-->
+    <select id="selArticleById" parameterType="int" resultType="ForumArticle">
+        select id, user_id, fo_title, fo_data, status, gmt_create
+        from forum_article
+        where id = #{id}
+    </select>
+    <!--根据id删除帖子-->
+    <update id="delArticeById" parameterType="int">
+        update forum_article set is_delete = 1
+        where id = #{id};
+    </update>
+    <select id="selAllArtice" resultType="ForumArticle">
+        select fa.id id, fa.user_id user_id, fa.fo_title fo_title, fa.fo_data fo_data, fa.status status, fa.gmt_create gmt_create,cui.user_pname pname
+        from forum_article fa inner join com_user_info cui on fa.user_id = cui.user_id
+        where fa.is_delete=0 and fa.status='已审核'
+    </select>
 </mapper>

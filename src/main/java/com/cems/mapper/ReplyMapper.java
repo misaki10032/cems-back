@@ -2,6 +2,7 @@ package com.cems.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.cems.pojo.CommentReply;
+import com.cems.pojo.Message;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;

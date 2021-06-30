@@ -2,6 +2,8 @@ package com.cems.mapper;
 
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.cems.pojo.ForumArticle;
+import com.cems.pojo.Message;
 import com.cems.pojo.to.ComUser;
 import com.cems.pojo.to.ComUserInfo;
 import com.cems.pojo.to.LoginUser;
@@ -67,4 +69,15 @@ public interface UserMapper extends BaseMapper<ComUser> {
 
     UniMyFriend getMyFriend(int id);
 
+    List<Message> selAllMessageById(int userId);
+    //删除
+    int delMessage(int id);
+    int delMessageByUid(int id);
+
+    List<ForumArticle> selArticleByUId(int userId);
+    List<ForumArticle> selDelArticleByUId(int artId);
+    ForumArticle  selArticleById(int id);
+    int delArticeById(int id);
+
+    List<ForumArticle> selAllArtice();
 }
