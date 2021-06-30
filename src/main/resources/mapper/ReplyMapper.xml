@@ -15,4 +15,5 @@
             or comm_re_user like #{text}
             or gmt_create like #{text})
     </select>
+
 </mapper>

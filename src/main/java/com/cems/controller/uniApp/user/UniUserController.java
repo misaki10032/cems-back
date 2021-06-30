@@ -1,5 +1,7 @@
 package com.cems.controller.uniApp.user;
 
+import com.cems.pojo.ForumArticle;
+import com.cems.pojo.Message;
 import com.cems.pojo.UniUserFriend;
 import com.cems.pojo.to.ComUser;
 import com.cems.pojo.to.LoginUser;
@@ -7,7 +9,10 @@ import com.cems.pojo.uni.UniUpUserSole;
 import com.cems.service.ComUserService;
 import com.cems.service.FriendService;
 import com.cems.service.UserService;
+import com.cems.util.DateUtil;
 import com.cems.util.ShiroMd5Util;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -186,5 +191,35 @@ public class UniUserController {
         return map;
     }
 
+
+    @GetMapping("selArticleByUId")
+    public Map<String, Object> selArticleByUId(String pageIndex, String pageSize, String id) {
+        try {
+            PageHelper.startPage(Integer.parseInt(pageIndex), Integer.parseInt(pageSize));
+            List<ForumArticle> forumArticles = userService.selArticleByUId(Integer.parseInt(id));
+            for (ForumArticle forum:forumArticles) {
+                forum.setDel(true);
+            }
+            System.out.println(forumArticles);
+            PageInfo<ForumArticle> forumList = new PageInfo<>(forumArticles);
+            Map<String, Object> map = new ConcurrentHashMap<>();
+            map.put("data", forumList.getList());
+            map.put("total", forumList.getTotal());
+            return map;
+        } catch (Exception e) {
+            System.err.println("查找失败!!!");
+            return null;
+        }
+    }
+    @GetMapping("delArticle")
+    public String delArticle( String id) {
+        try {
+            userService.delArticeById(Integer.parseInt(id));
+            return "";
+        } catch (Exception e) {
+            System.err.println("查找失败!!!");
+            return null;
+        }
+    }
 
 }
