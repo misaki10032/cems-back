@@ -57,8 +57,13 @@ public class UniLoginController {
             map.put("loginUser", loginUser);
             map.put("pName", loginUser.getUserPname());
             map.put("userId", loginUser.getId());
-            map.put("fans", friendService.getMyFriend(loginUser.getId()).getFriends().size());
-            map.put("foucs", friendService.getMyFocus(loginUser.getId()).getFriends().size());
+            try {
+                map.put("fans", friendService.getMyFriend(loginUser.getId()).getFriends().size());
+                map.put("foucs", friendService.getMyFocus(loginUser.getId()).getFriends().size());
+            }catch (Exception e){
+                map.put("fans", 0);
+                map.put("foucs", 0);
+            }
             map.put("code", "200");
         } catch (UnknownAccountException uae) {
             map.put("code", "500");
