@@ -1,17 +1,21 @@
 package com.cems.controller.uniApp.user;
 
-import com.cems.pojo.UniUserFriend;
+import com.cems.pojo.ForumArticle;
 import com.cems.pojo.to.ComUser;
 import com.cems.pojo.to.LoginUser;
+import com.cems.pojo.uni.UniMyFriend;
 import com.cems.pojo.uni.UniUpUserSole;
 import com.cems.service.ComUserService;
 import com.cems.service.FriendService;
 import com.cems.service.UserService;
 import com.cems.util.ShiroMd5Util;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.*;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 
@@ -21,7 +25,6 @@ import java.util.concurrent.ConcurrentHashMap;
  * @Date 2021/6/27
  * @Version 1.0
  */
-
 @RestController
 @RequestMapping("uniApp")
 public class UniUserController {
@@ -87,7 +90,7 @@ public class UniUserController {
     public Map<String, Object> getMyFriend(int id) {
         Map<String, Object> map = new ConcurrentHashMap<>();
         try {
-            List<UniUserFriend> myFriend = friendService.getMyFriend(id);
+            UniMyFriend myFriend = friendService.getMyFriend(id);
             map.put("code", "200");
             map.put("data", myFriend);
         } catch (Exception e) {
@@ -99,9 +102,10 @@ public class UniUserController {
 
     @GetMapping("getMyFocus")
     public Map<String, Object> getMyFocus(int id) {
+        System.out.println(id);
         Map<String, Object> map = new ConcurrentHashMap<>();
         try {
-            List<UniUserFriend> myFocus = friendService.getMyFocus(id);
+            UniMyFriend myFocus = friendService.getMyFocus(id);
             map.put("code", "200");
             map.put("data", myFocus);
         } catch (Exception e) {
@@ -186,18 +190,57 @@ public class UniUserController {
         return map;
     }
 
-    @GetMapping("getUserAtt")
-    public HashMap<String, Object> getUserAtt(Integer id) {
-        HashMap<String, Object> map = new HashMap<>();
-        LinkedList<ComUser> listUser;
+
+    @GetMapping("selArticleByUId")
+    public Map<String, Object> selArticleByUId(String pageIndex, String pageSize, String id) {
         try {
-            listUser = comUserService.getUserAtt(id);
-            map.put("Userlist", listUser);
-            map.put("code", "200");
+            PageHelper.startPage(Integer.parseInt(pageIndex), Integer.parseInt(pageSize));
+            List<ForumArticle> forumArticles = userService.selArticleByUId(Integer.parseInt(id));
+            for (ForumArticle forum:forumArticles) {
+                forum.setDel(true);
+            }
+            System.out.println(forumArticles);
+            PageInfo<ForumArticle> forumList = new PageInfo<>(forumArticles);
+            Map<String, Object> map = new ConcurrentHashMap<>();
+            map.put("data", forumList.getList());
+            map.put("total", forumList.getTotal());
+            return map;
         } catch (Exception e) {
-            map.put("code", "500");
+            System.err.println("查找失败!!!");
+            return null;
         }
-        System.err.println(map);
-        return map;
     }
+    @GetMapping("delArticle")
+    public String delArticle( String id) {
+        try {
+            userService.delArticeById(Integer.parseInt(id));
+            return "";
+        } catch (Exception e) {
+            System.err.println("查找失败!!!");
+            return null;
+        }
+    }
+
+    @GetMapping("selAllArticle")
+    public Map<String, Object> selAllArticle(String pageIndex, String pageSize, String id) {
+        try {
+            PageHelper.startPage(Integer.parseInt(pageIndex), Integer.parseInt(pageSize));
+            List<ForumArticle> forumArticles = userService.selAllArtice();
+            for (ForumArticle forum:forumArticles) {
+                forum.setDel(true);
+            }
+            System.out.println(forumArticles);
+            PageInfo<ForumArticle> forumList = new PageInfo<>(forumArticles);
+            Map<String, Object> map = new ConcurrentHashMap<>();
+            map.put("data", forumList.getList());
+            map.put("total", forumList.getTotal());
+            return map;
+        } catch (Exception e) {
+            System.err.println("查找失败!!!");
+            return null;
+        }
+    }
+
+
+
 }

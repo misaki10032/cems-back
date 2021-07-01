@@ -158,12 +158,104 @@
         SET user_money = #{money}
         WHERE user_id = #{id}
     </update>
-
-
-    <select id="getUserFriById" resultType="Integer">
-        SELECT `friend_id`
-        FROM com_user_friend
-        WHERE user_id = #{id}
+    <resultMap id="myFriend" type="com.cems.pojo.uni.UniMyFriend">
+        <id column="userId" property="userId"/>
+        <collection property="friends" ofType="com.cems.pojo.to.ComUser">
+            <id column="friendId" property="userId"/>
+            <result column="userPname" property="userPname"/>
+            <result column="userName" property="userName"/>
+            <result column="userSex" property="userSex"/>
+            <result column="userBirth" property="userBirth"/>
+            <result column="userHouse" property="userHouse"/>
+            <result column="userEmail" property="userEmail"/>
+            <result column="userPwdProtect" property="userPwdProtect"/>
+            <result column="userDec" property="userDec"/>
+            <result column="userMoney" property="userMoney"/>
+        </collection>
+    </resultMap>
+    <select id="getMyFocus" resultMap="myFriend">
+        select
+               friend_id as friendId,
+               cuf.user_id as userId,
+               user_email as userEmail,
+               user_house as userHouse,
+               user_birth as userBirth,
+               user_pwd_protect as userPwdProtext,
+               user_dec as userDec,
+               user_name as userName,
+               user_pname as userPname,
+               user_sex as userSex,
+               user_money as userMoney,
+               user_picture as userPicture
+        from com_user_friend cuf
+                 inner join com_user_info cui
+                            on cuf.friend_id = cui.user_id
+        where cuf.user_id =#{id}
+    </select>
+    <select id="getMyFriend" resultMap="myFriend">
+        select
+            cuf.user_id as friendId,
+            cuf.friend_id as userId,
+            user_email as userEmail,
+            user_house as userHouse,
+            user_birth as userBirth,
+            user_pwd_protect as userPwdProtext,
+            user_dec as userDec,
+            user_name as userName,
+            user_pname as userPname,
+            user_sex as userSex,
+            user_money as userMoney,
+            user_picture as userPicture
+        from com_user_friend cuf
+                 inner join com_user_info cui
+                            on cuf.user_id = cui.user_id
+        where cuf.friend_id =#{id}
     </select>
 
+    <select id="selAllMessageById" parameterType="int" resultType="com.cems.pojo.Message">
+        select id, user_id, user_message, user_time
+        from table_name
+        where user_id = #{userId}
+        order by user_time desc
+    </select>
+
+    <delete id="delMessage" parameterType="int">
+        delete
+        from table_name
+        where id = #{id}
+    </delete>
+    <delete id="delMessageByUid" parameterType="int">
+        delete
+        from table_name
+        where user_id = #{id}
+    </delete>
+
+    <!--获取某个人的发帖集合-->
+    <select id="selArticleByUId" parameterType="int" resultType="ForumArticle">
+        SELECT id, user_id, fo_title, fo_data, status, gmt_create
+        from forum_article
+        where user_id = #{userId} and is_delete=0
+    </select>
+    <!--获取某个人的回收站帖子-->
+    <select id="selDelArticleByUId" parameterType="int" resultType="ForumArticle">
+        SELECT id, user_id, fo_title, fo_data, status, gmt_create
+        from forum_article
+        where user_id = #{userId} and is_delete=1
+    </select>
+    <!--根据帖子id获得某个帖子-->
+    <select id="selArticleById" parameterType="int" resultType="ForumArticle">
+        select id, user_id, fo_title, fo_data, status, gmt_create
+        from forum_article
+        where id = #{id}
+    </select>
+    <!--根据id删除帖子-->
+    <update id="delArticeById" parameterType="int">
+        update forum_article set is_delete = 1
+        where id = #{id};
+    </update>
+    <select id="selAllArtice" resultType="ForumArticle">
+        select fa.id id, fa.user_id user_id, fa.fo_title fo_title, fa.fo_data fo_data, fa.status status, fa.gmt_create gmt_create,cui.user_pname pname
+        from forum_article fa inner join com_user_info cui on fa.user_id = cui.user_id
+        where fa.is_delete=0 and fa.status='已审核'
+    </select>
 </mapper>

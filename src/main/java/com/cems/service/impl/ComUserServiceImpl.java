@@ -6,6 +6,7 @@ import com.cems.pojo.ComUserBig;
 import com.cems.pojo.to.ComUser;
 import com.cems.pojo.to.ComUserInfo;
 import com.cems.pojo.to.FormInline;
+import com.cems.pojo.uni.UniMyFriend;
 import com.cems.service.ComUserService;
 import com.cems.util.ShiroMd5Util;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -118,23 +119,6 @@ public class ComUserServiceImpl implements ComUserService {
         return userMapper.revUserInfo(user);
     }
 
-
-//    @Override
-//    public void updateUserMoney(Integer id, Integer upMoney) {
-//        userMapper.updateUserPwd(id, String.valueOf(upMoney));
-//    }
-//
-//    @Override
-//    public boolean updateUserRole(Integer id, String userRole) {
-//        return userMapper.updateUserRole(id,userRole);
-//    }
-
-//    @Override
-//    public boolean updateUserRole(Map<String, Object> serMap) {
-//        return userMapper.updateUserRole(serMap);
-//
-//    }
-
     @Override
     public void addUserMoney(Integer id, Integer upMoney) {
         String money = String.valueOf(upMoney);
@@ -146,6 +130,11 @@ public class ComUserServiceImpl implements ComUserService {
     public void updataUserMoney(Integer id, Integer upMoney) {
         String money = String.valueOf(upMoney);
         userMapper.updateUserMoney(id, money);
+    }
+
+    @Override
+    public UniMyFriend getMyFriend(int id) {
+        return userMapper.getMyFriend(id);
     }
 
     @Override

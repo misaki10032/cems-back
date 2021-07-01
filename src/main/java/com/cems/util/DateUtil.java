@@ -11,7 +11,7 @@ import java.util.Date;
  * @Version 1.0
  */
 public class DateUtil {
-    public    Date strToDate(String s) throws ParseException {
+    public     Date strToDate(String s) throws ParseException {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         Date date = simpleDateFormat.parse(s);
         return date;

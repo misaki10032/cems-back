@@ -3,6 +3,7 @@ package com.cems.pojo;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
@@ -21,5 +22,7 @@ public class ForumArticle {
     private String foTitle;
     private String foData;
     private String status;
-    private Date gmtCreate;
+    private String gmtCreate;
+    private boolean del;
+    private String pname;
 }

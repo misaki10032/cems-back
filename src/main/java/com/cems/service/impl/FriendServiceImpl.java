@@ -1,7 +1,9 @@
 package com.cems.service.impl;
 
 import com.cems.mapper.FriendMapper;
+import com.cems.mapper.UserMapper;
 import com.cems.pojo.UniUserFriend;
+import com.cems.pojo.uni.UniMyFriend;
 import com.cems.service.FriendService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +21,8 @@ public class FriendServiceImpl implements FriendService {
 
     @Autowired
     FriendMapper friendMapper;
+    @Autowired
+    UserMapper userMapper;
 
     @Override
     public void addFriend(int userId, int friendId) {
@@ -26,13 +30,13 @@ public class FriendServiceImpl implements FriendService {
     }
 
     @Override
-    public List<UniUserFriend> getMyFocus(int id) {
-        return friendMapper.getMyFocus(id);
+    public UniMyFriend getMyFocus(int id) {
+        return userMapper.getMyFocus(id);
     }
 
     @Override
-    public List<UniUserFriend> getMyFriend(int id) {
-        return friendMapper.getMyFriend(id);
+    public UniMyFriend getMyFriend(int id) {
+        return userMapper.getMyFriend(id);
     }
 
     @Override
@@ -42,5 +46,15 @@ public class FriendServiceImpl implements FriendService {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public int countUserFans(int id) {
+        return friendMapper.countFans(id);
+    }
+
+    @Override
+    public int countUserFocus(int id) {
+        return friendMapper.countFocus(id);
     }
 }
