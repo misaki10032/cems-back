@@ -159,4 +159,11 @@
         WHERE user_id = #{id}
     </update>
 
+
+    <select id="getUserFriById" resultType="Integer">
+        SELECT `friend_id`
+        FROM com_user_friend
+        WHERE user_id = #{id}
+    </select>
+
 </mapper>

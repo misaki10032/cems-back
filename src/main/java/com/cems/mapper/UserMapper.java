@@ -10,6 +10,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -60,5 +61,7 @@ public interface UserMapper extends BaseMapper<ComUser> {
     void updateUserRole(@Param("id") Integer id, @Param("userRole") String userRole);
 
 
-    void updateUserMoney( @Param("id")  Integer id,  @Param("money") String money);
+    void updateUserMoney(@Param("id") Integer id, @Param("money") String money);
+
+    List<Integer> getUserFriById(int id);
 }

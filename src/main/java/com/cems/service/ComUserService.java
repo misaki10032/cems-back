@@ -6,6 +6,8 @@ import com.cems.pojo.to.ComUser;
 import com.cems.pojo.to.ComUserInfo;
 import com.cems.pojo.to.FormInline;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -49,4 +51,6 @@ public interface ComUserService {
     void addUserMoney(Integer id, Integer upMoney);
 
     void updataUserMoney(Integer id, Integer upMoney);
+
+    LinkedList<ComUser> getUserAtt(int id);
 }

@@ -11,6 +11,8 @@ import com.cems.util.ShiroMd5Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -135,20 +137,21 @@ public class ComUserServiceImpl implements ComUserService {
 
     @Override
     public void addUserMoney(Integer id, Integer upMoney) {
-        String money  = String.valueOf(upMoney);
+        String money = String.valueOf(upMoney);
         userMapper.updateUserMoney(id, money);
     }
 
+
     @Override
     public void updataUserMoney(Integer id, Integer upMoney) {
-        String money  = String.valueOf(upMoney);
+        String money = String.valueOf(upMoney);
         userMapper.updateUserMoney(id, money);
     }
 
     @Override
     public void updateUserRole(Integer id, String userRole, Integer upMoney) {
         userMapper.updateUserRole(id, userRole);
-        String money  = String.valueOf(upMoney);
+        String money = String.valueOf(upMoney);
         userMapper.updateUserMoney(id, money);
 
     }
@@ -163,4 +166,16 @@ public class ComUserServiceImpl implements ComUserService {
         return userMapper.getUserById(id);
     }
 
+
+    @Override
+    public LinkedList<ComUser> getUserAtt(int id) {
+        List<Integer> userFriById = userMapper.getUserFriById(id);
+        LinkedList<ComUser> comUserList = new LinkedList<>();
+        for (Integer friId : userFriById) {
+            ComUser comUser = userMapper.getUserById(friId);
+            comUserList.add(comUser);
+        }
+
+        return comUserList;
+    }
 }

@@ -11,8 +11,7 @@ import com.cems.util.ShiroMd5Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 
@@ -22,6 +21,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @Date 2021/6/27
  * @Version 1.0
  */
+
 @RestController
 @RequestMapping("uniApp")
 public class UniUserController {
@@ -186,5 +186,18 @@ public class UniUserController {
         return map;
     }
 
-
+    @GetMapping("getUserAtt")
+    public HashMap<String, Object> getUserAtt(Integer id) {
+        HashMap<String, Object> map = new HashMap<>();
+        LinkedList<ComUser> listUser;
+        try {
+            listUser = comUserService.getUserAtt(id);
+            map.put("Userlist", listUser);
+            map.put("code", "200");
+        } catch (Exception e) {
+            map.put("code", "500");
+        }
+        System.err.println(map);
+        return map;
+    }
 }
