@@ -79,6 +79,7 @@ public class ComUserServiceImpl implements ComUserService {
         return user;
     }
 
+
     @Override
     public ComUser judgeAP(Map<String, Object> map) {
         return userMapper.judgeAP(map);
@@ -132,10 +133,7 @@ public class ComUserServiceImpl implements ComUserService {
         userMapper.updateUserMoney(id, money);
     }
 
-    @Override
-    public UniMyFriend getMyFriend(int id) {
-        return userMapper.getMyFriend(id);
-    }
+
 
     @Override
     public void updateUserRole(Integer id, String userRole, Integer upMoney) {
@@ -156,15 +154,5 @@ public class ComUserServiceImpl implements ComUserService {
     }
 
 
-    @Override
-    public LinkedList<ComUser> getUserAtt(int id) {
-        List<Integer> userFriById = userMapper.getUserFriById(id);
-        LinkedList<ComUser> comUserList = new LinkedList<>();
-        for (Integer friId : userFriById) {
-            ComUser comUser = userMapper.getUserById(friId);
-            comUserList.add(comUser);
-        }
 
-        return comUserList;
-    }
 }
