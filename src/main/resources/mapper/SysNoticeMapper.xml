@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cems.mapper.SysNoticeMapper">
+    <select id="selAllNotice" resultType="SysNotice">
+        select notice_id, notice_content, notice_begin, notice_end,admin_id
+        from sys_notice
+    </select>
+
+    <delete id="delOneNotice">
+        delete from sys_notice
+        where notice_id = #{id}
+    </delete>
+
+    <delete id="selSomeNot">
+        select notice_id, notice_content, notice_begin, notice_end,admin_id
+        from sys_notice
+        where notice_end>now()
+        order by notice_begin asc
+        limit 5
+    </delete>
+
+</mapper>
