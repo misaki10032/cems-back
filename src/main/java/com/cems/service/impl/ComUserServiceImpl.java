@@ -12,6 +12,8 @@ import com.cems.util.ShiroMd5Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -77,6 +79,7 @@ public class ComUserServiceImpl implements ComUserService {
         return user;
     }
 
+
     @Override
     public ComUser judgeAP(Map<String, Object> map) {
         return userMapper.judgeAP(map);
@@ -119,25 +122,23 @@ public class ComUserServiceImpl implements ComUserService {
 
     @Override
     public void addUserMoney(Integer id, Integer upMoney) {
-        String money  = String.valueOf(upMoney);
+        String money = String.valueOf(upMoney);
         userMapper.updateUserMoney(id, money);
     }
+
 
     @Override
     public void updataUserMoney(Integer id, Integer upMoney) {
-        String money  = String.valueOf(upMoney);
+        String money = String.valueOf(upMoney);
         userMapper.updateUserMoney(id, money);
     }
 
-    @Override
-    public UniMyFriend getMyFriend(int id) {
-        return userMapper.getMyFriend(id);
-    }
+
 
     @Override
     public void updateUserRole(Integer id, String userRole, Integer upMoney) {
         userMapper.updateUserRole(id, userRole);
-        String money  = String.valueOf(upMoney);
+        String money = String.valueOf(upMoney);
         userMapper.updateUserMoney(id, money);
 
     }
@@ -151,5 +152,7 @@ public class ComUserServiceImpl implements ComUserService {
     public ComUser getUserById(int id) {
         return userMapper.getUserById(id);
     }
+
+
 
 }

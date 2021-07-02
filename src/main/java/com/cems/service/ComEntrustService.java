@@ -77,4 +77,8 @@ public interface ComEntrustService {
     List<String> getAllEntrustTypeId();
 
     void addEntrust(UniAddEntrust entrust);
+
+    void updateEntPlan(Integer id, String entPlan);
+
+    ComEntrust getEntUserId(Integer id);
 }

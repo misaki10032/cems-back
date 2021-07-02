@@ -290,5 +290,13 @@ public class ComEntrustServiceImpl implements ComEntrustService {
         entrustMapper.updataEntState(id, status);
     }
 
+    @Override
+    public void updateEntPlan(Integer id, String entPlan) {
+        entrustMapper.updateEntPlan(id,entPlan);
+    }
 
+    @Override
+    public ComEntrust getEntUserId(Integer id) {
+        return entrustMapper.getEntById(id);
+    }
 }

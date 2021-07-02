@@ -83,4 +83,5 @@ public interface EntrustMapper extends BaseMapper<ComEntrust> {
 
     void addEntrust(UniAddEntrust entrust);
 
+    void updateEntPlan(@Param("id") Integer id, @Param("entPlan") String entPlan);
 }
