@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class SysNoticeServiceImpl implements SysNoticeService {
@@ -27,5 +28,10 @@ public class SysNoticeServiceImpl implements SysNoticeService {
     @Override
     public List<SysNotice> selSomeNot() {
         return sysNoticeMapper.selSomeNot();
+    }
+
+    @Override
+    public int insNotice(Map<String, Object> map) {
+        return sysNoticeMapper.insNotice(map);
     }
 }

@@ -12,12 +12,16 @@
         where notice_id = #{id}
     </delete>
 
-    <delete id="selSomeNot">
+    <select id="selSomeNot" resultType="SysNotice">
         select notice_id, notice_content, notice_begin, notice_end,admin_id
         from sys_notice
         where notice_end>now()
         order by notice_begin asc
         limit 5
-    </delete>
+    </select>
+
+    <insert id="insNotice" parameterType="map">
+        insert into sys_notice (notice_content, notice_begin, notice_end, admin_id) VALUES (#{content},#{begin},#{end},#{adminId})
+    </insert>
 
 </mapper>

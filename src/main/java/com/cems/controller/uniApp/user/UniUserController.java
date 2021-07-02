@@ -1,12 +1,14 @@
 package com.cems.controller.uniApp.user;
 
 import com.cems.pojo.ForumArticle;
+import com.cems.pojo.SysNotice;
 import com.cems.pojo.to.ComUser;
 import com.cems.pojo.to.LoginUser;
 import com.cems.pojo.uni.UniMyFriend;
 import com.cems.pojo.uni.UniUpUserSole;
 import com.cems.service.ComUserService;
 import com.cems.service.FriendService;
+import com.cems.service.SysNoticeService;
 import com.cems.service.UserService;
 import com.cems.util.ShiroMd5Util;
 import com.github.pagehelper.PageHelper;
@@ -34,6 +36,8 @@ public class UniUserController {
     UserService userService;
     @Autowired
     FriendService friendService;
+    @Autowired
+    SysNoticeService sysNoticeService;
 
     @PostMapping("revUserInfo")
     public Map<String, Object> revUserInfo(@RequestBody ComUser user) {
@@ -224,6 +228,16 @@ public class UniUserController {
     @GetMapping("selAllArticle")
     public Map<String, Object> selAllArticle(String pageIndex, String pageSize, String id) {
         try {
+            List<SysNotice> sysNotices = sysNoticeService.selSomeNot();
+            String s = "";
+            s+="\r\n";
+            int i = 1;
+            for (SysNotice sysNotice:sysNotices) {
+                String ss = sysNotice.getNoticeContent();
+                s+=i+"、"+ss+"!\r\n\n";
+                i++;
+            }
+            System.out.println("ssssssss=="+s);
             PageHelper.startPage(Integer.parseInt(pageIndex), Integer.parseInt(pageSize));
             List<ForumArticle> forumArticles = userService.selAllArtice();
             for (ForumArticle forum:forumArticles) {
@@ -234,6 +248,7 @@ public class UniUserController {
             Map<String, Object> map = new ConcurrentHashMap<>();
             map.put("data", forumList.getList());
             map.put("total", forumList.getTotal());
+            map.put("str", s);
             return map;
         } catch (Exception e) {
             System.err.println("查找失败!!!");

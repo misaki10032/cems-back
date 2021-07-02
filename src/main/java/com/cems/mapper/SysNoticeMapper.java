@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 @Component
@@ -15,4 +16,5 @@ public interface SysNoticeMapper extends BaseMapper<SysNotice> {
     List<SysNotice> selAllNotice();
     int delOneNotice(int id);
     List<SysNotice> selSomeNot();
+    int insNotice(Map<String,Object> map);
 }
