@@ -14,4 +14,9 @@
            or comm_data like #{text}
            or gmt_create like #{text}
     </select>
+
+    <insert id="addComment"  parameterType="com.cems.pojo.uni.UniComment" useGeneratedKeys="true" keyColumn="id" keyProperty="cid">
+        insert into forum_comment(art_id, comm_user, comm_data, gmt_create)
+        value (#{artId},#{cUserId},#{commData},now())
+    </insert>
 </mapper>

@@ -5,6 +5,9 @@ import com.cems.pojo.ForumArticle;
 import com.cems.pojo.ForumComment;
 import com.cems.pojo.to.FormArticle;
 import com.cems.pojo.to.FormInline;
+import com.cems.pojo.uni.UniArticle;
+import com.cems.pojo.uni.UniComment;
+import com.cems.pojo.uni.UniReply;
 
 import java.util.List;
 import java.util.Map;
@@ -32,4 +35,10 @@ public interface ForumService {
     List<CommentReply> getReplyLike(FormInline form);
 
     void addForum(Map<String, Object> map);
+
+    UniArticle getArticleInfo(int id);
+
+    int addComment(UniComment comment);
+
+    int addReply(UniReply reply);
 }

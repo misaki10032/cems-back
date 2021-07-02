@@ -8,6 +8,9 @@ import com.cems.pojo.ForumArticle;
 import com.cems.pojo.ForumComment;
 import com.cems.pojo.to.FormArticle;
 import com.cems.pojo.to.FormInline;
+import com.cems.pojo.uni.UniArticle;
+import com.cems.pojo.uni.UniComment;
+import com.cems.pojo.uni.UniReply;
 import com.cems.service.ForumService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,8 +30,6 @@ public class ForumServeImpl implements ForumService {
     ArticleMapper articleMapper;
     @Autowired
     CommentMapper commentMapper;
-
-
 
     @Autowired
     ReplyMapper replyMapper;
@@ -72,6 +73,21 @@ public class ForumServeImpl implements ForumService {
     @Override
     public void addForum(Map<String, Object> map) {
         articleMapper.addForum(map);
+    }
+
+    @Override
+    public UniArticle getArticleInfo(int id) {
+        return articleMapper.getArticleInfo(id);
+    }
+
+    @Override
+    public int addComment(UniComment comment) {
+        return commentMapper.addComment(comment);
+    }
+
+    @Override
+    public int addReply(UniReply reply) {
+        return replyMapper.addReply(reply);
     }
 
     @Override
