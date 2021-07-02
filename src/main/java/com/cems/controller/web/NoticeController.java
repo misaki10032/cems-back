@@ -37,10 +37,6 @@ public class NoticeController {
         try {
             PageHelper.startPage(pageTo.getPageNum(), pageTo.getPageSize());
             List<SysNotice> sysNotices = noticeService.selAllNotice();
-/*            for (SysNotice sysNotices1:sysNotices) {
-                sysNotices1.setNoticeBegin(sysNotices1.getNoticeBegin().substring(0,11));
-                sysNotices1.setNoticeEnd(sysNotices1.getNoticeEnd().substring(0,11));
-            }*/
             PageInfo<SysNotice> sysAdminInfoBigPageInfo = new PageInfo<>(sysNotices);
             List<SysNotice> sysAdminInfoBigs = sysAdminInfoBigPageInfo.getList();
             map.put("data", sysAdminInfoBigs);

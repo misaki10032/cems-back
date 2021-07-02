@@ -237,7 +237,6 @@ public class UniUserController {
                 s+=i+"、"+ss+"!\r\n\n";
                 i++;
             }
-            System.out.println("ssssssss=="+s);
             PageHelper.startPage(Integer.parseInt(pageIndex), Integer.parseInt(pageSize));
             List<ForumArticle> forumArticles = userService.selAllArtice();
             for (ForumArticle forum:forumArticles) {

@@ -16,7 +16,7 @@
         select notice_id, notice_content, notice_begin, notice_end,admin_id
         from sys_notice
         where notice_end>now()
-        order by notice_begin asc
+        order by notice_begin
         limit 5
     </select>
 
