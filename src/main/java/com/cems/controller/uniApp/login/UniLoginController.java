@@ -1,7 +1,9 @@
 package com.cems.controller.uniApp.login;
+import com.cems.mapper.FriendMapper;
 import com.cems.pojo.to.ComUser;
 import com.cems.pojo.to.LoginAdmin;
 import com.cems.service.ComUserService;
+import com.cems.service.FriendService;
 import com.cems.util.IDUtil;
 import com.cems.util.JWTUtil;
 import org.apache.shiro.SecurityUtils;
@@ -32,6 +34,8 @@ public class UniLoginController {
     ComUserService userService;
     @Autowired
     JavaMailSenderImpl mailSender;
+    @Autowired
+    FriendService friendService;
 
     @PostMapping("uniAppLogin")
     public Map<String, Object> UserLogin(@RequestBody LoginAdmin json) {
@@ -53,6 +57,13 @@ public class UniLoginController {
             map.put("loginUser", loginUser);
             map.put("pName", loginUser.getUserPname());
             map.put("userId", loginUser.getId());
+            try {
+                map.put("fans", friendService.getMyFriend(loginUser.getId()).getFriends().size());
+                map.put("foucs", friendService.getMyFocus(loginUser.getId()).getFriends().size());
+            }catch (Exception e){
+                map.put("fans", 0);
+                map.put("foucs", 0);
+            }
             map.put("code", "200");
         } catch (UnknownAccountException uae) {
             map.put("code", "500");
@@ -64,6 +75,7 @@ public class UniLoginController {
             map.put("code", "502");
             map.put("msg", "账号被锁定!");
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             map.put("code", "503");
             map.put("msg", "服务器异常!");
         }

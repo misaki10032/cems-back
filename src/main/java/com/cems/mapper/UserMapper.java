@@ -8,6 +8,7 @@ import com.cems.pojo.to.ComUser;
 import com.cems.pojo.to.ComUserInfo;
 import com.cems.pojo.to.LoginUser;
 import com.cems.pojo.to.SysEntrust;
+import com.cems.pojo.uni.UniMyFriend;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
@@ -63,6 +64,11 @@ public interface UserMapper extends BaseMapper<ComUser> {
 
 
     void updateUserMoney( @Param("id")  Integer id,  @Param("money") String money);
+
+    UniMyFriend getMyFocus(int id);
+
+    UniMyFriend getMyFriend(int id);
+
     List<Message> selAllMessageById(int userId);
     //删除
     int delMessage(int id);

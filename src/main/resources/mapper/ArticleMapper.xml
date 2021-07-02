@@ -17,7 +17,6 @@
         set status = #{status}
         where id = #{id}
     </update>
-
     <update id="addForum" parameterType="map">
         INSERT INTO forum_article (user_id,
                                    fo_title,
@@ -25,5 +24,64 @@
                                    gmt_create)
             VALUE (#{userId}, #{foTitle}, #{foDate}, NOW())
     </update>
+    <resultMap id="articleInfo" type="com.cems.pojo.uni.UniArticle">
+        <id column="aid" property="id"/>
+        <result column="aUserId" property="aUserId"/>
+        <result column="aUserName" property="aUserName"/>
+        <result column="foTitle" property="foTitle"/>
+        <result column="foData" property="foData"/>
+        <result column="status" property="status"/>
+        <result column="aGmtCreate" property="aGmtCreate"/>
+        <collection property="comments" ofType="com.cems.pojo.uni.UniComment">
+            <id column="cid" property="cid"/>
+            <result column="cid" property="cid"/>
+            <result column="artId" property="artId"/>
+            <result column="cUserId" property="cUserId"/>
+            <result column="cUserName" property="cUserName"/>
+            <result column="commData" property="commData"/>
+            <result column="cGmtCreate" property="cGmtCreate"/>
+            <collection property="replies" ofType="com.cems.pojo.uni.UniReply">
+                <id column="rid" property="rid"/>
+                <result column="commReData" property="commReData"/>
+                <result column="rCommuser" property="rCommuser"/>
+                <result column="rCommuserName" property="rCommuserName"/>
+                <result column="commReUser" property="commReUser"/>
+                <result column="commReUserName" property="commReUserName"/>
+                <result column="commReply" property="commReply"/>
+                <result column="rGmtCreate" property="rGmtCreate"/>
+            </collection>
+        </collection>
+    </resultMap>
+    <select id="getArticleInfo" resultMap="articleInfo">
+        select a.id           as aid,
+               a.user_id      as aUserId,
+               ca.user_pname  as aUserName,
+               a.fo_title     as foTitle,
+               a.fo_data      as foData,
+               a.status       as status,
+               a.gmt_create   as aGmtCreate,
+               c.id           as cid,
+               c.art_id       as artId,
+               c.comm_user    as cUserId,
+               cc.user_pname  as cUserName,
+               c.comm_data    as commData,
+               c.gmt_create   as cGmtCreate,
+               r.id           as rid,
+               r.comm_re_data as commReData,
+               r.comm_user    as rCommuser,
+               cr1.user_pname    as rCommuserName,
+               r.comm_re_user as commReUser,
+               cr2.user_pname as commReUserName,
+               r.comm_reply   as commReply,
+               r.gmt_create   as rGmtCreate
+        from forum_article a
+                 left join com_user_info ca on ca.user_id = a.user_id
+                 left join forum_comment c on a.id = c.art_id
+                 left join com_user_info cc on cc.user_id = c.comm_user
+                 left join comment_reply r on c.id = r.comm_reply
+                 left join com_user_info cr1 on cr1.user_id = r.comm_re_user
+                 left join com_user_info cr2 on cr2.user_id = r.comm_user
+        where a.id = #{id}
+    </select>
 
 </mapper>

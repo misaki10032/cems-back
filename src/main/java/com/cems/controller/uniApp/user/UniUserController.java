@@ -1,15 +1,13 @@
 package com.cems.controller.uniApp.user;
 
 import com.cems.pojo.ForumArticle;
-import com.cems.pojo.Message;
-import com.cems.pojo.UniUserFriend;
 import com.cems.pojo.to.ComUser;
 import com.cems.pojo.to.LoginUser;
+import com.cems.pojo.uni.UniMyFriend;
 import com.cems.pojo.uni.UniUpUserSole;
 import com.cems.service.ComUserService;
 import com.cems.service.FriendService;
 import com.cems.service.UserService;
-import com.cems.util.DateUtil;
 import com.cems.util.ShiroMd5Util;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -92,7 +90,7 @@ public class UniUserController {
     public Map<String, Object> getMyFriend(int id) {
         Map<String, Object> map = new ConcurrentHashMap<>();
         try {
-            List<UniUserFriend> myFriend = friendService.getMyFriend(id);
+            UniMyFriend myFriend = friendService.getMyFriend(id);
             map.put("code", "200");
             map.put("data", myFriend);
         } catch (Exception e) {
@@ -104,9 +102,10 @@ public class UniUserController {
 
     @GetMapping("getMyFocus")
     public Map<String, Object> getMyFocus(int id) {
+        System.out.println(id);
         Map<String, Object> map = new ConcurrentHashMap<>();
         try {
-            List<UniUserFriend> myFocus = friendService.getMyFocus(id);
+            UniMyFriend myFocus = friendService.getMyFocus(id);
             map.put("code", "200");
             map.put("data", myFocus);
         } catch (Exception e) {
@@ -241,5 +240,7 @@ public class UniUserController {
             return null;
         }
     }
+
+
 
 }

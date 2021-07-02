@@ -22,4 +22,14 @@
         where user_id = #{userId}
           and friend_id = #{friendId}
     </select>
+    <select id="countFocus" resultType="int">
+        select count(*)
+        from com_user_friend
+        where user_id = #{id}
+    </select>
+    <select id="countFocus" resultType="int">
+        select count(*)
+        from com_user_friend
+        where friend_id = #{id}
+    </select>
 </mapper>

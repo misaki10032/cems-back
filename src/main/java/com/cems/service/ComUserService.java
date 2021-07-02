@@ -5,6 +5,7 @@ import com.cems.pojo.ComUserBig;
 import com.cems.pojo.to.ComUser;
 import com.cems.pojo.to.ComUserInfo;
 import com.cems.pojo.to.FormInline;
+import com.cems.pojo.uni.UniMyFriend;
 
 import java.util.List;
 import java.util.Map;
@@ -41,7 +42,6 @@ public interface ComUserService {
 
     ComUser getUserById(int id);
 
-
     void updateUserPsw(int id,String pwd);
 
     void updateUserRole(Integer id, String userRole, Integer upMoney);
@@ -49,4 +49,6 @@ public interface ComUserService {
     void addUserMoney(Integer id, Integer upMoney);
 
     void updataUserMoney(Integer id, Integer upMoney);
+
+    UniMyFriend getMyFriend(int id);
 }

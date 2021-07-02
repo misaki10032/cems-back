@@ -15,5 +15,9 @@
             or comm_re_user like #{text}
             or gmt_create like #{text})
     </select>
-
+    <insert id="addReply" parameterType="com.cems.pojo.uni.UniReply" useGeneratedKeys="true" keyColumn="id"
+            keyProperty="rid">
+        insert into comment_reply(comm_re_data, comm_user, comm_re_user, comm_reply, gmt_create)
+            value (#{commReData}, #{rCommuser}, #{commReUser}, #{commReply}, now())
+    </insert>
 </mapper>

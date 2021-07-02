@@ -20,10 +20,10 @@ public interface FriendMapper extends BaseMapper<UniUserFriend> {
 
     void addFriend(@Param("userId") int userId, @Param("friendId") int friendId);
 
-    List<UniUserFriend> getMyFocus(int userId);
-
-    List<UniUserFriend> getMyFriend(int userId);
-
     List<UniUserFriend> getMsg(@Param("userId") int userId, @Param("friendId") int friendId);
+
+    int countFocus(int id);
+
+    int countFans(int id);
 
 }

@@ -3,6 +3,7 @@ package com.cems.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.cems.pojo.ForumArticle;
 import com.cems.pojo.to.FormArticle;
+import com.cems.pojo.uni.UniArticle;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
@@ -27,4 +28,6 @@ public interface ArticleMapper extends BaseMapper<ForumArticle> {
     void killArticle(@Param("id") int id, @Param("status") String status);
 
     void addForum(Map<String, Object> map);
+
+    UniArticle getArticleInfo(int id);
 }

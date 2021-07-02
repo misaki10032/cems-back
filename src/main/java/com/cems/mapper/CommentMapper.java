@@ -2,6 +2,7 @@ package com.cems.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.cems.pojo.ForumComment;
+import com.cems.pojo.uni.UniComment;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Component;
 
@@ -20,4 +21,6 @@ public interface CommentMapper extends BaseMapper<ForumComment> {
     List<ForumComment> getComments();
 
     List<ForumComment> getCommentLike(String text);
+
+    int addComment(UniComment comment);
 }
