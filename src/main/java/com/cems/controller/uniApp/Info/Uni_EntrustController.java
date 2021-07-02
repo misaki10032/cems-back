@@ -1,10 +1,12 @@
 package com.cems.controller.uniApp.Info;
+
 import com.cems.pojo.ComEntrust;
 import com.cems.pojo.ComEntrustType;
 import com.cems.pojo.to.ComUser;
 import com.cems.pojo.uni.UniAddEntrust;
 import com.cems.pojo.uni.UniEntrust;
 import com.cems.pojo.uni.UniPage;
+import com.cems.pojo.uni.UniUpUserSole;
 import com.cems.service.ComEntrustService;
 import com.cems.service.ComUserService;
 import com.github.pagehelper.PageHelper;
@@ -12,6 +14,7 @@ import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,6 +33,7 @@ public class Uni_EntrustController {
     ComEntrustService entrustService;
     @Autowired
     ComUserService userService;
+
     @GetMapping("getEnts")
     public Map<String, Object> getEnts(String pageIndex, String pageSize) {
         try {
@@ -217,14 +221,14 @@ public class Uni_EntrustController {
         Map<String, Object> map = new ConcurrentHashMap<>();
         try {
             ComUser userById = userService.getUserById(Integer.parseInt(entrust.getId()));
-            if(userById.getUserMoney()<Integer.parseInt(entrust.getMoney())){
+            if (userById.getUserMoney() < Integer.parseInt(entrust.getMoney())) {
                 map.put("msg", "余额不足!");
                 map.put("code", 501);
                 return map;
             }
             Integer upMoney = userById.getUserMoney() - Integer.parseInt(entrust.getMoney());
-            userService.updataUserMoney(Integer.valueOf(entrust.getId()),upMoney);
-            if(userById.getUserRole().equals("agent")){
+            userService.updataUserMoney(Integer.valueOf(entrust.getId()), upMoney);
+            if (userById.getUserRole().equals("agent")) {
                 map.put("msg", "权限不足!");
                 map.put("code", 502);
                 return map;
@@ -240,6 +244,69 @@ public class Uni_EntrustController {
         }
         return map;
     }
+
+    @GetMapping("updateEntPlan")
+    public Map<String, Object> updateEntPlan(Integer id) {
+        System.err.println(id);
+        Map<String, Object> map = new ConcurrentHashMap<>();
+        String EntPlan = "已完成";
+        ComEntrust entById = entrustService.getEntUserId(id);
+
+        System.err.println(entById);
+        ComUser userById = userService.getUserById(entById.getEntAgent());
+        Integer allMoney = Integer.parseInt(entById.getEntMoney()) + userById.getUserMoney();
+        try {
+            entrustService.updateEntPlan(id, EntPlan);
+            userService.addUserMoney(userById.getUserId(), allMoney);
+            map.put("msg", "确认成功");
+            map.put("code", 200);
+        } catch (Exception e) {
+            e.printStackTrace();
+            map.put("msg", "服务器故障!");
+            map.put("code", 500);
+        }
+        System.err.println(map);
+        return map;
+    }
+
+//        @GetMapping("updataEntState")
+//        public String updataEntState(Integer rowid, String rowstatus, HttpSession session) {
+//            try {
+//                if (rowstatus.equals("已审核")) {
+//                    rowstatus = "未审核";
+//                } else {
+//                    rowstatus = "已审核";
+//                }
+//                entrustService.updataEntState(rowid, rowstatus);
+//                return rowstatus;
+//            } catch (Exception e) {
+//                return "0";
+//            }
+//        }
+
+//        try {
+//            ComUser userById = userService.getUserById(Integer.parseInt(entrust.getId()));
+//            if(userById.getUserMoney()<Integer.parseInt(entrust.getMoney())){
+//                map.put("msg", "余额不足!");
+//                map.put("code", 501);
+//                return map;
+//            }
+//            Integer upMoney = userById.getUserMoney() - Integer.parseInt(entrust.getMoney());
+//            userService.updataUserMoney(Integer.valueOf(entrust.getId()),upMoney);
+//            if(userById.getUserRole().equals("agent")){
+//                map.put("msg", "权限不足!");
+//                map.put("code", 502);
+//                return map;
+//            }
+//            entrustService.addEntrust(entrust);
+//            userById.setUserMoney(upMoney);
+//            map.put("msg", "添加成功!");
+//            map.put("loginUser", userById);
+//            map.put("code", 200);
+//        } catch (Exception e) {
+//            map.put("msg", "服务器故障!");
+//            map.put("code", 500);
+//        }
 
 
 }

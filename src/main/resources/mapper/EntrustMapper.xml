@@ -17,6 +17,15 @@
         set ent_state = #{status}
         where id = #{id}
     </update>
+
+
+    <update id="updateEntPlan">
+        update cems.com_entrust
+        set ent_plan = #{entPlan}
+        where id = #{id}
+    </update>
+
+
     <update id="upQuitEtrustEntMoney" parameterType="map">
         UPDATE
             com_user_info
@@ -126,8 +135,7 @@
                gmt_end,
                ent_money
         from com_entrust
-        where ent_state = '已审核'
-          and id = #{id}
+        where id = #{id}
     </select>
     <select id="getEntTypeById" resultType="ComEntrustType">
         select id, ent_type
@@ -222,8 +230,7 @@
                gmt_end,
                ent_money
         from com_entrust
-        where ent_state = '已审核'
-          and ent_consignor = #{id}
+        where  ent_consignor = #{id}
         order by ent_plan
     </select>
     <select id="getUserEntByPlan" resultType="ComEntrust">
