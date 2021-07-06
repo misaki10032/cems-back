@@ -17,15 +17,11 @@
         set ent_state = #{status}
         where id = #{id}
     </update>
-
-
     <update id="updateEntPlan">
         update cems.com_entrust
         set ent_plan = #{entPlan}
         where id = #{id}
     </update>
-
-
     <update id="upQuitEtrustEntMoney" parameterType="map">
         UPDATE
             com_user_info
