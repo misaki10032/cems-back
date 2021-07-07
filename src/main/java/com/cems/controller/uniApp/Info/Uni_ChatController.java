@@ -25,7 +25,9 @@ public class Uni_ChatController {
             List<ChatMessage> chatMessages = chatService.selSomeChat();
             map.put("code",200);
             map.put("msg","查询成功!");
-            map.put("article",chatMessages);
+            System.err.println(chatMessages);
+            System.out.println("==================================================");
+            map.put("message",chatMessages);
         }catch (Exception e){
             map.put("code",500);
             map.put("msg","查询失败");

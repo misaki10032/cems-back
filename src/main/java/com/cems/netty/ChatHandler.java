@@ -37,7 +37,6 @@ public class ChatHandler extends SimpleChannelInboundHandler<TextWebSocketFrame>
         chatMapper.addOneChat(chatMessage);
         for(Channel client : clients){
             //将消息发送到所有的客户端
-//            client.writeAndFlush(new TextWebSocketFrame(split[0]+"&&"+nowTime+"&&"+split[1]));
             client.writeAndFlush(new TextWebSocketFrame(JSON.toJSONString(chatMessage)));
         }
     }

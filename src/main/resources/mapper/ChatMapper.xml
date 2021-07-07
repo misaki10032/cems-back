@@ -5,7 +5,7 @@
 
     <select id="selSomeChat" resultType="ChatMessage">
         select id, user_name, user_msg, date_time,user_id from com_chat
-        order by date_time desc
+        order by date_time
         limit 20
     </select>
 
