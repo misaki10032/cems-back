@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cems.mapper.ChatMapper">
+
+    <select id="selSomeChat" resultType="ChatMessage">
+        select id, user_name, user_msg, date_time,user_id from com_chat
+        order by date_time desc
+        limit 20
+    </select>
+
+    <insert id="addOneChat" parameterType="ChatMessage">
+
+        insert into com_chat (user_name, user_msg, date_time,user_id) values (#{userName},#{userMsg},#{dateTime},#{userId})
+
+    </insert>
+</mapper>

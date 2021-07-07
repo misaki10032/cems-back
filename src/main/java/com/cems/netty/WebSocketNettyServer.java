@@ -1,9 +1,11 @@
 package com.cems.netty;
 
+import com.cems.service.ChatService;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import org.springframework.beans.factory.annotation.Autowired;
 
 public class WebSocketNettyServer {
     public static void openNettyServer(){

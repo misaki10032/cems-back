@@ -14,7 +14,9 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 public class ChatMessage {
+    private int id;
     private String userName;
     private String userMsg;
     private String dateTime;
+    private int userId;
 }
