@@ -24,7 +24,7 @@ public class WebSocketNettyServer {
                     //指定通道初始化器来加载当Channel收到消息事件后
                     .childHandler(new WebsocketChannelInitializer());
             //绑定服务器端口，已同步方式启动服务器
-            ChannelFuture future = serverBootstrap.bind(9000).sync();
+            ChannelFuture future = serverBootstrap.bind(8082).sync();
             //等待服务器关闭
             future.channel().closeFuture().sync();
         } catch (InterruptedException e) {
