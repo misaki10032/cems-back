@@ -3,6 +3,7 @@ package com.cems.pojo;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+import org.springframework.context.annotation.Bean;
 
 /**
  * @ClassName ComEntrust

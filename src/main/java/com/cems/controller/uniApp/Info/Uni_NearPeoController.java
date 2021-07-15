@@ -34,12 +34,16 @@ public class Uni_NearPeoController {
         Map<String, Object> map = new HashMap<>();
         try {
             String redisKey = "cems_JW";
-            redisGeoUtil.geoAdd(redisKey, new Point(Double.parseDouble(longitude), Double.parseDouble(latitude)), userId);
-            redisUtil.set("cems_jw_info_" + userId, userInfo);
-            redisUtil.expire("cems_jw_info_" + userId,24*60*30, TimeUnit.MINUTES);
-            List<Point> points = redisGeoUtil.geoGet(redisKey, String.valueOf(userId));
-            System.err.println("添加位置坐标点:" + userId + points);
-            redisUtil.expire("cems_JW",24*60*30, TimeUnit.MINUTES);
+            if(longitude!=null||!longitude.equals("")){
+                redisGeoUtil.geoAdd(redisKey, new Point(Double.parseDouble(longitude), Double.parseDouble(latitude)), userId);
+                redisUtil.set("cems_jw_info_" + userId, userInfo);
+            }else {
+                map.put("code", "503");
+                map.put("msg", "位置信息定位失败!");
+                return map;
+            }
+            redisUtil.persist("cems_jw_info_" + userId);
+            redisUtil.persist("cems_JW");
             map.put("code", "200");
             map.put("msg", "成功获取位置信息!");
         } catch (Exception e) {
@@ -51,6 +55,7 @@ public class Uni_NearPeoController {
 
     @GetMapping("getOtherPeople")
     public Map<String, Object> getOtherPeople(String userId) {
+        int time = 0;
         System.err.println(userId);
         //redis中key的名字
         String redisKey = "cems_JW";
@@ -60,15 +65,19 @@ public class Uni_NearPeoController {
         //查询10KM以内的人
         try {
             //获取自己的位置
-            String oinfo = String.valueOf(redisUtil.get("cems_jw_info_" + userId));
-            System.out.println(oinfo);
-            if (oinfo == null || oinfo.equals("null")) {
-                map.put("code", "501");
-                map.put("msg", "获取不到位置信息!");
-                return map;
+            String oinfo;
+            for(;;){
+                oinfo = String.valueOf(redisUtil.get("cems_jw_info_" + userId));
+                if (oinfo == null || oinfo.equals("null")) {
+                    for (int i = 0; i < 100000; i++) {
+                        i++;
+                    }
+                    System.err.println("501:获取不到位置信息!");
+                }else{
+                    break;
+                }
             }
             GeoResults<RedisGeoCommands.GeoLocation<String>> points = redisGeoUtil.nearByPlace(redisKey, userId, new Distance(100, Metrics.KILOMETERS), 100);
-            //遍历取得附近的人的id
             for (GeoResult<RedisGeoCommands.GeoLocation<String>> point : points) {
                 String otherId = point.getContent().getName();
                 UniNearPeople other = new UniNearPeople();
@@ -76,7 +85,6 @@ public class Uni_NearPeoController {
                     continue;
                 }
                 ComUser comUser = userService.selOneUser(Integer.parseInt(otherId));
-                System.err.println(point.getDistance().getValue() * 1000 + "---->user" + point.getContent().getName());
                 other.setUserDistance(String.valueOf(point.getDistance().getValue() * 1000))
                         .setUserId(String.valueOf(comUser.getUserId()))
                         .setUserName(comUser.getUserPname())

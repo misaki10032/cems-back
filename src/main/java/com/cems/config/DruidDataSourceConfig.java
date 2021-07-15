@@ -15,13 +15,11 @@ import javax.sql.DataSource;
 
 @Configuration
 public class DruidDataSourceConfig {
-
-	    @Bean
-		@ConfigurationProperties(prefix = "spring.datasource")
-	    public DataSource druid() {
-	        return new DruidDataSource();
-	    }
-
+	@Bean
+	@ConfigurationProperties(prefix = "spring.datasource")
+	public DataSource druid() {
+		return new DruidDataSource();
+	}
 	@Bean
 	public ServletRegistrationBean druidStatViewServlet() {
 		//ServletRegistrationBean提供类的进行注册
