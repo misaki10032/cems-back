@@ -14,7 +14,12 @@ import javax.crypto.spec.SecretKeySpec;
 import org.apache.commons.lang3.StringUtils;
 import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
-
+/**
+ * @ClassName AESUtils
+ * @Author 陈新予(blank)
+ * @Date 2021/8/10
+ * @Version 1.0
+ */
 public class AESUtils {
     private static final String encodeRules = "chenxinyu";
     /**
@@ -31,7 +36,6 @@ public class AESUtils {
             //1.构造密钥生成器，指定为AES算法,不区分大小写
             KeyGenerator keygen = KeyGenerator.getInstance("AES");
             //2.根据ecnodeRules规则初始化密钥生成器
-
             //生成一个128位的随机源,根据传入的字节数组
             SecureRandom random = SecureRandom.getInstance("SHA1PRNG");
             random.setSeed(encodeRules.getBytes());
